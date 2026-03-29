@@ -1,0 +1,67 @@
+{
+  "name": "asgard-frontend-template",
+  "type": "module",
+  "version": "1.2.0",
+  "private": true,
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "dev:test": "vite --mode test",
+    "build": "vite build",
+    "build:test": "vite build --mode test",
+    "preview": "vite preview",
+    "preview:test": "vite preview --mode test",
+    "test": "playwright test",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "lint": "eslint . --ext .ts,.vue,.json",
+    "lint:fix": "pnpm lint --fix",
+    "type-check": "vue-tsc --noEmit",
+    "dep:check": "pnpm dlx npm-check-updates",
+    "dep:update": "pnpm dlx npm-check-updates -u && pnpm install",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@vueuse/core": "^14.2.1",
+    "axios": "^1.13.6",
+    "element-plus": "^2.13.6",
+    "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
+    "vue": "^3.5.30",
+    "vue-i18n": "^11.3.0",
+    "vue-router": "^5.0.4"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^7.7.3",
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "@iconify-json/ep": "^1.2.4",
+    "@iconify/types": "^2.0.0",
+    "@iconify/utils": "^3.1.0",
+    "@microsoft/eslint-formatter-sarif": "^3.1.0",
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^24.6.1",
+    "@vitejs/plugin-vue": "^6.0.5",
+    "@vue/tsconfig": "^0.9.0",
+    "eslint": "^10.1.0",
+    "eslint-plugin-format": "^2.0.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "modern-normalize": "^3.0.1",
+    "sass": "^1.98.0",
+    "typescript": "~5.9.3",
+    "unplugin-auto-import": "^21.0.0",
+    "unplugin-icons": "^23.0.1",
+    "unplugin-vue-components": "^31.0.0",
+    "vite": "^7.3.1",
+    "vitest": "^4.1.0",
+    "vue-tsc": "^3.2.6"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,vue,js,json,md,yml}": "eslint --fix",
+    "*.{test,spec}.{ts,tsx,vue,js}": "eslint --fix"
+  }
+}

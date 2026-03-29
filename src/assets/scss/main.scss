@@ -1,0 +1,117 @@
+// =============================================================================
+// 主样式入口文件 - 简化版
+// =============================================================================
+
+@use 'sass:map';
+
+// 导入现代标准化样式
+@use 'modern-normalize' as *;
+
+// 导入 Sass 核心文件
+@use 'base/_variables' as *;
+@use 'base/_functions' as *;
+@use 'base/_mixins' as *;
+
+// 导入基础样式
+@use 'base/_reset' as *;
+
+// Element Plus 主题变量覆盖
+@use 'theme/_element-overrides' as *;
+// Element Plus 全量主题（表单、Message、MessageBox 等所有组件）
+@import 'element-plus/theme-chalk/index.css';
+
+:root {
+  --shell-font-family: 'Avenir Next', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --shell-bg: #{map.get($shell-colors, bg)};
+  --shell-bg-strong: #{map.get($shell-colors, bg-strong)};
+  --shell-surface: #{map.get($shell-colors, surface)};
+  --shell-surface-strong: #{map.get($shell-colors, surface-strong)};
+  --shell-surface-muted: #{map.get($shell-colors, surface-muted)};
+  --shell-border: #{map.get($shell-colors, border)};
+  --shell-border-strong: #{map.get($shell-colors, border-strong)};
+  --shell-text: #{map.get($shell-colors, text)};
+  --shell-text-muted: #{map.get($shell-colors, text-muted)};
+  --shell-text-soft: #{map.get($shell-colors, text-soft)};
+  --shell-accent: #{map.get($shell-colors, accent)};
+  --shell-accent-soft: #{map.get($shell-colors, accent-soft)};
+  --shell-accent-strong: #{map.get($shell-colors, accent-strong)};
+  --shell-success: #{map.get($shell-colors, success)};
+  --shell-warning: #{map.get($shell-colors, warning)};
+  --shell-shadow: #{map.get($shell-colors, shadow)};
+  --shell-shadow-soft: #{map.get($shell-colors, shadow-soft)};
+  --shell-radius-sm: #{map.get($shell-radius, sm)};
+  --shell-radius-md: #{map.get($shell-radius, md)};
+  --shell-radius-lg: #{map.get($shell-radius, lg)};
+  --shell-radius-xl: #{map.get($shell-radius, xl)};
+  --shell-radius-full: #{map.get($shell-radius, full)};
+  --shell-space-1: #{map.get($shell-spacing, 1)};
+  --shell-space-2: #{map.get($shell-spacing, 2)};
+  --shell-space-3: #{map.get($shell-spacing, 3)};
+  --shell-space-4: #{map.get($shell-spacing, 4)};
+  --shell-space-5: #{map.get($shell-spacing, 5)};
+  --shell-space-6: #{map.get($shell-spacing, 6)};
+  --shell-frame-padding: #{map.get($shell-layout, frame-padding)};
+  --shell-panel-gap: #{map.get($shell-layout, panel-gap)};
+  --shell-content-gap: #{map.get($shell-layout, content-gap)};
+  --shell-control-height: #{map.get($shell-layout, control-height)};
+  --shell-header-height: #{map.get($shell-layout, header-height)};
+  --shell-tabs-height: #{map.get($shell-layout, tabs-height)};
+  --shell-sider-width: #{map.get($shell-layout, sider-width)};
+  --shell-sider-collapsed-width: #{map.get($shell-layout, sider-collapsed-width)};
+  --shell-page-max-width: #{map.get($shell-layout, page-max-width)};
+  --shell-page-padding-inline: #{map.get($shell-layout, page-padding-inline)};
+  --shell-page-padding-block: #{map.get($shell-layout, page-padding-block)};
+  --shell-page-section-gap: #{map.get($shell-layout, page-section-gap)};
+  --el-color-primary: var(--shell-accent);
+  --el-color-success: var(--shell-success);
+  --el-color-warning: var(--shell-warning);
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(47, 111, 235, 0.06), transparent 30%),
+    radial-gradient(circle at top right, rgba(15, 118, 110, 0.05), transparent 26%), var(--shell-bg);
+  color: var(--shell-text);
+  font-family: var(--shell-font-family);
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: var(--shell-accent-soft);
+  color: var(--shell-text);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --shell-frame-padding: var(--shell-space-2);
+    --shell-panel-gap: var(--shell-space-2);
+    --shell-content-gap: var(--shell-space-3);
+    --shell-page-padding-inline: 0;
+    --shell-page-padding-block: var(--shell-space-2);
+    --shell-page-section-gap: var(--shell-space-4);
+  }
+}

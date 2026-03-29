@@ -1,0 +1,23 @@
+// =============================================================================
+// Element Plus 主题变量覆盖 - 与项目 _variables.scss 对齐
+// =============================================================================
+
+@use 'sass:map';
+@use '../base/variables' as *;
+
+:root {
+  // 主色（可与设计系统主色统一，此处先用 EP 默认蓝，后续可改为 map.get($colors, 'xxx')）
+  --el-color-primary: #409eff;
+  --el-color-primary-light-3: #79bbff;
+  --el-color-primary-light-5: #a0cfff;
+  --el-color-primary-light-7: #c6e2ff;
+  --el-color-primary-light-8: #d9ecff;
+  --el-color-primary-light-9: #ecf5ff;
+  --el-color-primary-dark-2: #337ecc;
+
+  // 字体大小 - 与 $font-sizes base 对齐
+  --el-font-size-base: #{map.get($font-sizes, base)};
+
+  // 圆角 - 与 $border-radius base 对齐
+  --el-border-radius-base: #{map.get($border-radius, base)};
+}
