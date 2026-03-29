@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.1](https://github.com/Yggdrasil-Labs/mealmate-web/compare/v1.2.0...v1.2.1) (2026-03-29)
+
+
+### 🔧 Miscellaneous Chores
+
+* **deps-dev:** bump unplugin-vue-components from 31.0.0 to 32.0.0 ([027b3e6](https://github.com/Yggdrasil-Labs/mealmate-web/commit/027b3e6c2c0c37826b10d1b7a65d46bcca30d1ed))
+* **deps:** bump the minor-and-patch group with 4 updates ([3e788b9](https://github.com/Yggdrasil-Labs/mealmate-web/commit/3e788b925e4783cba165e85fff73c4b4ff328883))
+
 ## [1.2.0](https://github.com/Yggdrasil-Labs/asgard-frontend-template/compare/v1.1.0...v1.2.0) (2026-03-29)
 
 
