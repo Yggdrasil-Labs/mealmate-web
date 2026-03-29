@@ -26,11 +26,11 @@
   },
   "dependencies": {
     "@vueuse/core": "^14.2.1",
-    "axios": "^1.13.6",
+    "axios": "^1.14.0",
     "element-plus": "^2.13.6",
     "pinia": "^3.0.4",
     "pinia-plugin-persistedstate": "^4.7.1",
-    "vue": "^3.5.30",
+    "vue": "^3.5.31",
     "vue-i18n": "^11.3.0",
     "vue-router": "^5.0.4"
   },
@@ -45,7 +45,7 @@
     "@playwright/test": "^1.58.2",
     "@types/node": "^24.6.1",
     "@vitejs/plugin-vue": "^6.0.5",
-    "@vue/tsconfig": "^0.9.0",
+    "@vue/tsconfig": "^0.9.1",
     "eslint": "^10.1.0",
     "eslint-plugin-format": "^2.0.1",
     "husky": "^9.1.7",
@@ -57,7 +57,7 @@
     "unplugin-icons": "^23.0.1",
     "unplugin-vue-components": "^31.0.0",
     "vite": "^7.3.1",
-    "vitest": "^4.1.0",
+    "vitest": "^4.1.2",
     "vue-tsc": "^3.2.6"
   },
   "lint-staged": {
