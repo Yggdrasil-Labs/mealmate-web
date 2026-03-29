@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Docker 构建脚本
-# 用于构建 asgard-frontend-template 项目的 Docker 镜像
+# 用于构建 mealmate-web 项目的 Docker 镜像
 
 set -e
 
@@ -12,7 +12,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # 默认配置
-IMAGE_NAME="yggdrasil-labs/asgard-frontend-template"
+IMAGE_NAME="yggdrasil-labs/mealmate-web"
 VERSION="latest"
 DOCKERFILE="Dockerfile"
 BUILD_CONTEXT="."
@@ -141,7 +141,7 @@ build_image() {
         info "镜像标签: $IMAGE_NAME:$VERSION, $IMAGE_NAME:latest"
         echo ""
         info "运行容器:"
-        echo "  docker run -d -p 8080:80 --name asgard-frontend $IMAGE_NAME:$VERSION"
+        echo "  docker run -d -p 8080:80 --name mealmate-web $IMAGE_NAME:$VERSION"
         echo ""
         info "查看镜像:"
         echo "  docker images $IMAGE_NAME"
@@ -154,7 +154,7 @@ build_image() {
 # 主函数
 main() {
     info "========================================="
-    info "  Asgard Frontend Template - Docker 构建"
+    info "  MealMate Web - Docker 构建"
     info "========================================="
     echo ""
     

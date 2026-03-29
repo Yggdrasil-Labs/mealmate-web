@@ -10,9 +10,9 @@ describe('createRouteRecords', () => {
 
   it('uses lazy route loaders instead of defineAsyncComponent wrappers', () => {
     const routes = createRouteRecords()
-    const proDialog = routes.find(route => route.path === '/pro-dialog-demo')
+    const home = routes.find(route => route.path === '/')
 
-    expect(typeof proDialog?.component).toBe('function')
+    expect(typeof home?.component).toBe('function')
   })
 
   it('preserves nested child routes from the schema', () => {
@@ -26,7 +26,7 @@ describe('createRouteRecords', () => {
           {
             name: 'WorkspaceDetail',
             path: '/workspace/detail',
-            component: 'pro-detail-demo',
+            component: 'index',
             meta: { title: 'Workspace Detail' },
           },
         ],

@@ -36,14 +36,14 @@ async function mountSider(options: { tree?: MenuNode[], collapsed?: boolean, mob
   const onToggleCollapse = vi.fn()
   const tree = options.tree ?? [
     { key: 'Home', path: '/', title: '首页', icon: 'menu-dashboard' },
-    { key: 'ProFormDemo', path: '/pro-form-demo', title: 'ProForm 示例', icon: 'edit' },
+    { key: 'CatalogPage', path: '/catalog', title: '商品目录', icon: 'edit' },
   ]
 
   const Host = defineComponent({
     setup() {
       return () => h(AppSider, {
         tree,
-        activeKey: 'ProFormDemo',
+        activeKey: 'CatalogPage',
         openKeys: ['Home'],
         collapsed: options.collapsed ?? false,
         mobile: options.mobile ?? false,
@@ -75,7 +75,7 @@ describe('app sider', () => {
     const firstItem = app.container.querySelector<HTMLElement>('.app-sider__item')
 
     expect(app.container.textContent).toContain('首页')
-    expect(app.container.textContent).toContain('ProForm 示例')
+    expect(app.container.textContent).toContain('商品目录')
     expect(app.container.textContent).not.toContain('Workspace navigation')
     expect(app.container.textContent).not.toContain('主导航')
     expect(sider).not.toBeNull()

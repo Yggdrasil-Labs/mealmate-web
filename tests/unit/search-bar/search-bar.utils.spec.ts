@@ -75,23 +75,23 @@ const schema: SearchFieldSchema[] = [
 describe('search-bar utils', () => {
   it('只填充缺失的默认值，保留已有字段值', () => {
     const values = mergeSearchDefaults(schema, {
-      keyword: 'asgard',
+      keyword: 'mealmate',
       status: 'published',
     })
 
     expect(values).toEqual({
-      keyword: 'asgard',
+      keyword: 'mealmate',
       status: 'published',
     })
   })
 
   it('会为缺失字段补上默认值', () => {
     const values = mergeSearchDefaults(schema, {
-      keyword: 'asgard',
+      keyword: 'mealmate',
     })
 
     expect(values).toEqual({
-      keyword: 'asgard',
+      keyword: 'mealmate',
       status: 'draft',
     })
   })

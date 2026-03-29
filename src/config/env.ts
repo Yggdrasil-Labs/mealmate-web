@@ -22,15 +22,15 @@ declare global {
 const ENV_DEFAULTS = {
   development: {
     API_BASE_URL: 'http://localhost:8080/api',
-    APP_NAME: 'Asgard Frontend (Development)',
+    APP_NAME: 'MealMate (Development)',
   },
   test: {
     API_BASE_URL: 'https://test-api.yggdrasil-labs.com/api',
-    APP_NAME: 'Asgard Frontend (Test)',
+    APP_NAME: 'MealMate (Test)',
   },
   production: {
     API_BASE_URL: 'https://api.yggdrasil-labs.com/api',
-    APP_NAME: 'Asgard Frontend (Production)',
+    APP_NAME: 'MealMate (Production)',
   },
 } as const
 

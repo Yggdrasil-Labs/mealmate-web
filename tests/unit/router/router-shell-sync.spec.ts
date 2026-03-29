@@ -51,21 +51,14 @@ async function mountRouter(path: string) {
 }
 
 describe('router shell sync', () => {
-  it('activates current menu item and tab on navigation', async () => {
-    const app = await mountRouter('/pro-form-demo')
+  it('activates the home menu item and tab on navigation', async () => {
+    const app = await mountRouter('/')
 
-    expect(app.menuStore.activeKey).toBe('ProFormDemo')
-    expect(app.tabsStore.activeKey).toBe('ProFormDemo')
+    expect(app.menuStore.activeKey).toBe('Home')
+    expect(app.tabsStore.activeKey).toBe('Home')
     expect(app.tabsStore.items.find(item => item.key === 'Home')?.pinned).toBe(true)
     expect(app.tabsStore.items.find(item => item.key === 'Home')?.closable).toBe(false)
-    expect(app.tabsStore.items.some(item => item.key === 'ProFormDemo')).toBe(true)
-
-    await router.push('/pro-detail-demo')
-    await nextTick()
-
-    expect(app.menuStore.activeKey).toBe('ProDetailDemo')
-    expect(app.tabsStore.activeKey).toBe('ProDetailDemo')
-    expect(app.tabsStore.items.some(item => item.key === 'Home')).toBe(true)
+    expect(app.tabsStore.items).toHaveLength(1)
 
     app.unmount()
   })

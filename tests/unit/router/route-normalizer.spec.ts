@@ -5,10 +5,10 @@ describe('normalizeAppRoutes', () => {
   it('fills default layout and menu visibility', () => {
     const [route] = normalizeAppRoutes([
       {
-        name: 'Demo',
-        path: '/demo',
-        component: 'pro-form-demo',
-        meta: { title: 'Demo' },
+        name: 'Profile',
+        path: '/profile',
+        component: 'index',
+        meta: { title: 'Profile' },
       },
     ])
 

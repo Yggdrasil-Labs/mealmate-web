@@ -1,14 +1,14 @@
 <div align="center">
 
-# asgard-frontend-template
+# mealmate-web
 
-[![CI](https://github.com/Yggdrasil-Labs/asgard-frontend-template/actions/workflows/ci.yml/badge.svg)](https://github.com/Yggdrasil-Labs/asgard-frontend-template/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/Yggdrasil-Labs/asgard-frontend-template/graph/badge.svg?token=8PGPHIE04N)](https://codecov.io/gh/Yggdrasil-Labs/asgard-frontend-template)
-[![Release Please](https://github.com/Yggdrasil-Labs/asgard-frontend-template/actions/workflows/release-please.yml/badge.svg)](https://github.com/Yggdrasil-Labs/asgard-frontend-template/actions/workflows/release-please.yml)
+[![CI](https://github.com/Yggdrasil-Labs/mealmate-web/actions/workflows/ci.yml/badge.svg)](https://github.com/Yggdrasil-Labs/mealmate-web/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/Yggdrasil-Labs/mealmate-web/graph/badge.svg)](https://codecov.io/gh/Yggdrasil-Labs/mealmate-web)
+[![Release Please](https://github.com/Yggdrasil-Labs/mealmate-web/actions/workflows/release-please.yml/badge.svg)](https://github.com/Yggdrasil-Labs/mealmate-web/actions/workflows/release-please.yml)
 
 </div>
 
-General frontend template. Asgard——kingdom of gods.
+MealMate 配套 Web 前端（Vue 3 + Vite）。
 
 ## 📋 环境要求
 
@@ -19,7 +19,7 @@ General frontend template. Asgard——kingdom of gods.
 ## 📁 项目结构
 
 ```bash
-asgard-frontend-template
+mealmate-web
 ├── .github/            # GitHub 配置
 │   ├── workflows/      # CI/CD 工作流
 │   │   ├── ci.yml                  # 代码检查与类型检查
@@ -103,7 +103,7 @@ asgard-frontend-template
 
 ## 🏗️ Layout Shell 架构
 
-当前模板的页面承载已经从单一 `MainLayout + RouterView` 升级为 schema 驱动的后台壳层：
+本项目的页面承载已从单一 `MainLayout + RouterView` 升级为 schema 驱动的后台壳层：
 
 - `src/router/types.ts`：定义 `AppRouteRecord / AppRouteMeta`
 - `src/router/app-route-schema.ts`：声明本地页面 schema
@@ -214,7 +214,7 @@ pnpm dep:update
 
 ```bash
 # 新功能
-git commit -m "feat(scope): 添加通用模板能力"
+git commit -m "feat(scope): 添加新功能"
 
 # Bug 修复
 git commit -m "fix(scope): 修复路由跳转问题"
@@ -284,8 +284,8 @@ export default defineConfig({
 创建 `.env.local` 文件（参考 `.env.example`）：
 
 ```env
-# 应用标题
-VITE_APP_TITLE=Asgard Frontend Template
+# 应用名称（可选，未设置时使用各环境内置默认）
+VITE_APP_NAME=MealMate
 
 # API 基础路径
 VITE_API_BASE_URL=https://api.example.com

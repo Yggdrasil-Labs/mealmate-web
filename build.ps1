@@ -1,5 +1,5 @@
-﻿# Docker 构建脚本 (PowerShell)
-# 用于构建 asgard-frontend-template 项目的 Docker 镜像
+# Docker 构建脚本 (PowerShell)
+# 用于构建 mealmate-web 项目的 Docker 镜像
 
 param(
     [string]$Version = 'latest',
@@ -19,7 +19,7 @@ chcp 65001 | Out-Null
 $ErrorActionPreference = "Stop"
 
 # 默认配置
-$ImageName = "yggdrasil-labs/asgard-frontend-template"
+$ImageName = "yggdrasil-labs/mealmate-web"
 $Dockerfile = "Dockerfile"
 $BuildContext = "."
 
@@ -128,7 +128,7 @@ function Build-Image {
         Write-Info "镜像标签: ${ImageName}:${Version}, ${ImageName}:latest"
         Write-Host ""
         Write-Info "运行容器:"
-        Write-Host "  docker run -d -p 8080:80 --name asgard-frontend ${ImageName}:${Version}" -ForegroundColor Cyan
+        Write-Host "  docker run -d -p 8080:80 --name mealmate-web ${ImageName}:${Version}" -ForegroundColor Cyan
         Write-Host ""
         Write-Info "查看镜像:"
         Write-Host "  docker images $ImageName" -ForegroundColor Cyan
@@ -142,7 +142,7 @@ function Build-Image {
 function Main {
     Write-Host ""
     Write-Info "========================================="
-    Write-Info "  Asgard Frontend Template - Docker 构建"
+    Write-Info "  MealMate Web - Docker 构建"
     Write-Info "========================================="
     Write-Host ""
     

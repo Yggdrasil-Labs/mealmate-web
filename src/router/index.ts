@@ -63,14 +63,14 @@ const router = createRouter({
   routes: createRouteRecords(),
 })
 
-// 路由守卫（模板默认不做业务鉴权）
+// 路由守卫（默认不做业务鉴权，可按需接入）
 // 路由后置守卫
 router.afterEach((to) => {
   syncShellState(to)
 
   // 更新页面标题
   if (to.meta.title) {
-    document.title = `${to.meta.title} - Asgard Frontend`
+    document.title = `${to.meta.title} - MealMate`
   }
 })
 

@@ -22,7 +22,7 @@ const menuStore = useMenuStore()
 const tabsStore = useTabsStore()
 
 const currentPageTitle = computed(() => {
-  return String(route.meta.title ?? 'Asgard Frontend Template')
+  return String(route.meta.title ?? 'MealMate Web')
 })
 
 const menuTree = computed<MenuNode[]>(() => {

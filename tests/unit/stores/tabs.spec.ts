@@ -45,31 +45,31 @@ describe('useTabsStore', () => {
       pinned: true,
     })
     store.open({
-      key: 'ProFormDemo',
-      routeName: 'ProFormDemo',
-      path: '/pro-form-demo',
-      fullPath: '/pro-form-demo',
-      title: 'ProForm 示例',
+      key: 'CatalogPage',
+      routeName: 'CatalogPage',
+      path: '/catalog',
+      fullPath: '/catalog',
+      title: '商品目录',
     })
     store.open({
-      key: 'ProTableDemo',
-      routeName: 'ProTableDemo',
-      path: '/pro-table-demo',
-      fullPath: '/pro-table-demo',
-      title: 'ProTable 示例',
+      key: 'OrdersPage',
+      routeName: 'OrdersPage',
+      path: '/orders',
+      fullPath: '/orders',
+      title: '订单管理',
     })
 
     const initialOrder = store.items.map(item => item.key)
 
     store.open({
-      key: 'ProFormDemo',
-      routeName: 'ProFormDemo',
-      path: '/pro-form-demo',
-      fullPath: '/pro-form-demo',
-      title: 'ProForm 示例',
+      key: 'CatalogPage',
+      routeName: 'CatalogPage',
+      path: '/catalog',
+      fullPath: '/catalog',
+      title: '商品目录',
     })
 
-    expect(store.activeKey).toBe('ProFormDemo')
+    expect(store.activeKey).toBe('CatalogPage')
     expect(store.items.map(item => item.key)).toEqual(initialOrder)
     expect(now).toHaveBeenCalled()
   })

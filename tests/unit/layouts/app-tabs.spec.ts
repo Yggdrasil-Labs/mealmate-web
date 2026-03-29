@@ -37,9 +37,9 @@ async function mountTabs() {
       return () => h(AppTabs, {
         items: [
           { key: 'Home', routeName: 'Home', path: '/', fullPath: '/', title: '首页', closable: false, pinned: true },
-          { key: 'ProFormDemo', routeName: 'ProFormDemo', path: '/pro-form-demo', fullPath: '/pro-form-demo', title: 'ProForm 示例', closable: true, pinned: false },
+          { key: 'CatalogPage', routeName: 'CatalogPage', path: '/catalog', fullPath: '/catalog', title: '商品目录', closable: true, pinned: false },
         ],
-        activeKey: 'ProFormDemo',
+        activeKey: 'CatalogPage',
       })
     },
   })
@@ -63,7 +63,7 @@ describe('app tabs', () => {
     const pinnedBadge = app.container.querySelector<HTMLElement>('.app-tabs__badge')
 
     expect(app.container.textContent).toContain('首页')
-    expect(app.container.textContent).toContain('ProForm 示例')
+    expect(app.container.textContent).toContain('商品目录')
     expect(pinnedBadge?.textContent?.trim()).toBe('')
     expect(pinnedBadge?.querySelector('.app-icon-stub')?.getAttribute('data-icon-name')).toBe('success')
 

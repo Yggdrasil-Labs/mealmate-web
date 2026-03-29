@@ -20,7 +20,7 @@ export function createAppPinia() {
 
 /**
  * 重置所有 Store
- * 预留扩展点：模板默认无业务 Store。
+ * 预留扩展点：默认无业务 Store，由业务模块注册。
  */
 export async function resetStores(): Promise<void> {
   return Promise.resolve()

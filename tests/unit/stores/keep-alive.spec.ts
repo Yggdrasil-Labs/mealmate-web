@@ -12,11 +12,11 @@ describe('useKeepAliveStore', () => {
 
     store.register('Home')
     store.register('Home')
-    store.register('ProFormDemo')
-    expect(store.keys).toEqual(['Home', 'ProFormDemo'])
+    store.register('ProductForm')
+    expect(store.keys).toEqual(['Home', 'ProductForm'])
 
     store.remove('Home')
-    expect(store.keys).toEqual(['ProFormDemo'])
+    expect(store.keys).toEqual(['ProductForm'])
 
     store.invalidate()
     expect(store.keys).toEqual([])

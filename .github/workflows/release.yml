@@ -215,9 +215,9 @@ jobs:
         run: |
           VERSION="${{ steps.get_version.outputs.version }}"
           cd dist
-          zip -r "../asgard-frontend-template-${VERSION}.zip" .
+          zip -r "../mealmate-web-${VERSION}.zip" .
           cd ..
-          echo "Created release archive: asgard-frontend-template-${VERSION}.zip"
+          echo "Created release archive: mealmate-web-${VERSION}.zip"
           ls -la *.zip
 
       - name: Create GitHub Release
@@ -230,6 +230,6 @@ jobs:
           prerelease: false
           generate_release_notes: false
           files: |
-            asgard-frontend-template-${{ steps.get_version.outputs.version }}.zip
+            mealmate-web-${{ steps.get_version.outputs.version }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

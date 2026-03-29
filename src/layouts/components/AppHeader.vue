@@ -13,7 +13,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  brand: 'Asgard Frontend Template',
+  brand: 'MealMate Web',
   title: 'Dashboard',
   device: 'desktop',
   collapsed: false,
