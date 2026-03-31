@@ -46,4 +46,4 @@ src/types/route-map.d.ts
 .cursor/
 openspec/
 
-docs/plans/
+.codex
