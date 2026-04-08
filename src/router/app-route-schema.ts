@@ -13,4 +13,13 @@ export const appRouteSchema: AppRouteRecord[] = [
       keepAlive: { enabled: false, strategy: 'routeName' },
     },
   },
+  {
+    name: 'FamilyProfile',
+    path: '/family/profile',
+    component: 'family-profile',
+    meta: {
+      title: '家庭画像',
+      icon: 'menu-user',
+    },
+  },
 ]

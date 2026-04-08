@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { FormFieldSchema, ProFormEmits, ProFormProps } from '@/types/pro-form'
+import type { FormFieldSchema, ProFormEmits, ProFormModelValue, ProFormProps } from '@/types/pro-form'
 import { ElCol, ElCollapse, ElCollapseItem, ElForm, ElRow } from 'element-plus'
 import { computed, nextTick, onMounted, ref, useSlots, watch } from 'vue'
 import { useAppBreakpoint } from '@/composables'
+import { toFormRecord } from './model-value'
 import ProFormField from './ProFormField.vue'
 import { buildElFormRules } from './validation'
 
@@ -146,17 +147,18 @@ function groupFieldsIntoRows(fields: FormFieldSchema[]): FormFieldSchema[][] {
 
 /** 用 schema meta.defaultValue 填充缺失项；键已存在时保留当前值（含 undefined，即用户清空） */
 function mergeDefaultsWithModelValue(): Record<string, unknown> {
+  const currentModelValue = toFormRecord(props.modelValue)
   const base: Record<string, unknown> = {}
   for (const field of props.schema) {
     const key = field.meta.field
-    if (key in props.modelValue) {
-      base[key] = props.modelValue[key]
+    if (key in currentModelValue) {
+      base[key] = currentModelValue[key]
     }
     else {
       base[key] = field.meta.defaultValue
     }
   }
-  return { ...props.modelValue, ...base }
+  return { ...currentModelValue, ...base }
 }
 
 function ensureInitialValuesAndEmitIfNeeded() {
@@ -172,26 +174,27 @@ function ensureInitialValuesAndEmitIfNeeded() {
   }
 }
 
-function handleFieldModelUpdate(nextValue: Record<string, unknown>) {
+function handleFieldModelUpdate(nextValue: ProFormModelValue) {
   emit('update:modelValue', nextValue)
-  const prev = props.modelValue
+  const nextValues = toFormRecord(nextValue)
+  const prev = toFormRecord(props.modelValue)
   const changedValues: Record<string, unknown> = {}
-  for (const key of Object.keys(nextValue)) {
-    if (nextValue[key] !== prev[key])
-      changedValues[key] = nextValue[key]
+  for (const key of Object.keys(nextValues)) {
+    if (nextValues[key] !== prev[key])
+      changedValues[key] = nextValues[key]
   }
   if (Object.keys(changedValues).length > 0)
-    emit('valuesChange', changedValues, nextValue)
+    emit('valuesChange', changedValues, nextValues)
 }
 
 // ---------- 暴露方法 ----------
 
 function setFieldsValue(values: Record<string, unknown>) {
-  emit('update:modelValue', { ...props.modelValue, ...values })
+  emit('update:modelValue', { ...toFormRecord(props.modelValue), ...values })
 }
 
 function getFieldsValue(): Record<string, unknown> {
-  return { ...props.modelValue }
+  return { ...toFormRecord(props.modelValue) }
 }
 
 function resetFields() {
@@ -274,9 +277,11 @@ watch(
   (newVal, oldVal) => {
     if (!oldVal || isResetting)
       return
+    const nextValues = toFormRecord(newVal)
+    const prevValues = toFormRecord(oldVal)
     const changedKeys = new Set<string>()
-    for (const key of Object.keys({ ...newVal, ...oldVal })) {
-      if (newVal[key] !== oldVal[key])
+    for (const key of Object.keys({ ...nextValues, ...prevValues })) {
+      if (nextValues[key] !== prevValues[key])
         changedKeys.add(key)
     }
     if (changedKeys.size === 0)

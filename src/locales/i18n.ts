@@ -9,6 +9,34 @@ export { DEFAULT_LOCALE, SUPPORTED_LOCALES }
 
 // 语言包缓存
 const messageCache = new Map<Locale, any>()
+const localeModuleLoaders = import.meta.glob('./*/*.json')
+
+function mergeLocaleMessages(modules: Record<string, unknown>[]) {
+  return modules.reduce<Record<string, unknown>>((merged, current) => {
+    return deepMerge(merged, current)
+  }, {})
+}
+
+function deepMerge(target: Record<string, unknown>, source: Record<string, unknown>) {
+  const next = { ...target }
+
+  Object.entries(source).forEach(([key, value]) => {
+    const current = next[key]
+
+    if (isPlainObject(current) && isPlainObject(value)) {
+      next[key] = deepMerge(current, value)
+      return
+    }
+
+    next[key] = value
+  })
+
+  return next
+}
+
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
 
 // 动态加载语言包
 async function loadLocaleMessages(locale: Locale) {
@@ -18,9 +46,18 @@ async function loadLocaleMessages(locale: Locale) {
   }
 
   try {
-    // 使用动态导入加载 JSON 文件
-    const messages = await import(`./${locale}/common.json`)
-    const messageData = messages.default
+    const localeEntries = Object.entries(localeModuleLoaders)
+      .filter(([path]) => path.startsWith(`./${locale}/`))
+      .sort(([left], [right]) => left.localeCompare(right))
+
+    const localeModules = await Promise.all(
+      localeEntries.map(async ([, load]) => {
+        const module = await load()
+        return (module as { default: Record<string, unknown> }).default
+      }),
+    )
+
+    const messageData = mergeLocaleMessages(localeModules)
 
     // 缓存消息
     messageCache.set(locale, messageData)

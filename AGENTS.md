@@ -296,6 +296,7 @@ Agent 在本仓库工作时，必须优先服从以下原则：
 - 构建：`pnpm build`
 - 类型检查：`pnpm type-check`
 - 代码检查：`pnpm lint`
+- 自动修复代码风格：`pnpm lint:fix`
 - 单元测试：`pnpm vitest`
 - E2E 测试：`pnpm test:e2e`
 
@@ -372,6 +373,7 @@ Agent 注意事项：
 ### 12.3 提交前
 
 - 至少做编译/类型/测试级验证
+- 如本次改动涉及新增或修改代码文件，完成实现后优先执行一次 `pnpm lint:fix`
 - 确认格式化无问题
 - 确认新增命名符合本文件约束
 - 确认提交信息符合 Conventional Commits

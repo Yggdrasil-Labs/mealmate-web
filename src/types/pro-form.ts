@@ -18,6 +18,9 @@ import type {
 /** ProForm 上下文，透传给 when/options/transform 等 */
 export type ProFormContext = Record<string, unknown>
 
+/** ProForm 对外接受的表单值类型：允许业务侧传入具名对象，而不强制声明索引签名 */
+export type ProFormModelValue = object
+
 // ---------------------------------------------------------------------------
 // 字段 Meta（标识、展示、值类型）
 // ---------------------------------------------------------------------------
@@ -202,7 +205,7 @@ export interface ProFormProps {
   /** 字段 Schema 数组 */
   schema: FormFieldSchema[]
   /** 表单值（v-model） */
-  modelValue: Record<string, unknown>
+  modelValue: ProFormModelValue
   /** 模式：编辑 / 只读。readonly 仅用于编辑表单的临时只读态，正式详情展示应使用 ProDetail。 */
   mode?: 'edit' | 'readonly'
   /** 透传上下文 */
@@ -227,7 +230,7 @@ export interface ProFormExpose {
 
 /** ProForm 事件（emit）类型 */
 export interface ProFormEmits {
-  (e: 'update:modelValue', value: Record<string, unknown>): void
+  (e: 'update:modelValue', value: ProFormModelValue): void
   (e: 'submit', values: Record<string, unknown>): void
   (e: 'reset', values: Record<string, unknown>): void
   (e: 'valuesChange', changedValues: Record<string, unknown>, allValues: Record<string, unknown>): void

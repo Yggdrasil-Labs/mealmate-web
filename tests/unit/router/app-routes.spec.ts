@@ -15,6 +15,18 @@ describe('createRouteRecords', () => {
     expect(typeof home?.component).toBe('function')
   })
 
+  it('resolves family profile to the dedicated page component', async () => {
+    const routes = createRouteRecords()
+    const familyProfile = routes.find(route => route.name === 'FamilyProfile')
+
+    expect(familyProfile?.path).toBe('/family/profile')
+    expect(typeof familyProfile?.component).toBe('function')
+
+    const pageModule = await familyProfile?.component?.()
+
+    expect(pageModule?.default).toBeTruthy()
+  })
+
   it('preserves nested child routes from the schema', () => {
     const routes = createRouteRecords([
       {

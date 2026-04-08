@@ -18,5 +18,6 @@ export type {
   ProFormEmits,
   ProFormExpose,
   ProFormLayout,
+  ProFormModelValue,
   ProFormProps,
 } from '@/types/pro-form'

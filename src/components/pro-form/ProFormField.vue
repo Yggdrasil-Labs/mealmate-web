@@ -1,20 +1,21 @@
 <script setup lang="ts">
-import type { FormFieldOption, FormFieldSchema, ProFormContext } from '@/types/pro-form'
+import type { FormFieldOption, FormFieldSchema, ProFormContext, ProFormModelValue } from '@/types/pro-form'
 import { ElFormItem, ElOption, ElSelect, ElTooltip } from 'element-plus'
 import { computed, useSlots } from 'vue'
 import { getFieldComponent } from './form-registry'
+import { toFormRecord } from './model-value'
 
 defineOptions({ name: 'ProFormField' })
 
 const props = defineProps<ProFormFieldProps>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: Record<string, unknown>): void
+  (e: 'update:modelValue', value: ProFormModelValue): void
 }>()
 
 interface ProFormFieldProps {
   schema: FormFieldSchema
-  modelValue: Record<string, unknown>
+  modelValue: ProFormModelValue
   disabled?: boolean
   readonly?: boolean
   context?: ProFormContext
@@ -45,11 +46,11 @@ const fieldComponent = computed(() =>
 
 const fieldValue = computed({
   get() {
-    return props.modelValue[fieldKey.value]
+    return toFormRecord(props.modelValue)[fieldKey.value]
   },
   set(value: unknown) {
     const nextValue: Record<string, unknown> = {
-      ...props.modelValue,
+      ...toFormRecord(props.modelValue),
       [fieldKey.value]: value,
     }
     emit('update:modelValue', nextValue)
@@ -71,7 +72,7 @@ const selectOptions = computed<FormFieldOption[]>(() => {
   const runtimeOpts = props.schema.runtime?.options
   if (typeof runtimeOpts !== 'function')
     return []
-  const result = runtimeOpts(props.modelValue, props.context ?? {})
+  const result = runtimeOpts(toFormRecord(props.modelValue), props.context ?? {})
   return Array.isArray(result) ? result : []
 })
 

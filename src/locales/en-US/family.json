@@ -1,0 +1,103 @@
+{
+  "family": {
+    "header": {
+      "eyebrow": "Family Profile"
+    },
+    "deleteDialog": {
+      "title": "Delete Member",
+      "confirmWithName": "Are you sure you want to delete {name}?"
+    },
+    "drawer": {
+      "titleAdd": "Add Member",
+      "titleEdit": "Edit Member",
+      "saveAll": "Save All"
+    },
+    "form": {
+      "groups": {
+        "identity": "Member Identity",
+        "goal": "Region & Goal",
+        "preferenceTags": "Taste Preferences",
+        "foodRestrictions": "Food Restrictions",
+        "seasoningLevel": "Seasoning Levels",
+        "nutritionRule": "Nutrition & Rules"
+      },
+      "fields": {
+        "name": "Name",
+        "roleType": "Role",
+        "gender": "Gender",
+        "birthday": "Birthday",
+        "region": "Region",
+        "targetType": "Goal",
+        "tasteTags": "Taste Tags",
+        "avoidIngredients": "Avoid Ingredients",
+        "allergyIngredients": "Allergy Ingredients",
+        "spicyLevel": "Spicy Level",
+        "sweetLevel": "Sweet Level",
+        "oilLevel": "Oil Level",
+        "saltLevel": "Salt Level",
+        "nutritionGoal": "Nutrition Goal",
+        "extraRule": "Extra Rule"
+      },
+      "placeholders": {
+        "name": "Enter member name",
+        "roleType": "Select role",
+        "gender": "Select gender",
+        "birthday": "Select birthday",
+        "region": "Enter region",
+        "targetType": "Select meal goal",
+        "tasteTags": "Press Enter or comma to add tags",
+        "avoidIngredients": "Press Enter or comma to add avoid ingredients",
+        "allergyIngredients": "Press Enter or comma to add allergy ingredients",
+        "spicyLevel": "Select spicy level",
+        "sweetLevel": "Select sweet level",
+        "oilLevel": "Select oil level",
+        "saltLevel": "Select salt level",
+        "nutritionGoal": "Enter nutrition goal",
+        "extraRule": "Enter extra rule"
+      }
+    },
+    "enums": {
+      "gender": {
+        "MALE": "Male",
+        "FEMALE": "Female",
+        "OTHER": "Other"
+      },
+      "roleType": {
+        "SELF": "Self",
+        "SPOUSE": "Spouse",
+        "CHILD": "Child",
+        "BABY": "Baby",
+        "ELDER": "Elder",
+        "OTHER": "Other Member"
+      },
+      "targetType": {
+        "BALANCED": "Balanced Diet",
+        "FAT_LOSS": "Fat Loss",
+        "MUSCLE_GAIN": "Muscle Gain",
+        "BABY_FRIENDLY": "Baby Friendly"
+      },
+      "spicyLevel": {
+        "NONE": "No Spice",
+        "LIGHT": "Mild",
+        "MEDIUM": "Medium",
+        "HEAVY": "Hot"
+      },
+      "sweetLevel": {
+        "NONE": "No Sugar",
+        "LIGHT": "Light",
+        "MEDIUM": "Medium",
+        "HEAVY": "Sweet"
+      },
+      "oilLevel": {
+        "LIGHT": "Light Oil",
+        "MEDIUM": "Medium",
+        "HEAVY": "Rich Oil"
+      },
+      "saltLevel": {
+        "LIGHT": "Light Salt",
+        "MEDIUM": "Medium",
+        "HEAVY": "Salty"
+      }
+    }
+  }
+}

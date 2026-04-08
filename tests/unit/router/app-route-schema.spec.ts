@@ -6,6 +6,19 @@ describe('app route schema', () => {
     expect(appRouteSchema.some(route => route.path === '/')).toBe(true)
   })
 
+  it('declares family profile route', () => {
+    const familyProfile = appRouteSchema.find(route => route.name === 'FamilyProfile')
+
+    expect(familyProfile).toMatchObject({
+      name: 'FamilyProfile',
+      path: '/family/profile',
+      component: 'family-profile',
+      meta: {
+        title: '家庭画像',
+      },
+    })
+  })
+
   it('marks home as pinned tab', () => {
     const home = appRouteSchema.find(route => route.path === '/')
     expect(home?.meta.tab?.pinned).toBe(true)

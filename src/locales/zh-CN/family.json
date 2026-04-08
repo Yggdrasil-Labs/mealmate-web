@@ -1,0 +1,103 @@
+{
+  "family": {
+    "header": {
+      "eyebrow": "家庭画像"
+    },
+    "deleteDialog": {
+      "title": "删除成员",
+      "confirmWithName": "确认删除 {name} 吗？"
+    },
+    "drawer": {
+      "titleAdd": "新增成员",
+      "titleEdit": "编辑成员",
+      "saveAll": "保存全部"
+    },
+    "form": {
+      "groups": {
+        "identity": "成员身份",
+        "goal": "地区与目标",
+        "preferenceTags": "口味偏好",
+        "foodRestrictions": "饮食限制",
+        "seasoningLevel": "调味强度",
+        "nutritionRule": "营养与规则"
+      },
+      "fields": {
+        "name": "姓名",
+        "roleType": "角色",
+        "gender": "性别",
+        "birthday": "生日",
+        "region": "地区",
+        "targetType": "目标",
+        "tasteTags": "口味标签",
+        "avoidIngredients": "忌口食材",
+        "allergyIngredients": "过敏食材",
+        "spicyLevel": "辣度",
+        "sweetLevel": "甜度",
+        "oilLevel": "油量",
+        "saltLevel": "盐量",
+        "nutritionGoal": "营养目标",
+        "extraRule": "额外规则"
+      },
+      "placeholders": {
+        "name": "请输入成员姓名",
+        "roleType": "请选择成员角色",
+        "gender": "请选择性别",
+        "birthday": "请选择生日",
+        "region": "请输入常住地区",
+        "targetType": "请选择饮食目标",
+        "tasteTags": "按 Enter 或逗号添加口味标签",
+        "avoidIngredients": "按 Enter 或逗号添加忌口食材",
+        "allergyIngredients": "按 Enter 或逗号添加过敏食材",
+        "spicyLevel": "请选择辣度",
+        "sweetLevel": "请选择甜度",
+        "oilLevel": "请选择油量",
+        "saltLevel": "请选择盐量",
+        "nutritionGoal": "请输入营养目标",
+        "extraRule": "请输入额外规则"
+      }
+    },
+    "enums": {
+      "gender": {
+        "MALE": "男",
+        "FEMALE": "女",
+        "OTHER": "其他"
+      },
+      "roleType": {
+        "SELF": "本人",
+        "SPOUSE": "配偶",
+        "CHILD": "儿童",
+        "BABY": "宝宝",
+        "ELDER": "老人",
+        "OTHER": "其他成员"
+      },
+      "targetType": {
+        "BALANCED": "均衡饮食",
+        "FAT_LOSS": "减脂控卡",
+        "MUSCLE_GAIN": "增肌补能",
+        "BABY_FRIENDLY": "宝宝适配"
+      },
+      "spicyLevel": {
+        "NONE": "不辣",
+        "LIGHT": "微辣",
+        "MEDIUM": "中辣",
+        "HEAVY": "重辣"
+      },
+      "sweetLevel": {
+        "NONE": "无糖",
+        "LIGHT": "微甜",
+        "MEDIUM": "适中",
+        "HEAVY": "偏甜"
+      },
+      "oilLevel": {
+        "LIGHT": "少油",
+        "MEDIUM": "适中",
+        "HEAVY": "偏油"
+      },
+      "saltLevel": {
+        "LIGHT": "少盐",
+        "MEDIUM": "适中",
+        "HEAVY": "偏咸"
+      }
+    }
+  }
+}
