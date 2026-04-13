@@ -1,6 +1,6 @@
 /**
  * ProDialog 公共类型定义
- * 与 docs/plans/2026-03-28-dialog-design.md 对齐。
+ * 与 docs/components/pro-dialog.md 对齐。
  */
 
 import type { VNodeChild } from 'vue'

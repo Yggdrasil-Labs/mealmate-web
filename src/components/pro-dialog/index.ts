@@ -1,6 +1,6 @@
 /**
  * ProDialog 入口：组件与类型 re-export
- * @see docs/plans/2026-03-28-dialog-design.md
+ * @see docs/components/pro-dialog.md
  */
 
 export { default as ProDialog } from './ProDialog.vue'

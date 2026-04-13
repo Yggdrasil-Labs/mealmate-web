@@ -1,6 +1,6 @@
 /**
  * ProForm Schema 驱动表单类型定义
- * 与 docs/plans/2026-03-14-pro-form-design.md 对齐
+ * 与 docs/components/pro-form.md 对齐
  */
 
 import type { Component } from 'vue'

@@ -1,6 +1,6 @@
 /**
  * ProForm 入口：组件与注册表 API、类型 re-export
- * @see docs/plans/2026-03-14-pro-form-design.md
+ * @see docs/components/pro-form.md
  */
 
 export {

@@ -30,7 +30,7 @@ export function getFieldComponent(name: string): Component | undefined {
 
 /**
  * 注册默认字段组件映射。
- * 名称与 docs/plans/2026-03-14-pro-form-design.md 的约定对齐。
+ * 名称与 docs/components/pro-form.md 的约定对齐。
  */
 export function registerDefaultFieldComponents() {
   registerFieldComponent('Input', ElInput)

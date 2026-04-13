@@ -1,6 +1,6 @@
 /**
  * ProDetail 入口：组件与类型 re-export
- * @see docs/plans/2026-03-16-pro-detail-design.md
+ * @see docs/components/pro-detail.md
  */
 
 export { default as ProDetail } from './ProDetail.vue'
