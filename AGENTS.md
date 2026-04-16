@@ -30,7 +30,7 @@
    MealMate 的业务目标、统一术语与业务文档入口。
 5. `docs/PLANS.md`
    计划文档的生命周期、目录规则与维护方式。
-6. `docs/business/` 或 `docs/components/` 下的聚焦文档
+6. `docs/design-docs/` 或 `docs/components/` 下的聚焦文档
    按改动范围继续阅读。
 7. `README.md`
    只用来查安装、启动和仓库概览。
@@ -39,7 +39,7 @@
 
 - 架构与边界：`ARCHITECTURE.md`
 - 前端实施规则：`docs/FRONTEND.md`
-- 业务语义与范围：`docs/PRODUCT_SENSE.md`、`docs/business/`
+- 业务语义与范围：`docs/PRODUCT_SENSE.md`、`docs/design-docs/`
 - 组件协议：`docs/components/`
 - 执行状态与计划：`docs/PLANS.md`、`docs/exec-plans/`
 
@@ -87,7 +87,7 @@ pnpm test:e2e
 - `AGENTS.md` 保持短小，只做导航与事实入口。
 - 架构变化时，同步更新 `ARCHITECTURE.md`。
 - 前端规则变化时，同步更新 `docs/FRONTEND.md`。
-- 业务语义与产品边界变化时，同步更新 `docs/PRODUCT_SENSE.md` 与 `docs/business/`。
+- 业务语义与产品边界变化时，同步更新 `docs/PRODUCT_SENSE.md` 与 `docs/design-docs/`。
 - 新的长期设计决策放到 `docs/design-docs/`，不要混入一次性计划。
 - 执行计划与阶段性工作记录放到 `docs/exec-plans/`。
 - 组件契约优先维护在 `docs/components/`，不要复制出第二份权威描述。

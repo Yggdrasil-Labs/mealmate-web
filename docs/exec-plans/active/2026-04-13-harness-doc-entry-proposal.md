@@ -6,7 +6,7 @@
 
 ## Background
 
-MealMate already has strong repository guidance in `AGENTS.md`, domain knowledge in `docs/business/`, component contracts in `docs/components/`, and historical plans in `docs/plans/`. The current issue is not lack of content; it is that too much of the repository's source-of-truth guidance is concentrated in `AGENTS.md`, while the rest of the docs are not arranged around a clear harness-oriented navigation model.
+MealMate already has strong repository guidance in `AGENTS.md`, domain knowledge in `docs/design-docs/`, component contracts in `docs/components/`, and historical plans in `docs/plans/`. The current issue is not lack of content; it is that too much of the repository's source-of-truth guidance is concentrated in `AGENTS.md`, while the rest of the docs are not arranged around a clear harness-oriented navigation model.
 
 The target structure is based on the entry-and-document layout used in the reference repository and on the harness engineering principle from OpenAI's article: make the repository itself a reliable operating surface for contributors and agents. In this phase, the emphasis is on documentation architecture and entry points, not on adding scripts, CI checks, or autonomous repair loops.
 
@@ -53,7 +53,7 @@ MealMate's business language is already documented, but the repository lacks a s
 - the authoritative domain language
 - which business documents to trust first
 
-The detailed content remains in `docs/business/`, which continues to be the source of truth.
+The detailed content remains in `docs/design-docs/`, which continues to be the source of truth.
 
 ### 5. Plans become lifecycle-based
 
@@ -69,7 +69,7 @@ The purpose is not to rewrite history, but to make active work, completed work, 
 
 This refactor should not force unnecessary moves for content that already has a natural home. In particular:
 
-- `docs/business/` remains the domain source-of-truth area
+- `docs/design-docs/` remains the domain source-of-truth area
 - `docs/components/` remains the public component contract area
 
 The new handbook files should index these locations instead of duplicating them.
@@ -130,9 +130,9 @@ docs/
 
 ### Files to keep in place but re-index
 
-- `docs/business/README.md`
-- `docs/business/mealmate-domain-context.md`
-- `docs/business/mealmate-web-scope.md`
+- `docs/design-docs/mealmate-business-model-design.md`
+- `docs/design-docs/mealmate-domain-language-design.md`
+- `docs/design-docs/mealmate-web-scope-design.md`
 - `docs/components/*.md`
 
 ### Files to reshape
@@ -192,7 +192,7 @@ Use when adding long-lived design decisions, rather than one-off feature plans.
 1. Create the new directory skeleton and entry files.
 2. Rewrite `AGENTS.md` into a concise navigation page.
 3. Move historical plan documents into `docs/exec-plans/completed/`.
-4. Add cross-links from the new top-level handbooks to existing `docs/business/` and `docs/components/`.
+4. Add cross-links from the new top-level handbooks to existing `docs/design-docs/` and `docs/components/`.
 5. Update `README.md` only where repository entry explanations would otherwise conflict.
 
 ## Success Criteria

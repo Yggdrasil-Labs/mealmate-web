@@ -51,7 +51,7 @@ git commit -m "docs: add harness-oriented documentation skeleton"
 **Files:**
 - Modify: `AGENTS.md`
 - Modify: `ARCHITECTURE.md`
-- Reference: `docs/business/mealmate-domain-context.md`
+- Reference: `docs/design-docs/mealmate-domain-language-design.md`
 
 **Step 1: Write `ARCHITECTURE.md` from the current repository facts**
 
@@ -133,8 +133,8 @@ git commit -m "docs: add frontend implementation handbook"
 **Step 1: Write `docs/PRODUCT_SENSE.md`**
 
 Point to:
-- `docs/business/mealmate-web-scope.md`
-- `docs/business/mealmate-domain-context.md`
+- `docs/design-docs/mealmate-web-scope-design.md`
+- `docs/design-docs/mealmate-domain-language-design.md`
 
 Explain the repository's business language and document priority.
 

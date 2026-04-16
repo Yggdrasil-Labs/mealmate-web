@@ -25,7 +25,7 @@
 - 组件 API 权威说明
 - 业务背景与统一术语
 
-这些内容分别应进入 `ARCHITECTURE.md`、`docs/components/` 与 `docs/business/`。
+这些内容分别应进入 `ARCHITECTURE.md`、`docs/components/` 与 `docs/design-docs/`。
 
 ## 3. 命名约定
 

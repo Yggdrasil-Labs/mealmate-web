@@ -62,9 +62,9 @@ MealMate 希望把这些零散问题变成一套连续的产品体验：
 
 如果你准备继续推进实现，建议先阅读这些文档：
 
-- [业务文档索引](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/business/README.md)
-- [业务与领域上下文](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/business/mealmate-domain-context.md)
-- [Web 范围与实施约束](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/business/mealmate-web-scope.md)
+- [业务模型设计](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs/mealmate-business-model-design.md)
+- [领域语言设计](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs/mealmate-domain-language-design.md)
+- [Web 范围设计](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs/mealmate-web-scope-design.md)
 - [协作约束](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/AGENTS.md)
 
 ## Getting Started
@@ -102,17 +102,17 @@ pnpm test:e2e
 
 ## Docs
 
-- `docs/business/`：业务背景、产品范围、Web 实施边界
+- `docs/design-docs/`：长期设计原则、业务模型、领域语言与 Web 范围
 - `docs/components/`：组件协议与通用实现约定
 
-业务上下文优先写入 `docs/business/`，不要只停留在外部笔记中。
+长期业务知识优先写入 `docs/design-docs/`，不要只停留在外部笔记中。
 
 ## Development Notes
 
 - 默认使用 Composition API + `<script setup lang="ts">`
 - 页面、路由、布局和壳层状态通过现有 schema / store 体系组织
 - 页面标题、菜单标题、页签标题保持一致
-- 业务术语优先与 `docs/business/` 保持一致，例如 `ShoppingList`、`NotifyTask`
+- 业务术语优先与 `docs/design-docs/` 保持一致，例如 `ShoppingList`、`NotifyTask`
 - 提交信息遵循 Conventional Commits
 
 ## References

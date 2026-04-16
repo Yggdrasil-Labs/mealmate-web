@@ -43,7 +43,7 @@
 
 ## 3. 业务语义约束
 
-页面标题、路由名、组件名、接口字段和测试描述应尽量与 [docs/business/mealmate-domain-context.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/business/mealmate-domain-context.md) 保持一致。
+页面标题、路由名、组件名、接口字段和测试描述应尽量与 [docs/design-docs/mealmate-domain-language-design.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs/mealmate-domain-language-design.md) 保持一致。
 
 优先使用：
 
