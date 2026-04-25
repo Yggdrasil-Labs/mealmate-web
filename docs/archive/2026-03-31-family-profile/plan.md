@@ -1,3 +1,11 @@
+---
+id: plan-family-profile
+status: completed
+owner: codex
+created: 2026-03-31
+updated: 2026-04-25
+---
+
 # Family Profile Implementation Plan
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.

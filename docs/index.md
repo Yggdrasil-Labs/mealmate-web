@@ -1,14 +1,15 @@
 # Docs Index
 
-本页是 `docs/` 目录的总导航，帮助人和 AI 快速判断“先读什么、哪些是权威来源、哪些仍在建设中”。
+本页是 `docs/` 目录的总导航，帮助人和 AI 快速判断“先读什么、哪些是权威来源、哪些是运行质量或产物入口”。
 
 ## 我现在该去哪里
 
 - 如果你要开始实现页面或组件：去 [FRONTEND.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/FRONTEND.md)
+- 如果你要判断文档该写到哪里、Agent 应该怎么验收：去 [HARNESS.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/HARNESS.md)
 - 如果你要确认业务语义、产品范围或术语：去 [PRODUCT_SENSE.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/PRODUCT_SENSE.md)
 - 如果你要找具体业务事实：去 [design-docs/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs)
 - 如果你要找组件契约：去 [components/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/components)
-- 如果你要找提案、计划或历史记录：去 [PLANS.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/PLANS.md) 或 [exec-plans/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/exec-plans)
+- 如果你要找提案、计划或历史记录：去 [guides/PLANS.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/guides/PLANS.md)、[active/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/active) 或 [archive/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/archive)
 
 ## 1. Primary Sources
 
@@ -18,9 +19,11 @@
   解决“仓库是怎么组织的、哪些依赖方向是允许的”。
 - [FRONTEND.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/FRONTEND.md)
   解决“写前端代码时应该遵守哪些实现约束”。
+- [HARNESS.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/HARNESS.md)
+  解决“文档体系如何分层、改动该写到哪里、完成前如何验收”。
 - [PRODUCT_SENSE.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/PRODUCT_SENSE.md)
   解决“业务术语和产品边界去哪看”；详细事实位于 `docs/design-docs/`。
-- [PLANS.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/PLANS.md)
+- [guides/PLANS.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/guides/PLANS.md)
   解决“计划应该放哪、提案和实施计划如何区分”。
 
 ## 2. Domain And Contract Sources
@@ -34,16 +37,20 @@
 
 ## 3. Working Records
 
+- [active/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/active)
+  当前仍在推进的需求、设计、实施计划与技术债。
+- [archive/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/archive)
+  已完成计划、历史迁移记录与未来版本快照。
+- [guides/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/guides)
+  spec、design、plan 与 workflow 的写作方法。
 - [design-docs/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs)
   适合长期有效的结构性设计决策。
-- [exec-plans/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/exec-plans)
-  适合活跃提案、实施计划、已完成记录与技术债。
 - [product-specs/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/product-specs)
   适合未来按功能沉淀产品规格。
 
-## 4. Building Status
+## 4. Operational And Artifact Entries
 
-以下页面当前是“建设中入口”，用于说明未来该沉淀什么，而不是当前最强事实来源：
+以下页面用于记录运行质量、安全边界、可靠性目标、生成产物和参考资料。它们会影响验收，但不替代架构、前端、业务和组件的一等事实来源：
 
 - [QUALITY_SCORE.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/QUALITY_SCORE.md)
 - [RELIABILITY.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/RELIABILITY.md)
@@ -51,11 +58,11 @@
 - [generated/README.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/generated/README.md)
 - [references/README.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/references/README.md)
 
-在这些页面补齐更具体的仓库事实之前，不应优先拿它们替代主入口文档。
+如果这些页面中的规则影响架构、业务语义或组件协议，应把结论同步回对应权威文档。
 
 ## 5. 阅读建议
 
 - 初次进入仓库：先读 `AGENTS.md`，再用本页决定下一跳
-- 要开始实现：优先 `ARCHITECTURE.md -> FRONTEND.md -> 具体业务/组件文档`
-- 要开始规划：优先 `PLANS.md -> exec-plans/`
+- 要开始实现：优先 `ARCHITECTURE.md -> HARNESS.md -> FRONTEND.md -> 具体业务/组件文档`
+- 要开始规划：优先 `HARNESS.md -> guides/PLANS.md -> active/`
 - 要校对术语：优先 `PRODUCT_SENSE.md -> design-docs/mealmate-domain-language-design.md`

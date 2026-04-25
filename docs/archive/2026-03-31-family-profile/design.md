@@ -1,3 +1,11 @@
+---
+id: design-family-profile
+status: verified
+owner: codex
+created: 2026-03-31
+verified: 2026-04-25
+---
+
 # UC1 家庭画像前端设计
 
 ## 背景

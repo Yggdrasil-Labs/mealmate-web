@@ -214,5 +214,3 @@ const schema: FormFieldSchema[] = [
 | `src/components/pro-detail/ProDetailField.vue` | 单字段展示、复制、`custom-render` |
 | `src/components/pro-detail/index.ts` | 导出 |
 | `src/types/pro-form.ts` | 基础 `FormFieldSchema` 类型 |
-
-展示 renderer 的后续收敛预研见 [Renderer Layer Spike](../plans/2026-03-28-renderer-layer-spike.md)。

@@ -170,4 +170,3 @@ const columns: TableColumnSchema[] = [
 
 - [ProForm](./pro-form.md)
 - [ProDetail](./pro-detail.md)
-- 展示 renderer 的后续收敛预研见 [Renderer Layer Spike](../plans/2026-03-28-renderer-layer-spike.md)

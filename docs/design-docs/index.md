@@ -13,5 +13,5 @@
 
 - 长期设计原则放这里
 - 业务模型、领域语言与 Web 范围的长期知识也放这里
-- 一次性实施计划放到 `docs/exec-plans/`
+- 一次性实施计划放到 `docs/active/`，完成后进入 `docs/archive/`
 - 组件 API 说明放到 `docs/components/`
