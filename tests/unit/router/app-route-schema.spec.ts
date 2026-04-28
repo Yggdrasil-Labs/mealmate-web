@@ -19,6 +19,20 @@ describe('app route schema', () => {
     })
   })
 
+  it('declares recipe library route', () => {
+    const recipeLibrary = appRouteSchema.find(route => route.name === 'RecipeLibrary')
+
+    expect(recipeLibrary).toMatchObject({
+      name: 'RecipeLibrary',
+      path: '/recipes',
+      component: 'recipe-library',
+      meta: {
+        title: '菜品库',
+        icon: 'menu-recipe',
+      },
+    })
+  })
+
   it('marks home as pinned tab', () => {
     const home = appRouteSchema.find(route => route.path === '/')
     expect(home?.meta.tab?.pinned).toBe(true)

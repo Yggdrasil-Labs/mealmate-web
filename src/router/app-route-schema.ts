@@ -22,4 +22,13 @@ export const appRouteSchema: AppRouteRecord[] = [
       icon: 'menu-user',
     },
   },
+  {
+    name: 'RecipeLibrary',
+    path: '/recipes',
+    component: 'recipe-library',
+    meta: {
+      title: '菜品库',
+      icon: 'menu-recipe',
+    },
+  },
 ]

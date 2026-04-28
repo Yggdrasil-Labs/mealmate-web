@@ -1,0 +1,138 @@
+{
+  "recipe": {
+    "header": {
+      "eyebrow": "Recipe Library",
+      "title": "Recipe Library",
+      "subtitle": "Browse, filter, view, create, and manage recipes"
+    },
+    "actions": {
+      "create": "New Recipe",
+      "edit": "Edit Recipe",
+      "delete": "Delete Recipe",
+      "view": "View Details",
+      "retry": "Retry",
+      "saveAll": "Save All",
+      "reset": "Reset Filters"
+    },
+    "drawer": {
+      "titleAdd": "Add Recipe",
+      "titleEdit": "Edit Recipe",
+      "titleDetail": "Recipe Details",
+      "saveAll": "Save All",
+      "close": "Close"
+    },
+    "cards": {
+      "sourceType": "Source",
+      "recipeType": "Type",
+      "difficultyLevel": "Difficulty",
+      "crowdTag": "Audience",
+      "cookingTimeMin": "Cooking Time",
+      "babyFriendly": "Baby Friendly",
+      "weightLossFriendly": "Weight-Loss Friendly"
+    },
+    "form": {
+      "tabs": {
+        "basic": "Basic Info",
+        "ingredients": "Ingredients",
+        "steps": "Steps",
+        "nutrition": "Nutrition"
+      },
+      "groups": {
+        "basicInfo": "Basic Info",
+        "classification": "Classification",
+        "flags": "Flags & Fit",
+        "ingredients": "Ingredient Editor",
+        "steps": "Step Editor",
+        "nutrition": "Nutrition Info"
+      },
+      "fields": {
+        "name": "Name",
+        "sourceType": "Source Type",
+        "recipeType": "Recipe Type",
+        "crowdTag": "Audience",
+        "seasonTag": "Season Tag",
+        "difficultyLevel": "Difficulty",
+        "cookingTimeMin": "Cooking Time",
+        "coverImageUrl": "Cover Image",
+        "isBabyFriendly": "Baby Friendly",
+        "isWeightLossFriendly": "Weight-Loss Friendly",
+        "ingredientName": "Ingredient Name",
+        "ingredientType": "Ingredient Type",
+        "quantity": "Quantity",
+        "unit": "Unit",
+        "isMain": "Main Ingredient",
+        "content": "Step Content",
+        "imageUrl": "Step Image",
+        "calories": "Calories",
+        "protein": "Protein",
+        "fat": "Fat",
+        "carbohydrate": "Carbohydrate",
+        "fiber": "Fiber",
+        "calcium": "Calcium",
+        "sodium": "Sodium"
+      },
+      "placeholders": {
+        "name": "Enter recipe name",
+        "sourceType": "Select source type",
+        "recipeType": "Select recipe type",
+        "crowdTag": "Select audience",
+        "seasonTag": "Select season tag",
+        "difficultyLevel": "Select difficulty",
+        "cookingTimeMin": "Enter cooking time (minutes)",
+        "coverImageUrl": "Enter cover image URL",
+        "ingredientName": "Enter ingredient name",
+        "ingredientType": "Enter ingredient type",
+        "quantity": "Enter quantity",
+        "unit": "Enter unit",
+        "content": "Enter step content",
+        "imageUrl": "Enter step image URL",
+        "calories": "Enter calories",
+        "protein": "Enter protein",
+        "fat": "Enter fat",
+        "carbohydrate": "Enter carbohydrate",
+        "fiber": "Enter fiber",
+        "calcium": "Enter calcium",
+        "sodium": "Enter sodium"
+      },
+      "validation": {
+        "required": "{field} is required",
+        "positiveNumber": "{field} must be greater than or equal to 0",
+        "integer": "{field} must be an integer",
+        "maxLength": "{field} must be at most {max} characters",
+        "imageUploadFailed": "Image upload failed. Please try again."
+      }
+    },
+    "deleteDialog": {
+      "title": "Delete Recipe",
+      "confirmWithName": "Are you sure you want to delete {name}?"
+    },
+    "empty": {
+      "title": "No recipes yet",
+      "description": "Add a recipe first or adjust the filters"
+    },
+    "enums": {
+      "sourceType": {
+        "MANUAL": "Manual",
+        "AI_GENERATED": "AI Generated",
+        "SYSTEM": "System"
+      },
+      "recipeType": {
+        "HOME_COOKING": "Home Cooking",
+        "SOUP": "Soup",
+        "STAPLE": "Staple",
+        "SNACK": "Snack"
+      },
+      "difficultyLevel": {
+        "EASY": "Easy",
+        "MEDIUM": "Medium",
+        "HARD": "Hard"
+      },
+      "crowdTag": {
+        "FAMILY": "Family",
+        "CHILD_FRIENDLY": "Child Friendly",
+        "ELDER_FRIENDLY": "Elder Friendly",
+        "PARTY": "Party"
+      }
+    }
+  }
+}

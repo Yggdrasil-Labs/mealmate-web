@@ -27,6 +27,18 @@ describe('createRouteRecords', () => {
     expect(pageModule?.default).toBeTruthy()
   })
 
+  it('resolves recipe library to the dedicated page component', async () => {
+    const routes = createRouteRecords()
+    const recipeLibrary = routes.find(route => route.name === 'RecipeLibrary')
+
+    expect(recipeLibrary?.path).toBe('/recipes')
+    expect(typeof recipeLibrary?.component).toBe('function')
+
+    const pageModule = await recipeLibrary?.component?.()
+
+    expect(pageModule?.default).toBeTruthy()
+  })
+
   it('preserves nested child routes from the schema', () => {
     const routes = createRouteRecords([
       {

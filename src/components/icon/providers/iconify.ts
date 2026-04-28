@@ -8,6 +8,7 @@ import type { SemanticIconName } from '../icon.types'
 import IconEpBack from '~icons/ep/back'
 import IconEpClose from '~icons/ep/close'
 import IconEpDelete from '~icons/ep/delete'
+import IconEpDish from '~icons/ep/dish'
 import IconEpEdit from '~icons/ep/edit'
 import IconEpExpand from '~icons/ep/expand'
 import IconEpFold from '~icons/ep/fold'
@@ -35,6 +36,7 @@ const iconifyMap: Record<SemanticIconName, Component> = {
   'menu-dashboard': IconEpSuccess, // 暂用 success，后续可换为本地 menu/dashboard.svg
   'menu-system': IconEpInfo,
   'menu-user': IconEpSuccess,
+  'menu-recipe': IconEpDish,
   'refresh': IconEpRefresh,
   'search': IconEpSearch,
   'status-error': IconEpError,

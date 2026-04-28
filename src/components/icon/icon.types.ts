@@ -19,6 +19,7 @@ export type SemanticIconName
     | 'menu-dashboard'
     | 'menu-system'
     | 'menu-user'
+    | 'menu-recipe'
     | 'status-success'
     | 'status-warning'
     | 'status-error'
