@@ -8,8 +8,6 @@ updated: 2026-04-25
 
 # Recipe Library Implementation Plan
 
-> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
-
 **Goal:** Build the `/recipes` recipe-library page with filtering, detail viewing, create/edit/delete flows, ingredient ordering, step image upload, and mock-backed verification in the current MealMate web architecture.
 
 **Architecture:** Follow the existing schema-driven page pattern already used by `family-profile`: keep `src/pages/recipe-library.vue` as a thin page shell, place business logic under `src/modules/recipe`, and centralize real/mock API adaptation in `src/modules/recipe/api.ts`. Reuse the existing `SearchBar`, drawer patterns, i18n structure, and route-shell integration so the new domain behaves like a first-class page inside the current app shell.

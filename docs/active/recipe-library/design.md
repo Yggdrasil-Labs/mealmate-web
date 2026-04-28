@@ -15,7 +15,7 @@ verified: 2026-04-25
 需求输入主要来自：
 
 - Notion 文档《UC2 管理菜品库 — 领域详细设计》
-- 当前仓库的 `AGENTS.md`、`ARCHITECTURE.md`、`docs/FRONTEND.md`
+- 当前仓库的 `AGENTS.md`、`ARCHITECTURE.md`（含前端实现约束 §11）
 - 当前仓库已有的 UC1 家庭画像前端实现模式
 
 ## 目标
