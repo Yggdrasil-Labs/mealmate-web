@@ -185,10 +185,111 @@ Route schema -> Shell renderer -> Page -> Module API/Store or Composable -> util
 - 组件不直接硬编码业务常量，除非它本身就是该领域的业务组件。
 - 长期架构变化应同步本文件；单次实现方案和阶段计划放入 `docs/active/{requirement}/`。
 
-## 11. 相关文档
+## 11. 前端实现约束
 
-- 前端实现约束：`docs/FRONTEND.md`
-- Harness 分层与验收：`docs/HARNESS.md`
+本节记录日常前端代码的实现规则，是 ARCHITECTURE.md 的组成部分，不单独维护外部文件。
+
+### 命名规则
+
+- 页面文件：`kebab-case.vue`，放在 `src/pages/`
+- 路由 name：`PascalCase`；路由 path：`kebab-case`
+- 组件：`PascalCase`；composable：`useXxx`；store：`useXxxStore`
+- 工具函数：动词或语义明确的名称，避免 `manager`、`temp`、`data` 等泛化命名
+- 页面标题简洁、面向用户，不带"Demo/示例/演示"
+
+### 业务语义约束
+
+页面标题、路由名、组件名、接口字段和测试描述应与 `docs/design-docs/mealmate-domain-language-design.md` 保持一致。
+
+优先使用：`Family`、`FamilyMember`、`Recipe`、`MealType`、`WeeklyMealPlan`、`MealPlanItem`、`PrepPlan`、`ShoppingList`、`MealRecord`、`NutritionReport`、`NotifyTask`
+
+默认避免：`Dish`、`Food`、`Menu`、`Schedule`、`WeekMenu`、`BuyList`、`PurchaseList`、`Reminder`
+
+### 页面、组件与状态边界
+
+- 页面负责编排，不在模板中塞入大段计算、请求编排或副作用逻辑
+- 组件优先可组合、可测试、可复用；通用协议组件的权威说明维护在 `docs/components/`
+- Composable 适合：单页面内部的列表加载、筛选、表单提交与交互逻辑；不需要跨页面同步的数据组织
+- Store 适合：跨页面共享数据、页面切换后仍需保留的状态、菜单/Tabs/KeepAlive/响应式壳层状态
+
+### 异步、校验与异常
+
+- 页面入口或表单组件通过 `defineProps`、`emits`、表单校验与类型约束完成入参限制
+- 异步请求收口到 composable、store 或 API 层；页面中的 loading、error、retry 状态应清晰可测
+- 技术异常在合适边界转换为可理解提示；不使用大段 `try/catch` 充当业务流程控制
+
+### 移动端底线
+
+- 页面主体布局不依赖固定像素宽度，优先使用弹性布局、栅格和媒体查询
+- 交互元素考虑触控场景，不把 `hover` 作为唯一触发方式
+- 核心页面实现后至少做一次移动端视口检查
+
+### 验证命令
+
+```bash
+source ~/.nvm/nvm.sh
+pnpm lint
+pnpm type-check
+pnpm exec vitest run
+pnpm test:e2e
+```
+
+## 12. 文档体系
+
+### 分层
+
+| 层级 | 文档或目录 | 负责回答 |
+| --- | --- | --- |
+| 仓库入口 | `AGENTS.md`, `docs/index.md` | 我应该先读什么 |
+| 长期架构与实现约束 | `ARCHITECTURE.md`（本文件）, `docs/design-docs/core-beliefs.md` | 仓库边界、依赖方向、前端规则与长期约束 |
+| 产品语义 | `docs/PRODUCT_SENSE.md`, `docs/design-docs/` | 业务范围、统一术语和页面边界 |
+| 组件协议 | `docs/components/` | 组件字段、事件、插槽和运行时协议 |
+| 工作流转 | `docs/guides/PLANS.md`, `docs/active/`, `docs/archive/` | 当前工作如何计划、推进和归档 |
+| 运行质量 | `docs/QUALITY_SCORE.md`, `docs/RELIABILITY.md`, `docs/SECURITY.md` | 质量、可靠性和安全边界 |
+
+### 文档落点规则
+
+- 长期稳定、跨功能生效的约束放到本文件或 `docs/design-docs/`
+- 组件字段、事件、插槽、运行时协议放到 `docs/components/`
+- 业务模型、统一语言和 Web 范围放到 `docs/design-docs/`，入口从 `docs/PRODUCT_SENSE.md` 指过去
+- 一次性 spec、design、plan 和阶段记录放到 `docs/active/{requirement}/`，完成后归档到 `docs/archive/`
+- 自动生成内容只放到 `docs/generated/`
+- 外部资料摘要放到 `docs/references/`
+
+### 任务前阅读路径
+
+| 改动类型 | 必读文档 |
+| --- | --- |
+| 新增或删除页面 | 本文件, `src/router/app-route-schema.ts`, 相关业务设计文档 |
+| 调整路由、菜单、Tabs 或 shell | 本文件, 相关 router / store 测试 |
+| 新增或修改通用组件协议 | `docs/components/component-api-conventions.md`, 对应组件文档 |
+| 修改业务术语、页面范围或产品边界 | `docs/PRODUCT_SENSE.md`, `docs/design-docs/` |
+| 多步骤功能或重构 | `docs/guides/PLANS.md`, `docs/active/` |
+| 修改安全、可靠性或质量规则 | `docs/SECURITY.md`, `docs/RELIABILITY.md`, `docs/QUALITY_SCORE.md` |
+
+### Agent 工作流
+
+1. 先读 `AGENTS.md`，确认当前任务属于哪类改动
+2. 按"任务前阅读路径"读取最小上下文，不扩大到无关文档
+3. 涉及多文件或多阶段工作时，在 `docs/active/{requirement}/` 更新或创建计划
+4. 实现时遵守 schema 路由、shell、store、组件协议和统一业务语言
+5. 行为、路由、组件协议或错误路径发生变化时，同步补测试
+6. 改动完成前同步相关文档，避免代码和文档分叉
+7. 运行与改动风险匹配的验证命令，并把未验证项明确留下
+
+### 验收清单
+
+完成一次非平凡改动前，至少确认：
+
+- 入口导航仍能把读者带到正确事实来源
+- 页面标题、菜单标题、页签标题仍围绕 route meta 保持一致
+- 新增或显著修改代码的关键注释覆盖核心流程、关键分支与重要约束（占比至少 25%）
+- 组件协议变化已同步到 `docs/components/`
+- 业务术语变化已同步到 `docs/design-docs/` 或对应产品规格
+- 已运行 `pnpm lint`、`pnpm type-check`、相关 Vitest 或 Playwright 检查；无法运行时说明原因
+
+## 13. 相关文档
+
 - 业务语义与范围：`docs/PRODUCT_SENSE.md`
 - 组件协议：`docs/components/`
 - 计划机制：`docs/guides/PLANS.md`, `docs/active/`, `docs/archive/`

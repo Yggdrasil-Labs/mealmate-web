@@ -1,9 +1,9 @@
 ---
 id: plan-harness-documentation-system-refresh
-status: in-progress
+status: completed
 owner: codex
 created: 2026-04-25
-updated: 2026-04-25
+updated: 2026-04-28
 ---
 
 # Harness Documentation System Refresh Plan

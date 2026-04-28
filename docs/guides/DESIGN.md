@@ -56,4 +56,4 @@ Last updated: 2026-04-25
 
 - 设计索引：[docs/design-docs/index.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs/index.md)
 - 核心设计信念：[docs/design-docs/core-beliefs.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs/core-beliefs.md)
-- Harness 工作流：[docs/HARNESS.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/HARNESS.md)
+- 文档体系与工作流：[ARCHITECTURE.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/ARCHITECTURE.md) §12

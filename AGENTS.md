@@ -12,20 +12,17 @@
 
 按任务选择最小阅读集合：
 
-| 任务                               | 入口                                                    |
-| ---------------------------------- | ------------------------------------------------------- |
-| 理解仓库结构、分层、路由和 shell   | `ARCHITECTURE.md`                                       |
-| 判断文档该写在哪里、Agent 如何验收 | `docs/HARNESS.md`                                       |
-| 开始写前端代码                     | `docs/FRONTEND.md`                                      |
-| 确认业务术语、页面范围和产品边界   | `docs/PRODUCT_SENSE.md`                                 |
-| 查找计划、提案或历史记录           | `docs/guides/PLANS.md`, `docs/active/`, `docs/archive/` |
-| 不确定该读哪篇 docs                | `docs/index.md`                                         |
+| 任务                                           | 入口                                                    |
+| ---------------------------------------------- | ------------------------------------------------------- |
+| 理解仓库结构、分层、路由、shell 和前端实现规则 | `ARCHITECTURE.md`                                       |
+| 判断文档该写在哪里、Agent 如何验收             | `ARCHITECTURE.md` §12                                   |
+| 确认业务术语、页面范围和产品边界               | `docs/PRODUCT_SENSE.md`                                 |
+| 查找计划、提案或历史记录                       | `docs/guides/PLANS.md`, `docs/active/`, `docs/archive/` |
+| 不确定该读哪篇 docs                            | `docs/index.md`                                         |
 
 ## 事实来源优先级
 
-- 架构与依赖边界：`ARCHITECTURE.md`
-- Harness 分层与验收：`docs/HARNESS.md`
-- 前端实施规则：`docs/FRONTEND.md`
+- 架构、依赖边界与前端实施规则：`ARCHITECTURE.md`
 - 业务语义与范围：`docs/PRODUCT_SENSE.md`, `docs/design-docs/`
 - 组件协议：`docs/components/`
 - 执行状态与计划：`docs/guides/PLANS.md`, `docs/active/`, `docs/archive/`
@@ -67,8 +64,7 @@ pnpm test:e2e
 ## 文档维护
 
 - `AGENTS.md` 保持短小，只做导航与事实入口。
-- 架构变化时，同步更新 `ARCHITECTURE.md`。
-- 前端规则变化时，同步更新 `docs/FRONTEND.md`。
+- 架构变化或前端规则变化时，同步更新 `ARCHITECTURE.md`。
 - 业务语义或产品边界变化时，同步更新 `docs/PRODUCT_SENSE.md` 与 `docs/design-docs/`。
 - 新的长期设计决策放到 `docs/design-docs/`，不要混入一次性计划。
 - 执行计划与阶段记录放到 `docs/active/`，完成后进入 `docs/archive/`。

@@ -102,6 +102,8 @@ pnpm test:e2e
 
 ## Docs
 
+- `AGENTS.md`：人类开发者、AI Agent 与自动化脚本的仓库入口
+- `ARCHITECTURE.md`：仓库结构、依赖方向、路由、shell、前端实现规则与文档体系
 - `docs/design-docs/`：长期设计原则、业务模型、领域语言与 Web 范围
 - `docs/components/`：组件协议与通用实现约定
 
