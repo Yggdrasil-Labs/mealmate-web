@@ -1,5 +1,7 @@
 # Docs Index
 
+Last updated: 2026-05-08
+
 本页是 `docs/` 目录的总导航，帮助人和 AI 快速判断"先读什么、哪些是权威来源、哪些是运行质量或产物入口"。
 
 ## 我现在该去哪里
@@ -39,10 +41,6 @@
   已完成计划、历史迁移记录与未来版本快照。
 - [guides/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/guides)
   spec、design、plan 与 workflow 的写作方法。
-- [design-docs/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs)
-  适合长期有效的结构性设计决策。
-- [product-specs/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/product-specs)
-  适合未来按功能沉淀产品规格。
 
 ## 4. Operational And Artifact Entries
 

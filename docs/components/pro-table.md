@@ -1,5 +1,7 @@
 # ProTable 组件说明
 
+Last updated: 2026-05-08
+
 基于 **Schema（meta / ui / runtime）** 驱动的列表组件，内置常用列渲染器，支持分页、排序、行选、工具栏与空/错/加载态；与 Element Plus `ElTable` 体系兼容。
 
 ---
@@ -8,7 +10,6 @@
 
 - **位置**：`src/components/pro-table`
 - **依赖**：Vue 3、Element Plus 2.x、类型 `@/types/pro-table`
-- **设计文档**：[Spec](../superpowers/specs/2026-03-22-pro-table-design.md)
 - **API 约定**：slot / 事件 / expose 命名规范见 [组件 API 约定](./component-api-conventions.md)
 
 ---

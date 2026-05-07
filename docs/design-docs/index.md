@@ -1,5 +1,7 @@
 # Design Docs Index
 
+Last updated: 2026-05-08
+
 本目录用于沉淀跨模块、长期有效的设计决策。
 
 ## 当前文档
