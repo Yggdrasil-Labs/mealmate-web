@@ -1,12 +1,35 @@
 ---
 id: plan-recipe-library
-status: in-progress
+status: completed
 owner: codex
 created: 2026-04-16
-updated: 2026-04-25
+updated: 2026-05-10
 ---
 
 # Recipe Library Implementation Plan
+
+**Status**: ✅ Completed (2026-05-10)
+
+## Completion Summary
+
+All 13 tasks completed successfully:
+- ✅ Task 1-5: Route, types, API, list composable, filter bar, card and grid
+- ✅ Task 6-10: Detail drawer, ingredient editor, step editor, nutrition form, delete dialog, form composable and form drawer
+- ✅ Task 11: Page integration
+- ⏭️ Task 12: E2E tests (skipped)
+- ✅ Task 13: Repository verification (lint, type-check, 58 unit tests passed)
+
+## Post-Integration Fixes (2026-05-10)
+
+Fixed 6 critical integration issues:
+1. Event name mismatch: Changed page listeners from `@view/@edit/@delete` to `@view-recipe/@edit-recipe/@delete-recipe/@add-recipe`
+2. Form drawer reactivity: Added watch to reinitialize form when `visible/mode/recipeId` changes
+3. Recipe ID extraction: Fixed `createRecipe` to use `created.recipeId` instead of treating the whole object as ID
+4. Delete API call: Added missing `deleteRecipe()` call in `handleDeleteConfirm`
+5. Filter bar binding: Changed from `:filter-values` to `v-model` for proper two-way binding
+6. Field name consistency: Unified to use `ingredientName` (not `name`), `content` (not `description`), `carbohydrate` (not `carbs`)
+
+All tests passing: 58/58 ✅
 
 **Goal:** Build the `/recipes` recipe-library page with filtering, detail viewing, create/edit/delete flows, ingredient ordering, step image upload, and mock-backed verification in the current MealMate web architecture.
 

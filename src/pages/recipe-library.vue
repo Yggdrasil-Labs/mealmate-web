@@ -1,80 +1,97 @@
 <script setup lang="ts">
 import { ElButton } from 'element-plus'
-import { onMounted, shallowRef } from 'vue'
+import { ref } from 'vue'
+import { deleteRecipe } from '@/modules/recipe/api'
+import RecipeDeleteDialog from '@/modules/recipe/components/RecipeDeleteDialog.vue'
+import RecipeDetailDrawer from '@/modules/recipe/components/RecipeDetailDrawer.vue'
+import RecipeFilterBar from '@/modules/recipe/components/RecipeFilterBar.vue'
+import RecipeFormDrawer from '@/modules/recipe/components/RecipeFormDrawer.vue'
+import RecipeGrid from '@/modules/recipe/components/RecipeGrid.vue'
+import { useRecipeList } from '@/modules/recipe/composables/useRecipeList'
 
-const route = useRoute()
-const loading = shallowRef(true)
-const error = shallowRef<Error | null>(null)
-const shouldSimulateInitialError = shallowRef(route.query.recipeShellError === '1')
+/**
+ * RecipeLibrary 页面
+ *
+ * 菜品库主页面，集成筛选、列表、详情、编辑和删除功能。
+ */
 
-async function bootstrapRecipeLibraryPage() {
-  await Promise.resolve()
+const list = useRecipeList()
 
-  // 保留一个可手动触发的失败入口，便于在真正接入模块前验证页面级错误与重试壳层。
-  if (shouldSimulateInitialError.value) {
-    shouldSimulateInitialError.value = false
-    throw new Error('菜品库壳层加载失败，请重试。')
-  }
+const detailDrawerVisible = ref(false)
+const detailRecipeId = ref('')
+
+const formDrawerVisible = ref(false)
+const formMode = ref<'add' | 'edit'>('add')
+const formRecipeId = ref<string | undefined>(undefined)
+
+const deleteDialogVisible = ref(false)
+const deleteRecipeId = ref('')
+const deleteRecipeName = ref('')
+
+function handleView(recipeId: string) {
+  detailRecipeId.value = recipeId
+  detailDrawerVisible.value = true
 }
 
-async function loadPage() {
-  loading.value = true
-  error.value = null
-
-  try {
-    await bootstrapRecipeLibraryPage()
-  }
-  catch (err) {
-    error.value = err instanceof Error ? err : new Error('Failed to load recipe library')
-  }
-  finally {
-    loading.value = false
-  }
+function handleAdd() {
+  formMode.value = 'add'
+  formRecipeId.value = undefined
+  formDrawerVisible.value = true
 }
 
-async function retry() {
-  await loadPage()
+function handleEdit(recipeId: string) {
+  formMode.value = 'edit'
+  formRecipeId.value = recipeId
+  formDrawerVisible.value = true
 }
 
-onMounted(() => {
-  void loadPage()
-})
+function handleDelete(recipeId: string) {
+  const recipe = list.items.value.find(r => r.recipeId === recipeId)
+  deleteRecipeId.value = recipeId
+  deleteRecipeName.value = recipe?.name || ''
+  deleteDialogVisible.value = true
+}
+
+async function handleDeleteConfirm() {
+  await deleteRecipe(deleteRecipeId.value)
+  deleteDialogVisible.value = false
+  await list.reload()
+}
+
+function handleDeleteCancel() {
+  deleteDialogVisible.value = false
+}
+
+async function handleSaved() {
+  formDrawerVisible.value = false
+  await list.reload()
+}
 </script>
 
 <template>
   <section class="recipe-library-page">
     <div class="recipe-library-page__shell">
+      <!-- 错误状态 -->
       <div
-        v-if="loading"
+        v-if="list.error.value"
         class="recipe-library-page__state"
       >
         <p class="recipe-library-page__state-label">
           菜品库
         </p>
         <p class="recipe-library-page__state-copy">
-          正在准备页面壳层...
-        </p>
-      </div>
-
-      <div
-        v-else-if="error"
-        class="recipe-library-page__state"
-      >
-        <p class="recipe-library-page__state-label">
-          菜品库
-        </p>
-        <p class="recipe-library-page__state-copy">
-          {{ error.message }}
+          {{ list.error.value.message }}
         </p>
         <ElButton
           type="primary"
           class="recipe-library-page__state-button"
-          @click="retry"
+          @click="list.reload"
         >
           重试
         </ElButton>
       </div>
 
+      <!-- 正常内容 -->
       <template v-else>
         <header class="recipe-library-page__hero">
           <div>
@@ -85,46 +102,63 @@ onMounted(() => {
               菜品库
             </h1>
             <p class="recipe-library-page__subtitle">
-              后续的筛选栏、卡片网格、抽屉和删除确认会在这里继续接入。
+              管理您的菜品，包括食材、步骤和营养信息。
             </p>
           </div>
+          <ElButton
+            type="primary"
+            @click="handleAdd"
+          >
+            新增菜品
+          </ElButton>
         </header>
 
+        <!-- 筛选栏 -->
         <section class="recipe-library-page__section">
-          <div class="recipe-library-page__section-head">
-            <h2>筛选栏占位</h2>
-            <p>这里会放搜索、分类和筛选条件。</p>
-          </div>
-          <div class="recipe-library-page__placeholder recipe-library-page__placeholder--bar" />
+          <RecipeFilterBar
+            v-model="list.filters"
+            @values-change="list.handleFilterValuesChange"
+            @search="list.handleFilterSearch"
+            @reset="list.handleFilterReset"
+          />
         </section>
 
+        <!-- 菜品网格 -->
         <section class="recipe-library-page__section">
-          <div class="recipe-library-page__section-head">
-            <h2>菜品网格占位</h2>
-            <p>这里会渲染菜品卡片和空状态。</p>
-          </div>
-          <div class="recipe-library-page__grid-placeholder">
-            <div
-              v-for="index in 6"
-              :key="index"
-              class="recipe-library-page__placeholder recipe-library-page__placeholder--card"
-            />
-          </div>
-        </section>
-
-        <section class="recipe-library-page__section recipe-library-page__section--supporting">
-          <div class="recipe-library-page__section-head">
-            <h2>抽屉与对话框占位</h2>
-            <p>详情抽屉、编辑抽屉和删除对话框会在这里挂载。</p>
-          </div>
-          <div class="recipe-library-page__supporting">
-            <div class="recipe-library-page__placeholder recipe-library-page__placeholder--panel" />
-            <div class="recipe-library-page__placeholder recipe-library-page__placeholder--panel" />
-            <div class="recipe-library-page__placeholder recipe-library-page__placeholder--dialog" />
-          </div>
+          <RecipeGrid
+            :recipes="list.items.value"
+            :loading="list.loading.value"
+            :total="list.total.value"
+            @add-recipe="handleAdd"
+            @view-recipe="handleView"
+            @edit-recipe="handleEdit"
+            @delete-recipe="handleDelete"
+          />
         </section>
       </template>
     </div>
+
+    <!-- 详情抽屉 -->
+    <RecipeDetailDrawer
+      v-model:visible="detailDrawerVisible"
+      :recipe-id="detailRecipeId"
+    />
+
+    <!-- 表单抽屉 -->
+    <RecipeFormDrawer
+      v-model:visible="formDrawerVisible"
+      :mode="formMode"
+      :recipe-id="formRecipeId"
+      @saved="handleSaved"
+    />
+
+    <!-- 删除对话框 -->
+    <RecipeDeleteDialog
+      :visible="deleteDialogVisible"
+      :recipe-name="deleteRecipeName"
+      @confirm="handleDeleteConfirm"
+      @cancel="handleDeleteCancel"
+    />
   </section>
 </template>
 
