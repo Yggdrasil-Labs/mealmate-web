@@ -1,15 +1,12 @@
-import { useWindowSize } from '@vueuse/core'
 import { computed } from 'vue'
-
-export const APP_MOBILE_BREAKPOINT = 768
+import { useAppShellStore } from '@/stores'
 
 export function useAppBreakpoint() {
-  const { width } = useWindowSize()
+  const appShellStore = useAppShellStore()
 
-  const isMobile = computed(() => width.value <= APP_MOBILE_BREAKPOINT)
+  const isMobile = computed(() => appShellStore.device === 'mobile')
+  const isTablet = computed(() => appShellStore.device === 'tablet')
+  const isDesktop = computed(() => appShellStore.device === 'desktop')
 
-  return {
-    width,
-    isMobile,
-  }
+  return { isMobile, isTablet, isDesktop }
 }

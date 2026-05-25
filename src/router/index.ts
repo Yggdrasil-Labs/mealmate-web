@@ -63,7 +63,13 @@ const router = createRouter({
   routes: createRouteRecords(),
 })
 
-// 路由守卫（默认不做业务鉴权，可按需接入）
+// 路由守卫：认证扩展点（当前直接放行，接入认证时在此实现）
+router.beforeEach((_to, _from, next) => {
+  // TODO: 接入认证时，在此检查 token / 权限
+  // 示例：if (!authStore.isAuthenticated && to.meta.requiresAuth) return next('/login')
+  next()
+})
+
 // 路由后置守卫
 router.afterEach((to) => {
   syncShellState(to)

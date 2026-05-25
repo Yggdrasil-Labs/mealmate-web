@@ -15,25 +15,29 @@ const request: AxiosInstance = axios.create({
 // 请求拦截器
 request.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // 添加时间戳防止缓存
-    if (config.method === 'get') {
+    // 开发环境：添加时间戳防止缓存
+    if (import.meta.env.DEV && config.method === 'get') {
       config.params = {
         ...config.params,
         _t: Date.now(),
       }
     }
 
-    console.log('请求发送:', {
-      url: config.url,
-      method: config.method,
-      params: config.params,
-      data: config.data,
-    })
+    if (import.meta.env.DEV) {
+      console.log('请求发送:', {
+        url: config.url,
+        method: config.method,
+        params: config.params,
+        data: config.data,
+      })
+    }
 
     return config
   },
   (error: AxiosError) => {
-    console.error('请求拦截器错误:', error)
+    if (import.meta.env.DEV) {
+      console.error('请求拦截器错误:', error)
+    }
     return Promise.reject(error)
   },
 )
@@ -43,11 +47,13 @@ request.interceptors.response.use(
   (response: AxiosResponse<ApiResponse>) => {
     const { data } = response
 
-    console.log('响应接收:', {
-      url: response.config.url,
-      status: response.status,
-      data,
-    })
+    if (import.meta.env.DEV) {
+      console.log('响应接收:', {
+        url: response.config.url,
+        status: response.status,
+        data,
+      })
+    }
 
     // cola5.0 统一处理响应数据
     if (data.success === true) {
@@ -59,15 +65,10 @@ request.interceptors.response.use(
       const errorMessage = data.errMessage || '请求失败'
       const errorCode = data.errCode || 'UNKNOWN_ERROR'
 
-      console.error('业务错误:', {
-        errCode: errorCode,
-        errMessage: errorMessage,
-      })
+      if (import.meta.env.DEV) {
+        console.error('业务错误:', { errCode: errorCode, errMessage: errorMessage })
+      }
 
-      // 可以在这里添加全局错误提示
-      // ElMessage.error(errorMessage)
-
-      // 创建带错误码的错误对象
       const error = new Error(errorMessage)
       ;(error as any).code = errorCode
       ;(error as any).response = response
@@ -76,7 +77,9 @@ request.interceptors.response.use(
     }
   },
   (error: AxiosError) => {
-    console.error('响应拦截器错误:', error)
+    if (import.meta.env.DEV) {
+      console.error('响应拦截器错误:', error)
+    }
 
     let errorMessage = '网络错误，请稍后重试'
     let errorCode = 'NETWORK_ERROR'
