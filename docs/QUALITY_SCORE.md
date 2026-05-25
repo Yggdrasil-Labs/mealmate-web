@@ -11,7 +11,7 @@ Last updated: 2026-04-25
 | 架构入口 | 阅读 `AGENTS.md`, `docs/index.md`, `ARCHITECTURE.md` | 能判断改动应落在哪一层 |
 | 业务语义 | 对照 `docs/PRODUCT_SENSE.md` 与 `docs/design-docs/` | 页面、路由、字段和测试用语不偏离统一语言 |
 | 组件协议 | 对照 `docs/components/` 与组件测试 | 字段、事件、插槽和运行时行为有文档或测试支撑 |
-| 计划状态 | 对照 `docs/guides/PLANS.md`、`docs/active/` 与 `docs/archive/` | 活跃工作、已完成记录和技术债不混放 |
+| 计划状态 | 对照 `docs/skills/project-workflow/SKILL.md`、`docs/active/` 与 `docs/archive/` | 活跃工作、已完成记录和技术债不混放 |
 | 验证路径 | 查看本次运行命令和测试覆盖 | 风险匹配的 lint、type-check、单测或 E2E 已运行 |
 | 注释可读性 | 人工检查新增或显著修改代码 | 关键流程、关键分支与重要约束有注释支撑，注释占比至少 25% |
 

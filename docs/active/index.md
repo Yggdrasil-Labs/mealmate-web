@@ -1,11 +1,11 @@
 # Active Requirements Index
 
-Last updated: 2026-05-08
+Last updated: 2026-05-26
 
 本目录是一等活跃工作区。每个子目录代表一个仍在推进的需求、重构或文档系统任务。
 
 | Requirement | Status | Files | Scope |
 | --- | --- | --- | --- |
-| `recipe-library` | in-progress | [design.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/active/recipe-library/design.md), [plan.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/active/recipe-library/plan.md) | UC2 菜品库前端页面 |
+| _(无活跃需求)_ | — | — | — |
 
-活跃工作结束后，应移动到 [docs/archive/](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/archive)，并同步本索引。
+活跃工作结束后，应移动到 [docs/archive/](../archive/)，并同步本索引。

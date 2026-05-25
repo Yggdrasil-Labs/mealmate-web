@@ -1,19 +1,35 @@
-# Design Docs Index
+---
+updated: 2026-05-26
+---
 
-Last updated: 2026-05-08
+# 设计决策目录
 
-本目录用于沉淀跨模块、长期有效的设计决策。
+项目级通用设计决策。每个文档定义一个跨功能的设计主题，智能体在相关领域编码前应先查阅。
 
-## 当前文档
+| id | 主题 | status | owner | 适用范围 | 路径 |
+|----|------|--------|-------|----------|------|
+| design-core-beliefs | 核心信条 | verified | team | 全局 | `docs/design-docs/core-beliefs.md` |
+| design-business-model | 业务模型设计 | verified | team | 全局 | `docs/design-docs/mealmate-business-model-design.md` |
+| design-domain-language | 领域语言设计 | verified | team | 全局 | `docs/design-docs/mealmate-domain-language-design.md` |
+| design-web-scope | Web 仓库范围设计 | verified | team | Web 前端 | `docs/design-docs/mealmate-web-scope-design.md` |
 
-- [core-beliefs.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs/core-beliefs.md)
-- [mealmate-business-model-design.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs/mealmate-business-model-design.md)
-- [mealmate-domain-language-design.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs/mealmate-domain-language-design.md)
-- [mealmate-web-scope-design.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs/mealmate-web-scope-design.md)
+## status 含义
 
-## 使用说明
+- **draft**：设计尚未落地。智能体可参考但需注意细节可能变化。
+- **verified**：设计与实现一致。智能体应严格遵守。
+- **stale**：实现已偏离设计。智能体不应信赖细节，需先更新。
 
-- 长期设计原则放这里
-- 业务模型、领域语言与 Web 范围的长期知识也放这里
-- 一次性实施计划放到 `docs/active/`，完成后进入 `docs/archive/`
-- 组件 API 说明放到 `docs/components/`
+## 何时创建 design-doc
+
+- 需要修改 `ARCHITECTURE.md` 或 `core-beliefs.md` 中的长期约束时，先创建 `arch-` 前缀的 design-doc 作为架构 RFC
+- 发现跨多个需求的通用设计问题时（如缓存策略、幂等设计、错误码规范）
+- 实施过程中需要违反现有依赖方向或架构约束时，暂停实施，先创建架构 RFC
+
+**不要用 design-doc 替代需求目录中的 design.md**——需求级的设计放在 `docs/active/{需求}/design.md`，项目级的通用决策放在这里。
+
+## 如何添加
+
+1. 复制 `_template.md` 为 `{主题名}.md`（架构 RFC 用 `arch-` 前缀）
+2. 填写 frontmatter 和所有章节
+3. 在上方目录表中添加条目
+4. status 设为 draft；落地验证后更新为 verified

@@ -10,11 +10,11 @@ MealMate 不是单纯的菜谱展示站，而是围绕家庭饮食决策的规�
 
 ## 2. 权威来源
 
-- [docs/design-docs/mealmate-business-model-design.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs/mealmate-business-model-design.md)
+- [docs/design-docs/mealmate-business-model-design.md](./design-docs/mealmate-business-model-design.md)
   业务本质、核心闭环、业务阶段与限界上下文。
-- [docs/design-docs/mealmate-domain-language-design.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs/mealmate-domain-language-design.md)
+- [docs/design-docs/mealmate-domain-language-design.md](./design-docs/mealmate-domain-language-design.md)
   统一术语、命名约束与前端表达影响。
-- [docs/design-docs/mealmate-web-scope-design.md](/home/yangyang/workspace/codes/Yggdrasil-Labs/mealmate-web/docs/design-docs/mealmate-web-scope-design.md)
+- [docs/design-docs/mealmate-web-scope-design.md](./design-docs/mealmate-web-scope-design.md)
   Web 仓库职责、页面范围与实现边界。
 
 如果需要确认 `Family`、`ShoppingList`、`NotifyTask` 等具体业务术语，请直接回到 `mealmate-domain-language-design.md`，不要把本页当成术语版权威来源。

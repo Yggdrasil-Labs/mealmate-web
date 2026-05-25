@@ -1,3 +1,12 @@
+---
+id: design-domain-language
+status: verified
+owner: team
+tags: [domain, naming]
+created: 2026-04-16
+verified: 2026-05-26
+---
+
 # MealMate Domain Language Design
 
 本设计文档用于沉淀 MealMate Web 需要长期统一的业务语言，确保页面命名、路由标题、组件文案和接口字段围绕同一套词汇演进。

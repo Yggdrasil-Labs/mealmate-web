@@ -1,3 +1,12 @@
+---
+id: design-business-model
+status: verified
+owner: team
+tags: [business, domain]
+created: 2026-04-16
+verified: 2026-05-26
+---
+
 # MealMate Business Model Design
 
 本设计文档用于沉淀 MealMate Web 所依赖的长期业务模型，帮助前端实现围绕同一套系统本质、业务闭环和领域边界演进。

@@ -12,20 +12,24 @@
 
 按任务选择最小阅读集合：
 
-| 任务                                           | 入口                                                    |
-| ---------------------------------------------- | ------------------------------------------------------- |
-| 理解仓库结构、分层、路由、shell 和前端实现规则 | `ARCHITECTURE.md`                                       |
-| 判断文档该写在哪里、Agent 如何验收             | `ARCHITECTURE.md` §12                                   |
-| 确认业务术语、页面范围和产品边界               | `docs/PRODUCT_SENSE.md`                                 |
-| 查找计划、提案或历史记录                       | `docs/guides/PLANS.md`, `docs/active/`, `docs/archive/` |
-| 不确定该读哪篇 docs                            | `docs/index.md`                                         |
+| 任务                                           | 入口                                    |
+| ---------------------------------------------- | --------------------------------------- |
+| 理解仓库结构、分层、路由、shell 和前端实现规则 | `ARCHITECTURE.md`                       |
+| 判断文档该写在哪里、Agent 如何验收             | `ARCHITECTURE.md` §12                   |
+| 确认业务术语、页面范围和产品边界               | `docs/PRODUCT_SENSE.md`                 |
+| 判断代码应该放在哪个业务领域                   | `docs/DOMAINS.md`                       |
+| 创建需求、写计划或归档                         | `docs/skills/project-workflow/SKILL.md` |
+| 查找活跃计划或历史记录                         | `docs/active/`, `docs/archive/`         |
+| 不确定该读哪篇 docs                            | `docs/index.md`                         |
 
 ## 事实来源优先级
 
 - 架构、依赖边界与前端实施规则：`ARCHITECTURE.md`
+- 业务领域划分：`docs/DOMAINS.md`
 - 业务语义与范围：`docs/PRODUCT_SENSE.md`, `docs/design-docs/`
 - 组件协议：`docs/components/`
-- 执行状态与计划：`docs/guides/PLANS.md`, `docs/active/`, `docs/archive/`
+- 需求生命周期：`docs/skills/project-workflow/SKILL.md`
+- 执行状态与计划：`docs/active/`, `docs/archive/`
 
 如果文档冲突，优先采用更具体、且更贴近当前代码实现的那一份；仍不确定时，以代码和测试为准。
 

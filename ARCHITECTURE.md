@@ -238,14 +238,16 @@ pnpm test:e2e
 
 ### 分层
 
-| 层级               | 文档或目录                                                         | 负责回答                               |
-| ------------------ | ------------------------------------------------------------------ | -------------------------------------- |
-| 仓库入口           | `AGENTS.md`, `docs/index.md`                                       | 我应该先读什么                         |
-| 长期架构与实现约束 | `ARCHITECTURE.md`（本文件）, `docs/design-docs/core-beliefs.md`    | 仓库边界、依赖方向、前端规则与长期约束 |
-| 产品语义           | `docs/PRODUCT_SENSE.md`, `docs/design-docs/`                       | 业务范围、统一术语和页面边界           |
-| 组件协议           | `docs/components/`                                                 | 组件字段、事件、插槽和运行时协议       |
-| 工作流转           | `docs/guides/PLANS.md`, `docs/active/`, `docs/archive/`            | 当前工作如何计划、推进和归档           |
-| 运行质量           | `docs/QUALITY_SCORE.md`, `docs/RELIABILITY.md`, `docs/SECURITY.md` | 质量、可靠性和安全边界                 |
+| 层级               | 文档或目录                                                               | 负责回答                               |
+| ------------------ | ------------------------------------------------------------------------ | -------------------------------------- |
+| 仓库入口           | `AGENTS.md`, `docs/index.md`                                             | 我应该先读什么                         |
+| 长期架构与实现约束 | `ARCHITECTURE.md`（本文件）, `docs/design-docs/core-beliefs.md`          | 仓库边界、依赖方向、前端规则与长期约束 |
+| 业务领域           | `docs/DOMAINS.md`                                                        | 代码放哪个领域、领域间关系             |
+| 产品语义           | `docs/PRODUCT_SENSE.md`, `docs/design-docs/`                             | 业务范围、统一术语和页面边界           |
+| 组件协议           | `docs/components/`                                                       | 组件字段、事件、插槽和运行时协议       |
+| 工作流转           | `docs/skills/project-workflow/SKILL.md`, `docs/active/`, `docs/archive/` | 当前工作如何计划、推进和归档           |
+| 运行质量           | `docs/QUALITY_SCORE.md`, `docs/RELIABILITY.md`, `docs/SECURITY.md`       | 质量、可靠性和安全边界                 |
+| 自动生成           | `docs/generated/`                                                        | 由源码自动提取的文档产物               |
 
 ### 文档落点规则
 
@@ -264,7 +266,8 @@ pnpm test:e2e
 | 调整路由、菜单、Tabs 或 shell    | 本文件, 相关 router / store 测试                                   |
 | 新增或修改通用组件协议           | `docs/components/component-api-conventions.md`, 对应组件文档       |
 | 修改业务术语、页面范围或产品边界 | `docs/PRODUCT_SENSE.md`, `docs/design-docs/`                       |
-| 多步骤功能或重构                 | `docs/guides/PLANS.md`, `docs/active/`                             |
+| 新增业务模块或判断代码归属       | `docs/DOMAINS.md`                                                  |
+| 多步骤功能或重构                 | `docs/skills/project-workflow/SKILL.md`, `docs/active/`            |
 | 修改安全、可靠性或质量规则       | `docs/SECURITY.md`, `docs/RELIABILITY.md`, `docs/QUALITY_SCORE.md` |
 
 ### Agent 工作流
@@ -292,4 +295,4 @@ pnpm test:e2e
 
 - 业务语义与范围：`docs/PRODUCT_SENSE.md`
 - 组件协议：`docs/components/`
-- 计划机制：`docs/guides/PLANS.md`, `docs/active/`, `docs/archive/`
+- 计划机制：`docs/skills/project-workflow/SKILL.md`, `docs/active/`, `docs/archive/`
