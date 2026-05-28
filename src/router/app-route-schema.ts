@@ -31,4 +31,31 @@ export const appRouteSchema: AppRouteRecord[] = [
       icon: 'menu-recipe',
     },
   },
+  {
+    name: 'WeeklyMealPlan',
+    path: '/weekly-meal-plan',
+    component: 'weekly-meal-plan',
+    meta: {
+      title: '周计划',
+      icon: 'menu-plan',
+    },
+  },
+  {
+    name: 'PrepPlan',
+    path: '/prep-plan',
+    component: 'prep-plan',
+    meta: {
+      title: '备菜计划',
+      icon: 'menu-prep',
+    },
+  },
+  {
+    name: 'ShoppingList',
+    path: '/shopping-list',
+    component: 'shopping-list',
+    meta: {
+      title: '采购清单',
+      icon: 'menu-shopping',
+    },
+  },
 ]

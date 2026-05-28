@@ -6,6 +6,6 @@ Last updated: 2026-05-26
 
 | Requirement | Status | Files | Scope |
 | --- | --- | --- | --- |
-| _(无活跃需求)_ | — | — | — |
+| [uc3-weekly-meal-plan](./uc3-weekly-meal-plan/) | spec-draft | spec.md | 周计划页面（7×3网格、生成/调整/确认） |
 
 活跃工作结束后，应移动到 [docs/archive/](../archive/)，并同步本索引。
