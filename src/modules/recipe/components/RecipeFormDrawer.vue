@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ElButton, ElDrawer, ElForm, ElFormItem, ElInput, ElInputNumber, ElOption, ElSelect, ElSwitch } from 'element-plus'
 import { computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRecipeForm } from '../composables/useRecipeForm'
 import {
   getRecipeCrowdTagLabel,
@@ -31,6 +32,8 @@ interface Emits {
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
+
+const { t } = useI18n()
 
 let form = useRecipeForm({
   mode: props.mode,
@@ -122,19 +125,19 @@ watch(
           <ElSelect v-model="form.formData.recipeType">
             <ElOption
               value="HOME_COOKING"
-              :label="getRecipeTypeLabel('HOME_COOKING', (key) => key)"
+              :label="getRecipeTypeLabel('HOME_COOKING', t)"
             />
             <ElOption
               value="SOUP"
-              :label="getRecipeTypeLabel('SOUP', (key) => key)"
+              :label="getRecipeTypeLabel('SOUP', t)"
             />
             <ElOption
               value="STAPLE"
-              :label="getRecipeTypeLabel('STAPLE', (key) => key)"
+              :label="getRecipeTypeLabel('STAPLE', t)"
             />
             <ElOption
               value="SNACK"
-              :label="getRecipeTypeLabel('SNACK', (key) => key)"
+              :label="getRecipeTypeLabel('SNACK', t)"
             />
           </ElSelect>
         </ElFormItem>
@@ -143,19 +146,19 @@ watch(
           <ElSelect v-model="form.formData.crowdTag">
             <ElOption
               value="FAMILY"
-              :label="getRecipeCrowdTagLabel('FAMILY', (key) => key)"
+              :label="getRecipeCrowdTagLabel('FAMILY', t)"
             />
             <ElOption
               value="CHILD_FRIENDLY"
-              :label="getRecipeCrowdTagLabel('CHILD_FRIENDLY', (key) => key)"
+              :label="getRecipeCrowdTagLabel('CHILD_FRIENDLY', t)"
             />
             <ElOption
               value="ELDER_FRIENDLY"
-              :label="getRecipeCrowdTagLabel('ELDER_FRIENDLY', (key) => key)"
+              :label="getRecipeCrowdTagLabel('ELDER_FRIENDLY', t)"
             />
             <ElOption
               value="PARTY"
-              :label="getRecipeCrowdTagLabel('PARTY', (key) => key)"
+              :label="getRecipeCrowdTagLabel('PARTY', t)"
             />
           </ElSelect>
         </ElFormItem>
@@ -164,15 +167,15 @@ watch(
           <ElSelect v-model="form.formData.difficultyLevel">
             <ElOption
               value="EASY"
-              :label="getRecipeDifficultyLabel('EASY', (key) => key)"
+              :label="getRecipeDifficultyLabel('EASY', t)"
             />
             <ElOption
               value="MEDIUM"
-              :label="getRecipeDifficultyLabel('MEDIUM', (key) => key)"
+              :label="getRecipeDifficultyLabel('MEDIUM', t)"
             />
             <ElOption
               value="HARD"
-              :label="getRecipeDifficultyLabel('HARD', (key) => key)"
+              :label="getRecipeDifficultyLabel('HARD', t)"
             />
           </ElSelect>
         </ElFormItem>
