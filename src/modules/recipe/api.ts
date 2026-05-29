@@ -29,6 +29,15 @@ interface RecipeApiEnvelope<T> {
   data?: T
 }
 
+/** COLA PageResponse 对应的前端类型 */
+interface PaginatedApiResponse<T> {
+  success: boolean
+  data?: T[]
+  totalCount?: number
+  pageSize?: number
+  pageIndex?: number
+}
+
 interface RecipeSummaryDto {
   recipeId?: string | number
   id?: string | number
@@ -41,7 +50,9 @@ interface RecipeSummaryDto {
   cookingTimeMin: number
   coverImageUrl?: string | null
   isBabyFriendly?: boolean | null
+  babyFriendly?: boolean | null
   isWeightLossFriendly?: boolean | null
+  weightLossFriendly?: boolean | null
   status: RecipeSummary['status']
 }
 
@@ -53,8 +64,6 @@ interface RecipeDetailDto extends RecipeSummaryDto {
 }
 
 const recipeRealModeAssumptions = {
-  fetchRecipePage: 'Recipe list backend contract is not frozen yet.',
-  fetchRecipeDetail: 'Recipe detail backend contract is not frozen yet.',
   updateRecipeSteps: 'Recipe step update backend contract is not frozen yet.',
   uploadRecipeStepImage: 'Recipe step image upload backend contract is not frozen yet.',
 } as const
@@ -91,8 +100,8 @@ function mapRecipeSummaryFromApi(summary: RecipeSummaryDto): RecipeSummary {
     difficultyLevel: summary.difficultyLevel,
     cookingTimeMin: summary.cookingTimeMin,
     coverImageUrl: summary.coverImageUrl ?? '',
-    isBabyFriendly: summary.isBabyFriendly ?? false,
-    isWeightLossFriendly: summary.isWeightLossFriendly ?? false,
+    isBabyFriendly: summary.isBabyFriendly ?? summary.babyFriendly ?? false,
+    isWeightLossFriendly: summary.isWeightLossFriendly ?? summary.weightLossFriendly ?? false,
     status: summary.status,
   }
 }
@@ -119,14 +128,43 @@ export async function fetchRecipePage(filters: RecipeFilters): Promise<RecipePag
   if (USE_RECIPE_MOCK)
     return mockFetchRecipePage(filters)
 
-  assertResolvedRealMode('fetchRecipePage')
+  const params: Record<string, unknown> = {}
+  if (filters.keyword)
+    params.keyword = filters.keyword
+  if (filters.recipeType)
+    params.recipeType = filters.recipeType
+  if (filters.seasonTag)
+    params.seasonTag = filters.seasonTag
+  if (filters.crowdTag)
+    params.crowdTag = filters.crowdTag
+  if (filters.isBabyFriendly !== undefined)
+    params.isBabyFriendly = filters.isBabyFriendly
+  if (filters.isWeightLossFriendly !== undefined)
+    params.isWeightLossFriendly = filters.isWeightLossFriendly
+  if (filters.difficultyLevel)
+    params.difficultyLevel = filters.difficultyLevel
+  if (filters.maxCookingTime)
+    params.maxCookingTime = filters.maxCookingTime
+  params.pageNum = filters.pageNum
+  params.pageSize = filters.pageSize
+
+  const response = await http.get<RecipeSummaryDto[]>('/api/recipes', params)
+  const body = (response as unknown as { data: PaginatedApiResponse<RecipeSummaryDto> }).data ?? response as unknown as PaginatedApiResponse<RecipeSummaryDto>
+
+  return {
+    list: (body.data ?? []).map(mapRecipeSummaryFromApi),
+    total: body.totalCount ?? 0,
+    pageNum: body.pageIndex ?? 1,
+    pageSize: body.pageSize ?? filters.pageSize,
+  }
 }
 
 export async function fetchRecipeDetail(recipeId: string): Promise<RecipeDetail> {
   if (USE_RECIPE_MOCK)
     return mockFetchRecipeDetail(recipeId)
 
-  assertResolvedRealMode('fetchRecipeDetail')
+  const detail = await unwrapResponseData<RecipeDetailDto>(http.get(`/api/recipes/${recipeId}`))
+  return mapRecipeDetailFromApi(detail)
 }
 
 export async function createRecipe(payload: CreateRecipePayload): Promise<RecipeDetail> {

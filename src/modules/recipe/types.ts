@@ -1,14 +1,14 @@
 export type RecipeSourceType = 'MANUAL' | 'AI_GENERATED' | 'SYSTEM'
 
-export type RecipeType = 'HOME_COOKING' | 'SOUP' | 'STAPLE' | 'SNACK'
+export type RecipeType = 'HOME_COOKING' | 'MAIN_DISH' | 'SIDE_DISH' | 'SOUP' | 'STAPLE' | 'SNACK' | 'DESSERT' | 'OTHER'
 
 export type RecipeDifficultyLevel = 'EASY' | 'MEDIUM' | 'HARD'
 
-export type RecipeCrowdTag = 'FAMILY' | 'CHILD_FRIENDLY' | 'ELDER_FRIENDLY' | 'PARTY'
+export type RecipeCrowdTag = 'FAMILY' | 'GENERAL' | 'CHILD_FRIENDLY' | 'ELDER_FRIENDLY' | 'BABY' | 'WEIGHT_LOSS' | 'PARTY'
 
-export type RecipeSeasonTag = 'SPRING' | 'SUMMER' | 'AUTUMN' | 'WINTER' | 'ALL'
+export type RecipeSeasonTag = 'SPRING' | 'SUMMER' | 'AUTUMN' | 'WINTER' | 'ALL' | 'ALL_SEASON'
 
-export type RecipeStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
+export type RecipeStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' | 'ACTIVE'
 
 export interface RecipeIngredientItem {
   ingredientId?: string

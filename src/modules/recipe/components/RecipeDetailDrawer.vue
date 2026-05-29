@@ -2,6 +2,7 @@
 import type { RecipeDetail } from '../types'
 import { ElButton, ElDescriptions, ElDescriptionsItem, ElDrawer, ElEmpty, ElImage } from 'element-plus'
 import { computed, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { fetchRecipeDetail } from '../api'
 import { getRecipeCrowdTagLabel, getRecipeDifficultyLabel, getRecipeTypeLabel } from '../constants'
 
@@ -23,6 +24,8 @@ interface Emits {
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
+
+const { t } = useI18n()
 
 const detail = ref<RecipeDetail | null>(null)
 const loading = ref(false)
@@ -123,13 +126,13 @@ watch(
           border
         >
           <ElDescriptionsItem label="类型">
-            {{ getRecipeTypeLabel(detail.recipeType, (key) => key) }}
+            {{ getRecipeTypeLabel(detail.recipeType, t) }}
           </ElDescriptionsItem>
           <ElDescriptionsItem label="难度">
-            {{ getRecipeDifficultyLabel(detail.difficultyLevel, (key) => key) }}
+            {{ getRecipeDifficultyLabel(detail.difficultyLevel, t) }}
           </ElDescriptionsItem>
           <ElDescriptionsItem label="人群">
-            {{ getRecipeCrowdTagLabel(detail.crowdTag, (key) => key) }}
+            {{ getRecipeCrowdTagLabel(detail.crowdTag, t) }}
           </ElDescriptionsItem>
           <ElDescriptionsItem label="耗时">
             {{ detail.cookingTimeMin }} 分钟
