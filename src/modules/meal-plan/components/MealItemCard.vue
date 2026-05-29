@@ -133,6 +133,12 @@ const initial = computed(() => props.item.recipeName.slice(0, 1))
   display: flex;
   gap: var(--space-1);
   flex-shrink: 0;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.meal-item-card:hover .meal-item-card__actions {
+  opacity: 1;
 }
 
 .meal-item-card__action {
@@ -164,5 +170,10 @@ const initial = computed(() => props.item.recipeName.slice(0, 1))
 .meal-item-card__action--danger:hover {
   background: var(--color-danger-soft);
   color: var(--color-danger);
+}
+@media (max-width: 768px) {
+  .meal-item-card__actions {
+    opacity: 1;
+  }
 }
 </style>

@@ -2,6 +2,7 @@
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import PageHeader from '@/components/PageHeader.vue'
 import { useMealPlanStore } from '@/modules/meal-plan/store'
 import PrepTaskList from '@/modules/prep/components/PrepTaskList.vue'
 import { usePrepPlan } from '@/modules/prep/composables/usePrepPlan'
@@ -16,9 +17,7 @@ onMounted(() => load())
 
 <template>
   <div class="prep-plan-page">
-    <h1 class="prep-plan-page__title">
-      {{ t('mealPlan.prepPlan') }}
-    </h1>
+    <PageHeader :title="t('mealPlan.prepPlan')" />
 
     <div v-if="loading" class="prep-plan-page__skeleton">
       <div v-for="i in 5" :key="i" class="skeleton" style="height: 48px;" />
@@ -52,12 +51,6 @@ onMounted(() => load())
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-}
-
-.prep-plan-page__title {
-  margin: 0;
-  font-size: var(--text-lg);
-  color: var(--color-text);
 }
 
 .prep-plan-page__skeleton {

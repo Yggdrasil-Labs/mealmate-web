@@ -46,7 +46,7 @@ const friendlyBadges = computed(() => {
 
 <template>
   <article class="recipe-card">
-    <div class="recipe-card__cover">
+    <div class="recipe-card__cover" :class="{ 'recipe-card__cover--no-image': !props.recipe.coverImageUrl }">
       <img
         v-if="props.recipe.coverImageUrl"
         class="recipe-card__image"
@@ -201,6 +201,10 @@ const friendlyBadges = computed(() => {
     var(--color-info-soft) 55%,
     var(--color-warning-soft) 100%
   );
+}
+
+.recipe-card__cover--no-image {
+  aspect-ratio: 4 / 3;
 }
 
 .recipe-card__image {

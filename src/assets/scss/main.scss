@@ -118,6 +118,11 @@
   --text-xl: 1.5rem;
   --text-2xl: 1.875rem;
 
+  // ───── 语义字号 ─────
+  --page-title-size: var(--text-2xl);
+  --section-title-size: var(--text-lg);
+  --card-title-size: var(--text-base);
+
   // ───── 动效 token ─────
   --duration-fast: 150ms;
   --duration-base: 250ms;
@@ -206,6 +211,45 @@ textarea {
   100% {
     transform: translateX(100%);
   }
+}
+
+/* ───── 暗色模式 ───── */
+[data-theme='dark'] {
+  --color-text: #e2e8f0;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+  --color-text-soft: #475569;
+  --color-bg: #0f172a;
+  --color-bg-page: #1e293b;
+  --color-surface: #1e293b;
+  --color-surface-muted: #334155;
+  --color-border: rgba(226, 232, 240, 0.1);
+  --color-border-strong: rgba(226, 232, 240, 0.16);
+  --color-primary: #60a5fa;
+  --color-primary-soft: rgba(96, 165, 250, 0.15);
+  --color-primary-strong: #3b82f6;
+  --color-success: #34d399;
+  --color-success-soft: rgba(52, 211, 153, 0.15);
+  --color-warning: #fbbf24;
+  --color-warning-soft: rgba(251, 191, 36, 0.15);
+  --color-danger: #f87171;
+  --color-danger-soft: rgba(248, 113, 113, 0.15);
+  --color-info: #38bdf8;
+  --color-info-soft: rgba(56, 189, 248, 0.15);
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shell-bg: #0f172a;
+  --shell-bg-strong: #1e293b;
+  --shell-surface: rgba(30, 41, 59, 0.9);
+  --shell-surface-strong: #1e293b;
+  --shell-border: rgba(226, 232, 240, 0.08);
+  --shell-border-strong: rgba(226, 232, 240, 0.14);
+  --shell-text: #e2e8f0;
+  --shell-text-muted: #94a3b8;
+  --shell-text-soft: #64748b;
+  --shell-accent: #60a5fa;
+  --shell-accent-soft: rgba(96, 165, 250, 0.15);
+  --shell-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shell-shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* ───── 动效降级：prefers-reduced-motion ───── */

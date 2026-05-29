@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import PageHeader from '@/components/PageHeader.vue'
 import ManualAddDrawer from '@/modules/meal-plan/components/ManualAddDrawer.vue'
 import PlanActionBar from '@/modules/meal-plan/components/PlanActionBar.vue'
 import ReplaceRecipeDrawer from '@/modules/meal-plan/components/ReplaceRecipeDrawer.vue'
@@ -26,16 +27,15 @@ async function handleDelete(item: { itemId: number }) {
 
 <template>
   <div class="weekly-meal-plan">
-    <header class="weekly-meal-plan__header">
-      <h1 class="weekly-meal-plan__title">
-        {{ t('mealPlan.title') }}
-      </h1>
-      <WeekNavigator
-        :week-start-date="selectedWeekStart"
-        @prev="navigateWeek(-1)"
-        @next="navigateWeek(1)"
-      />
-    </header>
+    <PageHeader :title="t('mealPlan.title')">
+      <template #actions>
+        <WeekNavigator
+          :week-start-date="selectedWeekStart"
+          @prev="navigateWeek(-1)"
+          @next="navigateWeek(1)"
+        />
+      </template>
+    </PageHeader>
 
     <!-- 加载态：骨架屏 -->
     <div v-if="loading" class="weekly-meal-plan__skeleton">
@@ -101,20 +101,6 @@ async function handleDelete(item: { itemId: number }) {
   gap: var(--space-4);
   padding: var(--space-4);
   min-height: 0;
-}
-
-.weekly-meal-plan__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-}
-
-.weekly-meal-plan__title {
-  margin: 0;
-  font-size: var(--text-lg);
-  color: var(--color-text);
 }
 
 .weekly-meal-plan__loading,

@@ -180,6 +180,8 @@ function handleRefresh() {
   padding: 0;
   scrollbar-width: thin;
   scrollbar-gutter: stable both-edges;
+  mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent);
 }
 
 .app-tabs__item {

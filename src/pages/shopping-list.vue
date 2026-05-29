@@ -2,6 +2,7 @@
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import PageHeader from '@/components/PageHeader.vue'
 import { useMealPlanStore } from '@/modules/meal-plan/store'
 import ShoppingItemList from '@/modules/prep/components/ShoppingItemList.vue'
 import { useShoppingList } from '@/modules/prep/composables/useShoppingList'
@@ -16,9 +17,7 @@ onMounted(() => load())
 
 <template>
   <div class="shopping-list-page">
-    <h1 class="shopping-list-page__title">
-      {{ t('mealPlan.shoppingList') }}
-    </h1>
+    <PageHeader :title="t('mealPlan.shoppingList')" />
 
     <div v-if="loading" class="shopping-list-page__skeleton">
       <div v-for="i in 5" :key="i" class="skeleton" style="height: 48px;" />
@@ -52,12 +51,6 @@ onMounted(() => load())
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-}
-
-.shopping-list-page__title {
-  margin: 0;
-  font-size: var(--text-lg);
-  color: var(--color-text);
 }
 
 .shopping-list-page__skeleton {

@@ -21,3 +21,27 @@
   // 圆角 - 与 $border-radius base 对齐
   --el-border-radius-base: #{map.get($border-radius, base)};
 }
+
+// 表单与 shell 对齐
+:root {
+  --el-border-radius-base: var(--btn-radius);
+  --el-component-size: var(--btn-height-md);
+  --el-component-size-small: var(--btn-height-sm);
+  --el-component-size-large: var(--btn-height-lg);
+  --el-font-size-base: var(--text-sm);
+  --el-border-color: var(--color-border-strong);
+  --el-border-color-hover: var(--color-primary);
+  --el-text-color-primary: var(--color-text);
+  --el-text-color-regular: var(--color-text-secondary);
+  --el-text-color-placeholder: var(--color-text-soft);
+  --el-fill-color-light: var(--color-surface-muted);
+}
+
+// Drawer 圆角与遮罩统一
+.el-drawer {
+  border-radius: var(--card-radius) 0 0 var(--card-radius);
+}
+
+.el-overlay {
+  background-color: rgba(15, 23, 42, 0.5);
+}

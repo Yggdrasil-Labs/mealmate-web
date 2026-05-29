@@ -138,6 +138,7 @@ function formatDayLabel(dateStr: string): string {
   background: var(--color-border-strong);
   border-radius: var(--btn-radius);
   overflow: hidden;
+  box-shadow: var(--card-shadow);
 }
 
 .week-grid__mobile {
@@ -151,6 +152,7 @@ function formatDayLabel(dateStr: string): string {
   font-weight: 600;
   text-align: center;
   color: var(--color-text-secondary);
+  border-bottom: 2px solid var(--color-border-strong);
 }
 
 .week-grid__meal-label {
@@ -171,6 +173,11 @@ function formatDayLabel(dateStr: string): string {
   flex-direction: column;
   gap: var(--space-1);
   min-height: 80px;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.week-grid__cell:hover {
+  background: var(--color-surface-muted);
 }
 
 .week-grid__add-btn {

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ElButton } from 'element-plus'
 import { ref } from 'vue'
+import PageHeader from '@/components/PageHeader.vue'
 import { deleteRecipe } from '@/modules/recipe/api'
 import RecipeDeleteDialog from '@/modules/recipe/components/RecipeDeleteDialog.vue'
 import RecipeDetailDrawer from '@/modules/recipe/components/RecipeDetailDrawer.vue'
@@ -93,25 +94,16 @@ async function handleSaved() {
 
       <!-- 正常内容 -->
       <template v-else>
-        <header class="recipe-library-page__hero">
-          <div>
-            <p class="recipe-library-page__eyebrow">
-              菜品库
-            </p>
-            <h1 class="recipe-library-page__title">
-              菜品库
-            </h1>
-            <p class="recipe-library-page__subtitle">
-              管理您的菜品，包括食材、步骤和营养信息。
-            </p>
-          </div>
-          <ElButton
-            type="primary"
-            @click="handleAdd"
-          >
-            新增菜品
-          </ElButton>
-        </header>
+        <PageHeader
+          title="菜品库"
+          subtitle="管理您的菜品，包括食材、步骤和营养信息。"
+        >
+          <template #actions>
+            <ElButton type="primary" @click="handleAdd">
+              新增菜品
+            </ElButton>
+          </template>
+        </PageHeader>
 
         <!-- 筛选栏 -->
         <section class="recipe-library-page__section">
@@ -176,7 +168,6 @@ async function handleSaved() {
 }
 
 .recipe-library-page__state,
-.recipe-library-page__hero,
 .recipe-library-page__section {
   border: var(--card-border);
   border-radius: var(--card-radius);
@@ -214,24 +205,6 @@ async function handleSaved() {
   background: var(--color-success);
   color: #fff;
   font: inherit;
-}
-
-.recipe-library-page__hero {
-  padding: var(--space-6);
-}
-
-.recipe-library-page__title {
-  margin: var(--space-2) 0 0;
-  font-size: var(--text-2xl);
-  line-height: 1.1;
-  color: var(--color-text);
-}
-
-.recipe-library-page__subtitle {
-  max-width: 52ch;
-  margin: var(--space-3) 0 0;
-  color: var(--color-text-secondary);
-  line-height: 1.7;
 }
 
 .recipe-library-page__section {
