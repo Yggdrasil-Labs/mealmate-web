@@ -57,6 +57,7 @@ const { t } = useI18n()
   align-items: center;
   padding: var(--space-3) var(--space-4);
   border: var(--card-border);
+  border-left: 3px solid transparent;
   border-radius: var(--btn-radius);
   background: var(--color-surface);
   transition:
@@ -72,6 +73,7 @@ const { t } = useI18n()
 .shopping-list__item--purchased {
   opacity: 0.6;
   text-decoration: line-through;
+  border-left-color: var(--color-success);
 }
 
 .shopping-list__label {

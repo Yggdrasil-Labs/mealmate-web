@@ -88,7 +88,7 @@ const { t } = useI18n()
 }
 
 .plan-action-bar__btn--primary {
-  background: var(--color-success);
+  background: var(--color-primary);
   color: #fff;
 }
 
@@ -99,7 +99,7 @@ const { t } = useI18n()
 
 .plan-action-bar__btn--secondary {
   background: var(--color-surface-muted);
-  color: var(--color-success);
-  border: 1px solid var(--color-success);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
 }
 </style>

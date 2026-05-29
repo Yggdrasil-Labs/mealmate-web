@@ -148,7 +148,7 @@ onMounted(async () => {
   border: none;
   border-radius: var(--btn-radius-pill);
   padding: var(--space-3) var(--space-6);
-  background: var(--color-success);
+  background: var(--color-primary);
   color: #fff;
   font: inherit;
   cursor: pointer;

@@ -50,6 +50,11 @@ function getItems(date: string, mealType: string): MealPlanItem[] {
   return day[key] ?? []
 }
 
+/** 判断日期是否为今天 */
+function isToday(dateStr: string): boolean {
+  return dateStr === new Date().toISOString().slice(0, 10)
+}
+
 /** 格式化日期为短标签（周几 + 日期） */
 function formatDayLabel(dateStr: string): string {
   const d = new Date(dateStr)
@@ -77,6 +82,7 @@ function formatDayLabel(dateStr: string): string {
           v-for="date in weekDays"
           :key="`${meal.key}-${date}`"
           class="week-grid__cell"
+          :class="{ 'is-today': isToday(date) }"
         >
           <MealItemCard
             v-for="item in getItems(date, meal.key)"
@@ -198,6 +204,16 @@ function formatDayLabel(dateStr: string): string {
 .week-grid__add-btn:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
+}
+
+.week-grid__header.is-today {
+  color: var(--color-primary);
+  font-weight: 700;
+  border-bottom-color: var(--color-primary);
+}
+
+.week-grid__cell.is-today {
+  background: var(--color-primary-soft);
 }
 
 /* 移动端切换 */

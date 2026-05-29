@@ -162,6 +162,11 @@ const brandInitial = computed(() => {
   font-weight: 700;
   letter-spacing: 0.04em;
   flex: none;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.app-header__brand-link:hover .app-header__brand-mark {
+  transform: rotate(3deg) scale(1.05);
 }
 
 .app-header__brand-copy {

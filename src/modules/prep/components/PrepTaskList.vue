@@ -68,11 +68,24 @@ function priorityOrder(p: string) {
   justify-content: space-between;
   padding: var(--space-3) var(--space-4);
   border: var(--card-border);
+  border-left: 3px solid transparent;
   border-radius: var(--btn-radius);
   background: var(--color-surface);
   transition:
     background-color var(--duration-fast) var(--ease-out),
     box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.prep-task-list__item:has(.prep-task-list__priority--high) {
+  border-left-color: var(--color-danger);
+}
+
+.prep-task-list__item:has(.prep-task-list__priority--normal) {
+  border-left-color: var(--color-info);
+}
+
+.prep-task-list__item:has(.prep-task-list__priority--low) {
+  border-left-color: var(--color-border-strong);
 }
 
 .prep-task-list__item:hover {

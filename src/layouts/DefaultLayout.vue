@@ -248,7 +248,7 @@ function getTabCacheKey(routeName: string, fullPath: string) {
 
 .default-layout__main-surface {
   min-height: 100%;
-  border-radius: calc(var(--shell-radius-xl) - 10px);
+  border-radius: var(--shell-radius-md);
   background: var(--shell-surface-strong);
 }
 
@@ -268,7 +268,7 @@ function getTabCacheKey(routeName: string, fullPath: string) {
   }
 
   .default-layout__content {
-    border-radius: calc(var(--shell-radius-lg) + 2px);
+    border-radius: var(--shell-radius-lg);
   }
 
   .default-layout__main {

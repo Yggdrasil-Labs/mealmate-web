@@ -46,7 +46,7 @@ const { t } = useI18n()
 
     <div
       v-else
-      class="recipe-grid__list"
+      class="recipe-grid__list stagger-enter"
       data-testid="recipe-grid-list"
     >
       <RecipeCard
@@ -108,7 +108,7 @@ const { t } = useI18n()
   border: none;
   border-radius: var(--btn-radius);
   padding: var(--space-3) var(--space-4);
-  background: var(--color-success);
+  background: var(--color-primary);
   color: #fff;
   font: inherit;
   font-weight: 600;

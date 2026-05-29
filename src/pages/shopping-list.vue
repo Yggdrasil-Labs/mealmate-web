@@ -86,17 +86,17 @@ onMounted(() => load())
 .shopping-list-page__btn {
   margin-top: var(--space-3);
   padding: var(--space-2) var(--space-6);
-  border: 1px solid var(--color-success);
+  border: 1px solid var(--color-primary);
   border-radius: var(--btn-radius);
   background: var(--color-surface);
-  color: var(--color-success);
+  color: var(--color-primary);
   font-size: var(--text-sm);
   cursor: pointer;
   transition: background-color var(--duration-fast) var(--ease-out);
 }
 
 .shopping-list-page__btn:hover {
-  background: var(--color-success-soft);
+  background: var(--color-primary-soft);
 }
 
 .shopping-list-page__btn:active {

@@ -161,6 +161,10 @@ const preferenceSummary = computed(() => {
 .family-member-card__preference {
   line-height: 1.65;
   color: var(--color-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .family-member-card__actions {

@@ -10,30 +10,35 @@ const shortcuts = [
     title: '周计划',
     description: '查看和管理本周三餐安排',
     path: '/weekly-meal-plan',
+    color: 'var(--color-primary)',
   },
   {
     icon: '📖',
     title: '菜品库',
     description: '浏览和管理所有菜品',
     path: '/recipes',
+    color: 'var(--color-success)',
   },
   {
     icon: '👨‍👩‍👧‍👦',
     title: '家庭画像',
     description: '管理家庭成员和饮食偏好',
     path: '/family/profile',
+    color: 'var(--color-warning)',
   },
   {
     icon: '🛒',
     title: '采购清单',
     description: '查看本周需要采购的食材',
     path: '/shopping-list',
+    color: 'var(--color-info)',
   },
   {
     icon: '🥗',
     title: '备菜计划',
     description: '查看备菜任务和进度',
     path: '/prep-plan',
+    color: 'var(--color-success)',
   },
 ]
 </script>
@@ -49,12 +54,28 @@ const shortcuts = [
       </p>
     </header>
 
+    <div class="home-dashboard__summary">
+      <div class="home-dashboard__stat">
+        <span class="home-dashboard__stat-value">—</span>
+        <span class="home-dashboard__stat-label">本周计划</span>
+      </div>
+      <div class="home-dashboard__stat">
+        <span class="home-dashboard__stat-value">—</span>
+        <span class="home-dashboard__stat-label">待采购项</span>
+      </div>
+      <div class="home-dashboard__stat">
+        <span class="home-dashboard__stat-value">—</span>
+        <span class="home-dashboard__stat-label">备菜任务</span>
+      </div>
+    </div>
+
     <nav class="home-dashboard__grid" aria-label="快捷入口">
       <button
         v-for="item in shortcuts"
         :key="item.path"
         type="button"
         class="home-dashboard__card"
+        :style="{ borderLeft: `3px solid ${item.color}` }"
         @click="router.push(item.path)"
       >
         <span class="home-dashboard__card-icon" aria-hidden="true">{{ item.icon }}</span>
@@ -86,6 +107,33 @@ const shortcuts = [
 
 .home-dashboard__subtitle {
   margin: var(--space-2) 0 0;
+  color: var(--color-text-muted);
+}
+
+.home-dashboard__summary {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-8);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.home-dashboard__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.home-dashboard__stat-value {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.home-dashboard__stat-label {
+  font-size: var(--text-xs);
   color: var(--color-text-muted);
 }
 

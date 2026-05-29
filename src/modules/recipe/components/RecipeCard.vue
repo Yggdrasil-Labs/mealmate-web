@@ -332,7 +332,7 @@ const friendlyBadges = computed(() => {
 }
 
 .recipe-card__button--primary {
-  background: var(--color-success);
+  background: var(--color-primary);
   color: #fff;
 }
 

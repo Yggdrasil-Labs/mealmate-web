@@ -38,7 +38,7 @@ const { t } = useI18n()
 
     <div
       v-else
-      class="family-member-grid__list"
+      class="family-member-grid__list stagger-enter"
       data-testid="family-member-grid-list"
     >
       <FamilyMemberCard
@@ -79,7 +79,7 @@ const { t } = useI18n()
   border: none;
   border-radius: var(--btn-radius-pill);
   padding: var(--space-3) var(--space-6);
-  background: var(--color-success);
+  background: var(--color-primary);
   color: #fff;
   font: inherit;
   cursor: pointer;
