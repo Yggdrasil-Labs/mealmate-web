@@ -56,15 +56,23 @@ const initial = computed(() => props.item.recipeName.slice(0, 1))
 .meal-item-card {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 8px;
-  background: #fff;
-  border: 1px solid #e2e8f0;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--btn-radius);
+  background: var(--color-surface);
+  border: var(--card-border);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.meal-item-card:hover {
+  background: var(--color-surface-muted);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
 }
 
 .meal-item-card--duplicate {
-  border-color: #f59e0b;
+  border-color: var(--color-warning);
 }
 
 .meal-item-card__cover {
@@ -73,7 +81,7 @@ const initial = computed(() => props.item.recipeName.slice(0, 1))
   height: 40px;
   border-radius: 6px;
   overflow: hidden;
-  background: #f1f5f9;
+  background: var(--color-surface-muted);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,7 +95,7 @@ const initial = computed(() => props.item.recipeName.slice(0, 1))
 
 .meal-item-card__initial {
   font-weight: 600;
-  color: #64748b;
+  color: var(--color-text-muted);
 }
 
 .meal-item-card__body {
@@ -96,55 +104,65 @@ const initial = computed(() => props.item.recipeName.slice(0, 1))
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--space-1);
 }
 
 .meal-item-card__name {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   font-weight: 500;
-  color: #0f172a;
+  color: var(--color-text);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .meal-item-card__badge {
-  font-size: 0.7rem;
-  padding: 0.1rem 0.35rem;
-  border-radius: 4px;
-  background: #e0f2fe;
-  color: #0369a1;
+  font-size: var(--badge-font-size);
+  padding: 0 var(--space-1);
+  border-radius: var(--space-1);
+  background: var(--color-info-soft);
+  color: var(--color-info);
 }
 
 .meal-item-card__badge--dup {
-  background: #fef3c7;
-  color: #92400e;
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
 }
 
 .meal-item-card__actions {
   display: flex;
-  gap: 0.25rem;
+  gap: var(--space-1);
   flex-shrink: 0;
 }
 
 .meal-item-card__action {
   min-width: 44px;
-  min-height: 32px;
+  min-height: var(--btn-height-sm);
   border: none;
-  border-radius: 4px;
-  padding: 0.25rem 0.5rem;
-  background: #f1f5f9;
-  color: #475569;
-  font-size: 0.75rem;
+  border-radius: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+  font-size: var(--text-xs);
   cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.meal-item-card__action:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.meal-item-card__action:active {
+  transform: scale(0.97);
 }
 
 .meal-item-card__action:hover {
-  background: #e2e8f0;
+  background: var(--color-border-strong);
 }
 
 .meal-item-card__action--danger:hover {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
 }
 </style>

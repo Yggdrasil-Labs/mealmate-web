@@ -248,10 +248,8 @@ function getTabCacheKey(routeName: string, fullPath: string) {
 
 .default-layout__main-surface {
   min-height: 100%;
-  border: 1px solid var(--shell-border);
   border-radius: calc(var(--shell-radius-xl) - 10px);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), var(--shell-surface));
-  box-shadow: var(--shell-shadow-soft);
+  background: var(--shell-surface-strong);
 }
 
 .default-layout__page-container {

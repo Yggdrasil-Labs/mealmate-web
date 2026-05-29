@@ -177,17 +177,30 @@ const friendlyBadges = computed(() => {
   grid-template-rows: auto 1fr auto;
   min-width: 0;
   overflow: hidden;
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  background: var(--color-surface);
+  box-shadow: var(--card-shadow);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.recipe-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
 }
 
 .recipe-card__cover {
   display: grid;
   place-items: center;
   aspect-ratio: 16 / 9;
-  background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 55%, #fef3c7 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-surface-muted) 0%,
+    var(--color-info-soft) 55%,
+    var(--color-warning-soft) 100%
+  );
 }
 
 .recipe-card__image {
@@ -202,21 +215,21 @@ const friendlyBadges = computed(() => {
   width: 3.25rem;
   height: 3.25rem;
   border-radius: 50%;
-  background: #fff;
-  color: #0f766e;
+  background: var(--color-surface);
+  color: var(--color-success);
   font-size: 1.4rem;
   font-weight: 700;
 }
 
 .recipe-card__body {
   display: grid;
-  gap: 1rem;
-  padding: 1rem;
+  gap: var(--space-4);
+  padding: var(--card-padding);
 }
 
 .recipe-card__heading {
   display: grid;
-  gap: 0.35rem;
+  gap: var(--space-1);
   min-width: 0;
 }
 
@@ -229,88 +242,104 @@ const friendlyBadges = computed(() => {
 
 .recipe-card__name {
   overflow-wrap: anywhere;
-  color: #0f172a;
-  font-size: 1.05rem;
+  color: var(--color-text);
+  font-size: var(--text-base);
   line-height: 1.35;
 }
 
 .recipe-card__source {
-  color: #64748b;
-  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
 }
 
 .recipe-card__meta {
   display: grid;
-  gap: 0.7rem;
+  gap: var(--space-3);
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .recipe-card__meta-item {
   display: grid;
-  gap: 0.2rem;
+  gap: var(--space-1);
   min-width: 0;
 }
 
 .recipe-card__meta-label {
-  color: #64748b;
-  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
 }
 
 .recipe-card__meta-value {
   overflow-wrap: anywhere;
-  color: #1e293b;
+  color: var(--color-text);
   font-weight: 600;
 }
 
 .recipe-card__badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  min-height: 1.75rem;
+  gap: var(--space-2);
+  min-height: var(--badge-height);
 }
 
 .recipe-card__badge {
   display: inline-flex;
   align-items: center;
-  min-height: 1.75rem;
-  border-radius: 999px;
-  padding: 0 0.7rem;
-  background: #ecfdf5;
-  color: #047857;
-  font-size: 0.82rem;
+  min-height: var(--badge-height);
+  border-radius: var(--badge-radius);
+  padding: var(--badge-padding);
+  background: var(--color-success-soft);
+  color: var(--color-success);
+  font-size: var(--badge-font-size);
   font-weight: 600;
 }
 
 .recipe-card__actions {
   display: grid;
-  gap: 0.65rem;
+  gap: var(--space-3);
   grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
-  padding: 0 1rem 1rem;
+  padding: 0 var(--card-padding) var(--card-padding);
 }
 
 .recipe-card__button {
-  min-height: 44px;
+  min-height: var(--btn-height-lg);
   border: none;
-  border-radius: 8px;
-  padding: 0.7rem 0.85rem;
+  border-radius: var(--btn-radius);
+  padding: var(--space-3);
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.recipe-card__button:hover {
+  opacity: 0.85;
+}
+
+.recipe-card__button:active {
+  transform: scale(0.97);
+}
+
+.recipe-card__button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .recipe-card__button--primary {
-  background: #0f766e;
+  background: var(--color-success);
   color: #fff;
 }
 
 .recipe-card__button--secondary {
-  background: #e2e8f0;
-  color: #0f172a;
+  background: var(--color-surface-muted);
+  color: var(--color-text);
 }
 
 .recipe-card__button--danger {
-  background: #fee2e2;
-  color: #b91c1c;
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
 }
 
 @media (max-width: 420px) {

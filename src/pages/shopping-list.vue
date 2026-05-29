@@ -20,13 +20,19 @@ onMounted(() => load())
       {{ t('mealPlan.shoppingList') }}
     </h1>
 
-    <div v-if="loading" class="shopping-list-page__loading">
-      加载中...
+    <div v-if="loading" class="shopping-list-page__skeleton">
+      <div v-for="i in 5" :key="i" class="skeleton" style="height: 48px;" />
     </div>
 
     <!-- 无计划时引导 -->
     <div v-else-if="!store.currentPlan?.planId" class="shopping-list-page__empty">
-      <p>暂无已确认的计划，请先前往周计划页面确认计划。</p>
+      <span class="shopping-list-page__empty-icon" aria-hidden="true">🛒</span>
+      <h2 class="shopping-list-page__empty-title">
+        暂无采购清单
+      </h2>
+      <p class="shopping-list-page__empty-desc">
+        暂无已确认的计划，请先前往周计划页面确认计划。
+      </p>
       <button type="button" class="shopping-list-page__btn" @click="router.push('/weekly-meal-plan')">
         前往周计划
       </button>
@@ -42,38 +48,70 @@ onMounted(() => load())
 
 <style scoped>
 .shopping-list-page {
-  padding: 1rem;
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .shopping-list-page__title {
   margin: 0;
-  font-size: 1.25rem;
-  color: #0f172a;
+  font-size: var(--text-lg);
+  color: var(--color-text);
 }
 
-.shopping-list-page__loading {
-  padding: 3rem;
-  text-align: center;
-  color: #64748b;
+.shopping-list-page__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
 }
 
 .shopping-list-page__empty {
-  padding: 3rem 1rem;
+  padding: var(--space-12) var(--space-4);
   text-align: center;
-  color: #64748b;
+  color: var(--color-text-muted);
+  display: grid;
+  place-items: center;
+  gap: var(--space-2);
+}
+
+.shopping-list-page__empty-icon {
+  font-size: 3rem;
+}
+
+.shopping-list-page__empty-title {
+  margin: 0;
+  font-size: var(--text-lg);
+  color: var(--color-text);
+}
+
+.shopping-list-page__empty-desc {
+  margin: 0;
+  color: var(--color-text-muted);
 }
 
 .shopping-list-page__btn {
-  margin-top: 0.75rem;
-  padding: 0.5rem 1.5rem;
-  border: 1px solid #0f766e;
-  border-radius: 8px;
-  background: #fff;
-  color: #0f766e;
-  font-size: 0.9rem;
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-6);
+  border: 1px solid var(--color-success);
+  border-radius: var(--btn-radius);
+  background: var(--color-surface);
+  color: var(--color-success);
+  font-size: var(--text-sm);
   cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.shopping-list-page__btn:hover {
+  background: var(--color-success-soft);
+}
+
+.shopping-list-page__btn:active {
+  transform: scale(0.97);
+}
+
+.shopping-list-page__btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 </style>

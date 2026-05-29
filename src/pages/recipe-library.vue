@@ -165,33 +165,30 @@ async function handleSaved() {
 <style scoped>
 .recipe-library-page {
   min-height: 100%;
-  padding: 1.5rem;
-  background:
-    radial-gradient(circle at top right, rgba(251, 191, 36, 0.16), transparent 26%),
-    linear-gradient(180deg, #fffdf7 0%, #fff 100%);
+  padding: var(--space-6);
 }
 
 .recipe-library-page__shell {
   width: min(1180px, 100%);
   margin: 0 auto;
   display: grid;
-  gap: 1.25rem;
+  gap: var(--space-4);
 }
 
 .recipe-library-page__state,
 .recipe-library-page__hero,
 .recipe-library-page__section {
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.06);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  background: var(--color-surface);
+  box-shadow: var(--card-shadow);
 }
 
 .recipe-library-page__state {
   display: grid;
-  gap: 0.8rem;
+  gap: var(--space-3);
   place-items: center;
-  padding: 2rem;
+  padding: var(--space-8);
   text-align: center;
 }
 
@@ -199,65 +196,65 @@ async function handleSaved() {
 .recipe-library-page__eyebrow {
   margin: 0;
   letter-spacing: 0.08em;
-  font-size: 0.78rem;
-  color: #94a3b8;
+  font-size: var(--text-xs);
+  color: var(--color-text-soft);
   text-transform: uppercase;
 }
 
 .recipe-library-page__state-copy {
   margin: 0;
-  color: #475569;
+  color: var(--color-text-secondary);
 }
 
 .recipe-library-page__state-button {
-  min-height: 44px;
+  min-height: var(--btn-height-lg);
   border: none;
-  border-radius: 999px;
-  padding: 0.8rem 1.2rem;
-  background: #0f766e;
+  border-radius: var(--btn-radius-pill);
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-success);
   color: #fff;
   font: inherit;
 }
 
 .recipe-library-page__hero {
-  padding: 1.5rem;
+  padding: var(--space-6);
 }
 
 .recipe-library-page__title {
-  margin: 0.55rem 0 0;
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-2xl);
   line-height: 1.1;
-  color: #0f172a;
+  color: var(--color-text);
 }
 
 .recipe-library-page__subtitle {
   max-width: 52ch;
-  margin: 0.75rem 0 0;
-  color: #475569;
+  margin: var(--space-3) 0 0;
+  color: var(--color-text-secondary);
   line-height: 1.7;
 }
 
 .recipe-library-page__section {
   display: grid;
-  gap: 1rem;
-  padding: 1.25rem;
+  gap: var(--space-4);
+  padding: var(--space-4);
 }
 
 .recipe-library-page__section-head h2 {
   margin: 0;
-  font-size: 1.05rem;
-  color: #0f172a;
+  font-size: var(--text-base);
+  color: var(--color-text);
 }
 
 .recipe-library-page__section-head p {
-  margin: 0.35rem 0 0;
-  color: #64748b;
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-muted);
 }
 
 .recipe-library-page__placeholder {
-  border-radius: 16px;
-  border: 1px dashed rgba(148, 163, 184, 0.55);
-  background: linear-gradient(135deg, rgba(248, 250, 252, 0.9), rgba(255, 255, 255, 0.75));
+  border-radius: var(--card-radius);
+  border: 1px dashed var(--color-border-strong);
+  background: var(--color-surface-muted);
 }
 
 .recipe-library-page__placeholder--bar {
@@ -301,13 +298,13 @@ async function handleSaved() {
 
 @media (max-width: 640px) {
   .recipe-library-page {
-    padding: 1rem;
+    padding: var(--space-4);
   }
 
   .recipe-library-page__hero,
   .recipe-library-page__section,
   .recipe-library-page__state {
-    padding: 1rem;
+    padding: var(--space-4);
   }
 }
 </style>

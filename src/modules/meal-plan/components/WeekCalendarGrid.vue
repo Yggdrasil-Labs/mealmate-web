@@ -135,8 +135,8 @@ function formatDayLabel(dateStr: string): string {
   display: grid;
   grid-template-columns: 4rem repeat(7, 1fr);
   gap: 1px;
-  background: #e2e8f0;
-  border-radius: 8px;
+  background: var(--color-border-strong);
+  border-radius: var(--btn-radius);
   overflow: hidden;
 }
 
@@ -145,46 +145,52 @@ function formatDayLabel(dateStr: string): string {
 }
 
 .week-grid__header {
-  padding: 0.5rem;
-  background: #f8fafc;
-  font-size: 0.8rem;
+  padding: var(--space-2);
+  background: var(--color-surface-muted);
+  font-size: var(--text-xs);
   font-weight: 600;
   text-align: center;
-  color: #475569;
+  color: var(--color-text-secondary);
 }
 
 .week-grid__meal-label {
-  padding: 0.5rem;
-  background: #f8fafc;
-  font-size: 0.8rem;
+  padding: var(--space-2);
+  background: var(--color-surface-muted);
+  font-size: var(--text-xs);
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #475569;
+  color: var(--color-text-secondary);
 }
 
 .week-grid__cell {
-  background: #fff;
-  padding: 0.375rem;
+  background: var(--color-surface);
+  padding: var(--space-2);
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--space-1);
   min-height: 80px;
 }
 
 .week-grid__add-btn {
-  min-height: 32px;
-  border: 1px dashed #cbd5e1;
-  border-radius: 4px;
+  min-height: var(--btn-height-sm);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--space-1);
   background: transparent;
-  color: #64748b;
-  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
   cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
 }
 
 .week-grid__add-btn:hover {
-  background: #f8fafc;
+  background: var(--color-surface-muted);
+}
+
+.week-grid__add-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 /* 移动端切换 */
@@ -196,32 +202,32 @@ function formatDayLabel(dateStr: string): string {
   .week-grid__mobile {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-4);
   }
 
   .week-grid__day-section {
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 0.75rem;
+    border: var(--card-border);
+    border-radius: var(--btn-radius);
+    padding: var(--space-3);
   }
 
   .week-grid__day-title {
-    margin: 0 0 0.5rem;
-    font-size: 1rem;
-    color: #0f172a;
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-base);
+    color: var(--color-text);
   }
 
   .week-grid__meal-section {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2);
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: var(--space-1);
   }
 
   .week-grid__meal-title {
     margin: 0;
-    font-size: 0.85rem;
-    color: #64748b;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
   }
 }
 </style>

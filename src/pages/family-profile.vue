@@ -118,40 +118,37 @@ onMounted(async () => {
 <style scoped>
 .family-profile-page {
   min-height: 100%;
-  padding: 1.5rem;
-  background:
-    radial-gradient(circle at top right, rgba(251, 191, 36, 0.18), transparent 28%),
-    linear-gradient(180deg, #fffdf7 0%, #fff 100%);
+  padding: var(--space-6);
 }
 
 .family-profile-page__content {
   width: min(1120px, 100%);
   margin: 0 auto;
   display: grid;
-  gap: 1.25rem;
+  gap: var(--space-4);
 }
 
 .family-profile-page__state {
   display: grid;
-  gap: 0.85rem;
+  gap: var(--space-3);
   place-items: center;
-  padding: 2rem;
-  border-radius: 20px;
-  background: #fff;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  padding: var(--space-8);
+  border-radius: var(--card-radius);
+  background: var(--color-surface);
+  border: var(--card-border);
 }
 
 .family-profile-page__state-copy {
   margin: 0;
-  color: #475569;
+  color: var(--color-text-secondary);
 }
 
 .family-profile-page__state-button {
-  min-height: 44px;
+  min-height: var(--btn-height-lg);
   border: none;
-  border-radius: 999px;
-  padding: 0.8rem 1.2rem;
-  background: #0f766e;
+  border-radius: var(--btn-radius-pill);
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-success);
   color: #fff;
   font: inherit;
   cursor: pointer;
@@ -159,7 +156,7 @@ onMounted(async () => {
 
 @media (max-width: 640px) {
   .family-profile-page {
-    padding: 1rem;
+    padding: var(--space-4);
   }
 }
 </style>

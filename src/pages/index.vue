@@ -1,114 +1,151 @@
 <script setup lang="ts">
-const cleanHighlights = [
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+/** 快捷入口定义 */
+const shortcuts = [
   {
-    label: '当前状态',
-    value: '页面内容已清理，当前仅保留正式项目所需的基础占位。',
+    icon: '📋',
+    title: '周计划',
+    description: '查看和管理本周三餐安排',
+    path: '/weekly-meal-plan',
   },
   {
-    label: '下一步',
-    value: '可以在这里继续接入真实业务模块与正式数据。',
+    icon: '📖',
+    title: '菜品库',
+    description: '浏览和管理所有菜品',
+    path: '/recipes',
+  },
+  {
+    icon: '👨‍👩‍👧‍👦',
+    title: '家庭画像',
+    description: '管理家庭成员和饮食偏好',
+    path: '/family/profile',
+  },
+  {
+    icon: '🛒',
+    title: '采购清单',
+    description: '查看本周需要采购的食材',
+    path: '/shopping-list',
+  },
+  {
+    icon: '🥗',
+    title: '备菜计划',
+    description: '查看备菜任务和进度',
+    path: '/prep-plan',
   },
 ]
 </script>
 
 <template>
-  <div class="demo-clean">
-    <div class="demo-clean__card">
-      <p class="demo-clean__eyebrow">
-        项目首页
+  <div class="home-dashboard">
+    <header class="home-dashboard__header">
+      <h1 class="home-dashboard__title">
+        欢迎使用 MealMate
+      </h1>
+      <p class="home-dashboard__subtitle">
+        家庭饮食规划助手，从这里开始管理您的一周三餐。
       </p>
-      <h1>内容已整理</h1>
-      <p class="demo-clean__subtitle">
-        当前页面仅保留基础布局，原先的展示模块和测试文案已被移除。你可以在此基础上继续搭建正式内容。
-      </p>
-      <div class="demo-clean__highlights">
-        <div
-          v-for="item in cleanHighlights"
-          :key="item.label"
-          class="demo-clean__highlight"
-        >
-          <p class="demo-clean__label">
-            {{ item.label }}
-          </p>
-          <p class="demo-clean__value">
-            {{ item.value }}
-          </p>
-        </div>
-      </div>
-    </div>
+    </header>
+
+    <nav class="home-dashboard__grid" aria-label="快捷入口">
+      <button
+        v-for="item in shortcuts"
+        :key="item.path"
+        type="button"
+        class="home-dashboard__card"
+        @click="router.push(item.path)"
+      >
+        <span class="home-dashboard__card-icon" aria-hidden="true">{{ item.icon }}</span>
+        <span class="home-dashboard__card-title">{{ item.title }}</span>
+        <span class="home-dashboard__card-desc">{{ item.description }}</span>
+      </button>
+    </nav>
   </div>
 </template>
 
 <style scoped>
-.demo-clean {
-  min-height: 100%;
+.home-dashboard {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 1.5rem;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-4);
+  min-height: 100%;
 }
 
-.demo-clean__card {
-  width: min(680px, 100%);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 20px;
-  padding: 2.5rem;
-  background: #fff;
-  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.08);
+.home-dashboard__header {
+  text-align: center;
 }
 
-.demo-clean__eyebrow {
+.home-dashboard__title {
   margin: 0;
-  letter-spacing: 0.08em;
-  font-size: 0.78rem;
-  color: #94a3b8;
+  font-size: var(--text-2xl);
+  color: var(--color-text);
 }
 
-.demo-clean h1 {
-  margin: 0.6rem 0 0;
-  font-size: clamp(2rem, 3vw, 2.6rem);
-  font-weight: 600;
-  color: #111827;
+.home-dashboard__subtitle {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-muted);
 }
 
-.demo-clean__subtitle {
-  margin: 0.75rem 0 1.8rem;
-  color: #475569;
-  line-height: 1.7;
-}
-
-.demo-clean__highlights {
+.home-dashboard__grid {
   display: grid;
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
 }
 
-.demo-clean__highlight {
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 14px;
-  padding: 1rem 1.25rem;
-  background: #f8fafc;
+.home-dashboard__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  background: var(--color-surface);
+  box-shadow: var(--card-shadow);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
 }
 
-.demo-clean__label {
-  margin: 0;
-  font-size: 0.8rem;
-  color: #64748b;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+.home-dashboard__card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
 }
 
-.demo-clean__value {
-  margin: 0.35rem 0 0;
-  color: #0f172a;
+.home-dashboard__card:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.home-dashboard__card:active {
+  transform: scale(0.98);
+}
+
+.home-dashboard__card-icon {
+  font-size: 2rem;
+}
+
+.home-dashboard__card-title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.home-dashboard__card-desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.5;
 }
 
 @media (max-width: 640px) {
-  .demo-clean__card {
-    padding: 2rem;
-  }
-
-  .demo-clean__highlight {
-    padding: 0.9rem 1rem;
+  .home-dashboard__grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>

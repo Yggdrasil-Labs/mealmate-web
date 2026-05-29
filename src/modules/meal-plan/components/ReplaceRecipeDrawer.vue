@@ -125,7 +125,7 @@ function handleClose() {
   font-size: 1.25rem;
   cursor: pointer;
   min-width: 44px;
-  min-height: 44px;
+  min-height: var(--btn-height-lg);
 }
 
 .replace-drawer__search {
@@ -137,7 +137,7 @@ function handleClose() {
   width: 100%;
   padding: 0.5rem 0.75rem;
   border: 1px solid #e2e8f0;
-  border-radius: 6px;
+  border-radius: var(--btn-radius);
   font-size: 0.875rem;
 }
 
@@ -162,9 +162,9 @@ function handleClose() {
 }
 
 .replace-drawer__btn {
-  min-height: 44px;
+  min-height: var(--btn-height-lg);
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: var(--btn-radius);
   font-size: 0.875rem;
   cursor: pointer;
   border: none;

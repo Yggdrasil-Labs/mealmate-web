@@ -53,7 +53,7 @@ const weekLabel = computed(() => {
 .week-navigator {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .week-navigator__btn {
@@ -61,21 +61,27 @@ const weekLabel = computed(() => {
   align-items: center;
   justify-content: center;
   min-width: 44px;
-  min-height: 44px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  background: #fff;
-  font-size: 1.25rem;
+  min-height: var(--btn-height-md);
+  border: var(--card-border);
+  border-radius: var(--btn-radius);
+  background: var(--color-surface);
+  font-size: var(--text-lg);
   cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
 }
 
 .week-navigator__btn:hover {
-  background: #f1f5f9;
+  background: var(--color-surface-muted);
+}
+
+.week-navigator__btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .week-navigator__label {
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 600;
-  color: #0f172a;
+  color: var(--color-text);
 }
 </style>

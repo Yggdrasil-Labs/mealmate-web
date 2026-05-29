@@ -49,16 +49,24 @@ const { t } = useI18n()
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .shopping-list__item {
   display: flex;
   align-items: center;
-  padding: 0.75rem 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  background: #fff;
+  padding: var(--space-3) var(--space-4);
+  border: var(--card-border);
+  border-radius: var(--btn-radius);
+  background: var(--color-surface);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.shopping-list__item:hover {
+  background: var(--color-surface-muted);
+  box-shadow: var(--card-shadow);
 }
 
 .shopping-list__item--purchased {
@@ -69,7 +77,7 @@ const { t } = useI18n()
 .shopping-list__label {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   cursor: pointer;
 }
 
@@ -79,18 +87,18 @@ const { t } = useI18n()
 }
 
 .shopping-list__name {
-  font-size: 0.9rem;
-  color: #0f172a;
+  font-size: var(--text-sm);
+  color: var(--color-text);
 }
 
 .shopping-list__qty {
-  font-size: 0.8rem;
-  color: #64748b;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
 }
 
 .shopping-list__empty {
-  padding: 2rem;
+  padding: var(--space-8);
   text-align: center;
-  color: #94a3b8;
+  color: var(--color-text-soft);
 }
 </style>

@@ -74,7 +74,7 @@ const brandInitial = computed(() => {
         </span>
         <span class="app-header__brand-copy">
           <span class="app-header__brand-name">{{ brand }}</span>
-          <span class="app-header__brand-meta">Enterprise control panel</span>
+          <span class="app-header__brand-meta">家庭饮食规划</span>
         </span>
       </RouterLink>
       <span class="app-header__divider" aria-hidden="true" />

@@ -37,14 +37,23 @@ async function handleDelete(item: { itemId: number }) {
       />
     </header>
 
-    <!-- 加载态 -->
-    <div v-if="loading" class="weekly-meal-plan__loading">
-      加载中...
+    <!-- 加载态：骨架屏 -->
+    <div v-if="loading" class="weekly-meal-plan__skeleton">
+      <div class="skeleton" style="height: 32px; width: 120px;" />
+      <div class="weekly-meal-plan__skeleton-grid">
+        <div v-for="i in 7" :key="i" class="skeleton" style="height: 80px;" />
+      </div>
     </div>
 
     <!-- 空态 -->
     <div v-else-if="!plan" class="weekly-meal-plan__empty">
-      <p>{{ t('mealPlan.emptyHint', '当前周暂无计划，点击下方按钮生成') }}</p>
+      <span class="weekly-meal-plan__empty-icon" aria-hidden="true">📋</span>
+      <h2 class="weekly-meal-plan__empty-title">
+        暂无本周计划
+      </h2>
+      <p class="weekly-meal-plan__empty-desc">
+        {{ t('mealPlan.emptyHint', '当前周暂无计划，点击下方按钮生成') }}
+      </p>
     </div>
 
     <!-- 网格 -->
@@ -89,8 +98,8 @@ async function handleDelete(item: { itemId: number }) {
 .weekly-meal-plan {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
+  gap: var(--space-4);
+  padding: var(--space-4);
   min-height: 0;
 }
 
@@ -99,20 +108,48 @@ async function handleDelete(item: { itemId: number }) {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .weekly-meal-plan__title {
   margin: 0;
-  font-size: 1.25rem;
-  color: #0f172a;
+  font-size: var(--text-lg);
+  color: var(--color-text);
 }
 
 .weekly-meal-plan__loading,
 .weekly-meal-plan__empty {
   display: grid;
   place-items: center;
-  padding: 3rem 1rem;
-  color: #64748b;
+  padding: var(--space-12) var(--space-4);
+  color: var(--color-text-muted);
+}
+
+.weekly-meal-plan__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.weekly-meal-plan__skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--space-2);
+}
+
+.weekly-meal-plan__empty-icon {
+  font-size: 3rem;
+}
+
+.weekly-meal-plan__empty-title {
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-lg);
+  color: var(--color-text);
+}
+
+.weekly-meal-plan__empty-desc {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-muted);
+  text-align: center;
 }
 </style>

@@ -68,24 +68,24 @@ const { t } = useI18n()
 
 .recipe-grid__list {
   display: grid;
-  gap: 1rem;
+  gap: var(--space-4);
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
 }
 
 .recipe-grid__empty {
   display: grid;
-  gap: 1rem;
+  gap: var(--space-4);
   place-items: center;
-  padding: 2rem 1.5rem;
-  border: 1px dashed rgba(100, 116, 139, 0.7);
-  border-radius: 8px;
-  background: #f8fafc;
+  padding: var(--space-8) var(--space-6);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--btn-radius);
+  background: var(--color-surface-muted);
   text-align: center;
 }
 
 .recipe-grid__empty-copy {
   display: grid;
-  gap: 0.4rem;
+  gap: var(--space-1);
 }
 
 .recipe-grid__empty-title,
@@ -94,21 +94,21 @@ const { t } = useI18n()
 }
 
 .recipe-grid__empty-title {
-  color: #0f172a;
-  font-size: 1.05rem;
+  color: var(--color-text);
+  font-size: var(--text-base);
 }
 
 .recipe-grid__empty-description {
-  color: #475569;
+  color: var(--color-text-secondary);
   line-height: 1.6;
 }
 
 .recipe-grid__empty-button {
-  min-height: 44px;
+  min-height: var(--btn-height-lg);
   border: none;
-  border-radius: 8px;
-  padding: 0.8rem 1rem;
-  background: #0f766e;
+  border-radius: var(--btn-radius);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-success);
   color: #fff;
   font: inherit;
   font-weight: 600;

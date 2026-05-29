@@ -68,27 +68,27 @@ const { t } = useI18n()
 .plan-action-bar {
   position: sticky;
   bottom: 0;
-  padding: 0.75rem 1rem;
-  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
-  background: #fff;
-  border-top: 1px solid #e2e8f0;
+  padding: var(--space-3) var(--space-4);
+  padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  background: var(--color-surface);
+  border-top: var(--card-border);
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-2);
   justify-content: center;
 }
 
 .plan-action-bar__btn {
-  min-height: 44px;
-  padding: 0.5rem 1.5rem;
+  min-height: var(--btn-height-lg);
+  padding: var(--space-2) var(--space-6);
   border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  border-radius: var(--btn-radius);
+  font-size: var(--text-sm);
   font-weight: 600;
   cursor: pointer;
 }
 
 .plan-action-bar__btn--primary {
-  background: #0f766e;
+  background: var(--color-success);
   color: #fff;
 }
 
@@ -98,8 +98,8 @@ const { t } = useI18n()
 }
 
 .plan-action-bar__btn--secondary {
-  background: #f1f5f9;
-  color: #0f766e;
-  border: 1px solid #0f766e;
+  background: var(--color-surface-muted);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
 }
 </style>
