@@ -254,12 +254,12 @@ function getTabCacheKey(routeName: string, fullPath: string) {
 
 .default-layout__page-container {
   display: flex;
+  flex-direction: column;
   min-height: 100%;
   width: 100%;
   max-width: var(--shell-page-max-width);
   margin: 0 auto;
   padding: var(--shell-page-padding-block) var(--shell-page-padding-inline);
-  justify-content: center;
 }
 
 @media (max-width: 768px) {
