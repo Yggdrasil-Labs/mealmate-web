@@ -21,7 +21,8 @@
 @import 'element-plus/theme-chalk/index.css';
 
 :root {
-  --shell-font-family: 'Avenir Next', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --shell-font-family:
+    system-ui, -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', sans-serif;
   --shell-bg: #{map.get($shell-colors, bg)};
   --shell-bg-strong: #{map.get($shell-colors, bg-strong)};
   --shell-surface: #{map.get($shell-colors, surface)};
@@ -119,7 +120,7 @@
   --text-2xl: 1.875rem;
 
   // ───── 语义字号 ─────
-  --page-title-size: var(--text-2xl);
+  --page-title-size: var(--text-xl);
   --section-title-size: var(--text-lg);
   --card-title-size: var(--text-base);
 
@@ -322,6 +323,7 @@ textarea {
 @media (min-width: 1600px) {
   :root {
     --shell-page-max-width: 1560px;
+    --shell-frame-padding: 16px;
   }
 }
 

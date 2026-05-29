@@ -192,7 +192,7 @@ function handleRefresh() {
   gap: var(--shell-space-1);
   min-width: 0;
   border: 1px solid var(--shell-border);
-  border-radius: calc(var(--shell-radius-md) - 2px);
+  border-radius: var(--shell-radius-sm);
   background: var(--shell-glass);
   min-height: var(--shell-tabs-height);
   max-width: min(18rem, 70vw);

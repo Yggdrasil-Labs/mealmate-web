@@ -47,7 +47,7 @@ async function handleDelete(item: { itemId: number }) {
 
     <!-- 空态 -->
     <div v-else-if="!plan" class="weekly-meal-plan__empty">
-      <span class="weekly-meal-plan__empty-icon" aria-hidden="true">📋</span>
+      <span class="weekly-meal-plan__empty-icon" aria-hidden="true">计</span>
       <h2 class="weekly-meal-plan__empty-title">
         暂无本周计划
       </h2>
@@ -124,7 +124,16 @@ async function handleDelete(item: { itemId: number }) {
 }
 
 .weekly-meal-plan__empty-icon {
-  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: var(--text-xl);
+  font-weight: 700;
 }
 
 .weekly-meal-plan__empty-title {

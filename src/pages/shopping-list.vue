@@ -25,7 +25,7 @@ onMounted(() => load())
 
     <!-- 无计划时引导 -->
     <div v-else-if="!store.currentPlan?.planId" class="shopping-list-page__empty">
-      <span class="shopping-list-page__empty-icon" aria-hidden="true">🛒</span>
+      <span class="shopping-list-page__empty-icon" aria-hidden="true">购</span>
       <h2 class="shopping-list-page__empty-title">
         暂无采购清单
       </h2>
@@ -69,7 +69,16 @@ onMounted(() => load())
 }
 
 .shopping-list-page__empty-icon {
-  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-info-soft);
+  color: var(--color-info);
+  font-size: var(--text-xl);
+  font-weight: 700;
 }
 
 .shopping-list-page__empty-title {

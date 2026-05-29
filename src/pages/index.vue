@@ -6,39 +6,44 @@ const router = useRouter()
 /** 快捷入口定义 */
 const shortcuts = [
   {
-    icon: '📋',
+    icon: '计',
     title: '周计划',
     description: '查看和管理本周三餐安排',
     path: '/weekly-meal-plan',
     color: 'var(--color-primary)',
+    bg: 'var(--color-primary-soft)',
   },
   {
-    icon: '📖',
+    icon: '菜',
     title: '菜品库',
     description: '浏览和管理所有菜品',
     path: '/recipes',
     color: 'var(--color-success)',
+    bg: 'var(--color-success-soft)',
   },
   {
-    icon: '👨‍👩‍👧‍👦',
+    icon: '家',
     title: '家庭画像',
     description: '管理家庭成员和饮食偏好',
     path: '/family/profile',
     color: 'var(--color-warning)',
+    bg: 'var(--color-warning-soft)',
   },
   {
-    icon: '🛒',
+    icon: '购',
     title: '采购清单',
     description: '查看本周需要采购的食材',
     path: '/shopping-list',
     color: 'var(--color-info)',
+    bg: 'var(--color-info-soft)',
   },
   {
-    icon: '🥗',
+    icon: '备',
     title: '备菜计划',
     description: '查看备菜任务和进度',
     path: '/prep-plan',
     color: 'var(--color-success)',
+    bg: 'var(--color-success-soft)',
   },
 ]
 </script>
@@ -75,7 +80,7 @@ const shortcuts = [
         :key="item.path"
         type="button"
         class="home-dashboard__card"
-        :style="{ borderLeft: `3px solid ${item.color}` }"
+        :style="{ 'borderLeft': `3px solid ${item.color}`, '--_card-color': item.bg }"
         @click="router.push(item.path)"
       >
         <span class="home-dashboard__card-icon" aria-hidden="true">{{ item.icon }}</span>
@@ -176,7 +181,16 @@ const shortcuts = [
 }
 
 .home-dashboard__card-icon {
-  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--_card-color, var(--color-primary-soft));
+  color: var(--color-text);
+  font-size: var(--text-lg);
+  font-weight: 700;
 }
 
 .home-dashboard__card-title {

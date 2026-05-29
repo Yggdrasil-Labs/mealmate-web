@@ -93,7 +93,6 @@ const mealGoal = computed(() => props.summary?.mealGoal ?? '-')
   margin: 0;
   font-size: var(--text-xs);
   letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--color-warning);
 }
 

@@ -25,7 +25,7 @@ onMounted(() => load())
 
     <!-- 无计划时引导 -->
     <div v-else-if="!store.currentPlan?.planId" class="prep-plan-page__empty">
-      <span class="prep-plan-page__empty-icon" aria-hidden="true">🥗</span>
+      <span class="prep-plan-page__empty-icon" aria-hidden="true">备</span>
       <h2 class="prep-plan-page__empty-title">
         暂无备菜计划
       </h2>
@@ -69,7 +69,16 @@ onMounted(() => load())
 }
 
 .prep-plan-page__empty-icon {
-  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-success-soft);
+  color: var(--color-success);
+  font-size: var(--text-xl);
+  font-weight: 700;
 }
 
 .prep-plan-page__empty-title {

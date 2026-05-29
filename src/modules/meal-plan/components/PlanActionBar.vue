@@ -71,7 +71,7 @@ const { t } = useI18n()
   padding: var(--space-3) var(--space-4);
   padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
   background: var(--color-surface);
-  border-top: var(--card-border);
+  border-top: 1px solid var(--color-border-strong);
   display: flex;
   gap: var(--space-2);
   justify-content: center;
