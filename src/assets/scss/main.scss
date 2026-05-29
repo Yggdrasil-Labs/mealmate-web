@@ -213,6 +213,30 @@ textarea {
   }
 }
 
+/* ───── 自定义滚动条 ───── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.3) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.5);
+}
+
 /* ───── 卡片 stagger 入场 ───── */
 @keyframes card-enter {
   from {
@@ -288,6 +312,17 @@ textarea {
   --shell-accent-soft: rgba(96, 165, 250, 0.15);
   --shell-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   --shell-shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shell-glass: rgba(30, 41, 59, 0.72);
+  --shell-glass-strong: rgba(30, 41, 59, 0.9);
+  --shell-shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shell-bg-accent-1: rgba(96, 165, 250, 0.06);
+  --shell-bg-accent-2: rgba(52, 211, 153, 0.04);
+}
+
+@media (min-width: 1600px) {
+  :root {
+    --shell-page-max-width: 1560px;
+  }
 }
 
 /* ───── 动效降级：prefers-reduced-motion ───── */

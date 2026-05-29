@@ -293,7 +293,7 @@ function handleSelect(key: string) {
   gap: var(--shell-space-2);
   border: 1px solid transparent;
   border-radius: var(--shell-radius-md);
-  background: rgba(255, 255, 255, 0.74);
+  background: var(--shell-glass);
   min-height: 44px;
   padding: 0.625rem var(--shell-space-3) 0.625rem var(--shell-space-4);
   color: var(--shell-text);

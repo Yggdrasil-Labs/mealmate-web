@@ -136,6 +136,8 @@ onMounted(async () => {
   border-radius: var(--card-radius);
   background: var(--color-surface);
   border: var(--card-border);
+  border-left: 3px solid var(--color-danger);
+  background: var(--color-danger-soft);
 }
 
 .family-profile-page__state-copy {

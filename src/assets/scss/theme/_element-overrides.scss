@@ -45,3 +45,34 @@
 .el-overlay {
   background-color: rgba(15, 23, 42, 0.5);
 }
+
+/* Drawer 标题与关闭按钮 */
+.el-drawer__header {
+  padding: var(--space-4) var(--space-6);
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--section-title-size);
+  font-weight: 600;
+}
+
+.el-drawer__body {
+  padding: var(--space-6);
+}
+
+.el-drawer__close-btn {
+  font-size: var(--text-lg);
+}
+
+/* 表单 label */
+.el-form-item__label {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+/* Message 样式 */
+.el-message {
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  border: var(--card-border);
+}

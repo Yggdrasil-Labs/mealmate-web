@@ -216,6 +216,24 @@ function formatDayLabel(dateStr: string): string {
   background: var(--color-primary-soft);
 }
 
+@media (min-width: 769px) and (max-width: 1024px) {
+  .week-grid__desktop {
+    grid-template-columns: 4rem repeat(7, 1fr);
+    font-size: var(--text-xs);
+  }
+
+  .week-grid__cell {
+    padding: var(--space-1);
+    min-height: 64px;
+  }
+
+  .week-grid__header,
+  .week-grid__meal-label {
+    padding: var(--space-1);
+    font-size: 0.7rem;
+  }
+}
+
 /* 移动端切换 */
 @media (max-width: 768px) {
   .week-grid__desktop {

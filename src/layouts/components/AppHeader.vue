@@ -126,7 +126,7 @@ const brandInitial = computed(() => {
   padding: var(--shell-space-3) var(--shell-space-4);
   border: 1px solid var(--shell-border);
   border-radius: var(--shell-radius-xl);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), var(--shell-surface));
+  background: linear-gradient(180deg, var(--shell-glass-strong), var(--shell-surface));
   box-shadow: var(--shell-shadow-soft);
   backdrop-filter: blur(18px);
 }

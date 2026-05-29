@@ -181,6 +181,8 @@ async function handleSaved() {
   place-items: center;
   padding: var(--space-8);
   text-align: center;
+  border-left: 3px solid var(--color-danger);
+  background: var(--color-danger-soft);
 }
 
 .recipe-library-page__state-label,

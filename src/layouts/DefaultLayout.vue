@@ -203,8 +203,8 @@ function getTabCacheKey(routeName: string, fullPath: string) {
   overflow: hidden;
   padding: var(--shell-frame-padding);
   background:
-    radial-gradient(circle at top left, rgba(47, 111, 235, 0.08), transparent 28%),
-    radial-gradient(circle at top right, rgba(15, 118, 110, 0.06), transparent 24%),
+    radial-gradient(circle at top left, var(--shell-bg-accent-1), transparent 28%),
+    radial-gradient(circle at top right, var(--shell-bg-accent-2), transparent 24%),
     linear-gradient(180deg, var(--shell-bg) 0%, var(--shell-bg-strong) 100%);
   color: var(--shell-text);
 }
@@ -235,7 +235,7 @@ function getTabCacheKey(routeName: string, fullPath: string) {
   overflow: hidden;
   border: 1px solid var(--shell-border);
   border-radius: var(--shell-radius-xl);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0.9));
+  background: linear-gradient(180deg, var(--shell-glass), var(--shell-glass-strong));
   box-shadow: var(--shell-shadow);
 }
 

@@ -46,7 +46,7 @@ const friendlyBadges = computed(() => {
 
 <template>
   <article class="recipe-card">
-    <div class="recipe-card__cover" :class="{ 'recipe-card__cover--no-image': !props.recipe.coverImageUrl }">
+    <div class="recipe-card__cover" :class="{ 'recipe-card__cover--no-image': !props.recipe.coverImageUrl }" :style="!props.recipe.coverImageUrl ? { background: coverGradient } : undefined">
       <img
         v-if="props.recipe.coverImageUrl"
         class="recipe-card__image"
