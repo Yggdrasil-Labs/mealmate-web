@@ -23,6 +23,7 @@ const emit = defineEmits<Emits>()
 
 const ingredients = computed(() => props.modelValue)
 
+/** 生成前端临时 key（非后端 ID），仅用于列表渲染的 :key 绑定。 */
 function generateId() {
   return `ing-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
 }

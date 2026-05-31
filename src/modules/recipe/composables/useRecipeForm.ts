@@ -85,33 +85,41 @@ export function useRecipeForm(initialOptions: UseRecipeFormOptions) {
   const recipeId = ref(initialOptions.recipeId)
 
   let currentOptions = { ...initialOptions }
+  let loadToken = 0
 
   async function loadDetail() {
     if (currentOptions.mode !== 'edit' || !currentOptions.recipeId)
       return
 
+    const token = ++loadToken
     loading.value = true
     error.value = null
 
     try {
       const detail = await fetchRecipeDetail(currentOptions.recipeId)
+      // 竞态保护：忽略过期的请求结果
+      if (token !== loadToken)
+        return
       Object.assign(formData, hydrateFormData(detail))
     }
     catch (err) {
+      if (token !== loadToken)
+        return
       error.value = err instanceof Error ? err : new Error('加载菜品详情失败')
     }
     finally {
-      loading.value = false
+      if (token === loadToken)
+        loading.value = false
     }
   }
 
-  /** 重置表单状态并可选切换模式，替代重新创建实例。 */
-  function reset(options: UseRecipeFormOptions) {
+  /** 重置表单状态并切换模式，支持 await 等待加载完成。 */
+  async function reset(options: UseRecipeFormOptions) {
     currentOptions = { ...options }
     recipeId.value = options.recipeId
     error.value = null
     Object.assign(formData, createDefaultFormData())
-    loadDetail()
+    await loadDetail()
   }
 
   function buildPayload(): CreateRecipePayload {

@@ -291,6 +291,7 @@ function normalizeFilterValues(values: Record<string, unknown>): Partial<RecipeF
 }
 
 export function useRecipeList(options: UseRecipeListOptions = {}) {
+  // 防御式获取路由：允许 composable 在非组件上下文（如单元测试）中运行
   const instance = getCurrentInstance()
   const route = instance ? useRoute() : undefined
   const router = instance ? useRouter() : undefined

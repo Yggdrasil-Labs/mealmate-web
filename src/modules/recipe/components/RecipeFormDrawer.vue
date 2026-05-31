@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { useWindowSize } from '@vueuse/core'
 import { ElButton, ElDrawer, ElForm, ElFormItem, ElInput, ElInputNumber, ElOption, ElSelect, ElSwitch } from 'element-plus'
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRecipeForm } from '../composables/useRecipeForm'
 import {
-  getRecipeCrowdTagLabel,
-  getRecipeDifficultyLabel,
-  getRecipeTypeLabel,
+  getRecipeCrowdTagOptions,
+  getRecipeDifficultyOptions,
+  getRecipeTypeOptions,
 } from '../constants'
 import IngredientEditor from './IngredientEditor.vue'
 import NutritionForm from './NutritionForm.vue'
@@ -44,8 +45,10 @@ const form = useRecipeForm({
   recipeId: props.recipeId,
 })
 
+const { width: windowWidth } = useWindowSize()
+
 const drawerSize = computed(() => {
-  return window.innerWidth < 768 ? '100%' : '70%'
+  return windowWidth.value < 768 ? '100%' : '70%'
 })
 
 const title = computed(() => {
@@ -135,56 +138,19 @@ watch(
 
         <ElFormItem label="类型">
           <ElSelect v-model="form.formData.recipeType">
-            <ElOption
-              value="HOME_COOKING"
-              :label="getRecipeTypeLabel('HOME_COOKING', t)"
-            />
-            <ElOption
-              value="SOUP"
-              :label="getRecipeTypeLabel('SOUP', t)"
-            />
-            <ElOption
-              value="STAPLE"
-              :label="getRecipeTypeLabel('STAPLE', t)"
-            />
-            <ElOption
-              value="SNACK"
-              :label="getRecipeTypeLabel('SNACK', t)"
-            />
+            <ElOption v-for="opt in getRecipeTypeOptions(t)" :key="opt.value" :value="opt.value" :label="opt.label" />
           </ElSelect>
         </ElFormItem>
 
         <ElFormItem label="人群">
           <ElSelect v-model="form.formData.crowdTag">
-            <ElOption
-              value="GENERAL"
-              :label="getRecipeCrowdTagLabel('GENERAL', t)"
-            />
-            <ElOption
-              value="BABY"
-              :label="getRecipeCrowdTagLabel('BABY', t)"
-            />
-            <ElOption
-              value="WEIGHT_LOSS"
-              :label="getRecipeCrowdTagLabel('WEIGHT_LOSS', t)"
-            />
+            <ElOption v-for="opt in getRecipeCrowdTagOptions(t)" :key="opt.value" :value="opt.value" :label="opt.label" />
           </ElSelect>
         </ElFormItem>
 
         <ElFormItem label="难度">
           <ElSelect v-model="form.formData.difficultyLevel">
-            <ElOption
-              value="EASY"
-              :label="getRecipeDifficultyLabel('EASY', t)"
-            />
-            <ElOption
-              value="MEDIUM"
-              :label="getRecipeDifficultyLabel('MEDIUM', t)"
-            />
-            <ElOption
-              value="HARD"
-              :label="getRecipeDifficultyLabel('HARD', t)"
-            />
+            <ElOption v-for="opt in getRecipeDifficultyOptions(t)" :key="opt.value" :value="opt.value" :label="opt.label" />
           </ElSelect>
         </ElFormItem>
 
