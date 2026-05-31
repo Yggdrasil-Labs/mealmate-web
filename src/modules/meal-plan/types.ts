@@ -36,6 +36,7 @@ export interface ConfirmPlanResult {
 }
 
 export interface GenerateRequest {
+  familyId?: string
   weekStartDate: string
   forceRegenerate?: boolean
 }

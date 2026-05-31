@@ -57,8 +57,8 @@ request.interceptors.response.use(
 
     // cola5.0 统一处理响应数据
     if (data.success === true) {
-      // 请求成功，直接返回响应
-      return response
+      // 请求成功，直接返回 COLA response body（与 Http 类的类型声明一致）
+      return data as any
     }
     else {
       // 业务错误处理

@@ -82,15 +82,9 @@ interface UpdateMemberPreferenceRequestDto {
 }
 
 async function unwrapResponseData<T>(request: Promise<unknown>): Promise<T> {
-  const response = await request as FamilyApiResponseEnvelope<FamilyApiResponseEnvelope<T> | T>
-  const payload = response.data
-
-  if (payload && typeof payload === 'object' && 'data' in payload)
-    return (payload as FamilyApiResponseEnvelope<T>).data as T
-
-  if (payload !== undefined)
-    return payload as T
-
+  const response = await request as FamilyApiResponseEnvelope<T>
+  if (response.data !== undefined)
+    return response.data as T
   throw new Error('Family API returned empty data payload')
 }
 

@@ -50,15 +50,9 @@ interface RecipeDetailDto extends RecipeSummaryDto {
 }
 
 async function unwrapResponseData<T>(request: Promise<unknown>): Promise<T> {
-  const response = await request as RecipeApiEnvelope<RecipeApiEnvelope<T> | T>
-  const payload = response.data
-
-  if (payload && typeof payload === 'object' && 'data' in payload)
-    return (payload as RecipeApiEnvelope<T>).data as T
-
-  if (payload !== undefined)
-    return payload as T
-
+  const response = await request as RecipeApiEnvelope<T>
+  if (response.data !== undefined)
+    return response.data as T
   throw new Error('[recipe api] API returned empty data payload.')
 }
 
@@ -119,7 +113,7 @@ export async function fetchRecipePage(filters: RecipeFilters): Promise<RecipePag
   params.pageSize = filters.pageSize
 
   const response = await http.get<RecipeSummaryDto[]>('/api/recipes', params)
-  const body = (response as unknown as { data: PaginatedApiResponse<RecipeSummaryDto> }).data ?? response as unknown as PaginatedApiResponse<RecipeSummaryDto>
+  const body = response as unknown as PaginatedApiResponse<RecipeSummaryDto>
 
   return {
     list: (body.data ?? []).map(mapRecipeSummaryFromApi),
@@ -171,5 +165,5 @@ export async function uploadRecipeStepImage(file: File): Promise<string> {
   const formData = new FormData()
   formData.append('file', file)
   const response = await http.post<{ url: string }>('/api/recipes/step-image', formData)
-  return (response as unknown as { data: { url: string } }).data?.url ?? ''
+  return (response as any).data?.url ?? ''
 }

@@ -64,10 +64,10 @@ const router = createRouter({
 })
 
 // 路由守卫：认证扩展点（当前直接放行，接入认证时在此实现）
-router.beforeEach((_to, _from, next) => {
+router.beforeEach((_to, _from) => {
   // TODO: 接入认证时，在此检查 token / 权限
-  // 示例：if (!authStore.isAuthenticated && to.meta.requiresAuth) return next('/login')
-  next()
+  // 示例：if (!authStore.isAuthenticated && to.meta.requiresAuth) return '/login'
+  return true
 })
 
 // 路由后置守卫

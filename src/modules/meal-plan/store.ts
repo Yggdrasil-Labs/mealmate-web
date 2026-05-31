@@ -1,6 +1,7 @@
 import type { GenerateRequest, WeeklyMealPlan } from './types'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { ref } from 'vue'
+import { DEFAULT_FAMILY_ID } from '@/modules/family/constants'
 import * as api from './api'
 
 export const useMealPlanStore = defineStore('mealPlan', () => {
@@ -13,7 +14,7 @@ export const useMealPlanStore = defineStore('mealPlan', () => {
     loading.value = true
     error.value = null
     try {
-      const res = await api.getCurrentPlan(selectedWeekStart.value || undefined)
+      const res = await api.getCurrentPlan(selectedWeekStart.value || undefined, DEFAULT_FAMILY_ID)
       currentPlan.value = res.data ?? null
     }
     catch (e: any) {
@@ -28,7 +29,7 @@ export const useMealPlanStore = defineStore('mealPlan', () => {
     loading.value = true
     error.value = null
     try {
-      const res = await api.generatePlan(data)
+      const res = await api.generatePlan({ ...data, familyId: DEFAULT_FAMILY_ID })
       currentPlan.value = res.data ?? null
     }
     catch (e: any) {
