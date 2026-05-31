@@ -32,8 +32,16 @@ const { t } = useI18n()
       </button>
     </template>
 
-    <!-- DRAFT：确认按钮 -->
+    <!-- DRAFT：确认按钮 + 重新生成 -->
     <template v-else-if="status === 'DRAFT'">
+      <button
+        type="button"
+        class="plan-action-bar__btn plan-action-bar__btn--secondary"
+        :disabled="loading"
+        @click="emit('generate')"
+      >
+        {{ t('mealPlan.generate') }}
+      </button>
       <button
         type="button"
         class="plan-action-bar__btn plan-action-bar__btn--primary"
