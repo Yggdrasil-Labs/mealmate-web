@@ -39,7 +39,7 @@ function getSeasonTagLabel(value: RecipeSeasonTag) {
     SUMMER: '夏季',
     AUTUMN: '秋季',
     WINTER: '冬季',
-    ALL: '四季',
+    ALL_SEASON: '四季',
   }
   return labels[value]
 }
@@ -143,7 +143,7 @@ export const recipeSearchSchema: SearchFieldSchema[] = [
       layout: { group: 'basic', span: 8 },
       options: [
         createOption('', '全部季节'),
-        ...(['SPRING', 'SUMMER', 'AUTUMN', 'WINTER', 'ALL'] as RecipeSeasonTag[])
+        ...(['SPRING', 'SUMMER', 'AUTUMN', 'WINTER', 'ALL_SEASON'] as RecipeSeasonTag[])
           .map(value => createOption(value, getSeasonTagLabel(value))),
       ],
     },

@@ -35,7 +35,11 @@ const emit = defineEmits<Emits>()
 
 const { t } = useI18n()
 
-let form = useRecipeForm({
+// 响应式状态集中声明
+const ingredientError = ref('')
+const ingredientSectionRef = ref<HTMLElement>()
+
+const form = useRecipeForm({
   mode: props.mode,
   recipeId: props.recipeId,
 })
@@ -53,15 +57,10 @@ function handleClose() {
   emit('update:visible', false)
 }
 
-const ingredientError = ref('')
-
 async function handleSave() {
-  // 前端校验：食材不能为空
   if (form.formData.ingredients.length === 0) {
-    ingredientError.value = '请至少添加一个食材'
-    // 滚动到食材区域让用户看到错误
-    const el = document.querySelector('.ingredient-editor')
-    el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    ingredientError.value = t('recipe.form.validation.required', { field: t('recipe.form.fields.ingredients') })
+    ingredientSectionRef.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
     return
   }
   ingredientError.value = ''
@@ -75,12 +74,13 @@ async function handleSave() {
   }
 }
 
+// 当 drawer 重新打开时，通过 reset 切换模式（保持模板引用不变）
 watch(
   () => [props.visible, props.mode, props.recipeId] as const,
   ([visible, mode, recipeId]) => {
     if (visible) {
-      // 重新初始化 form
-      form = useRecipeForm({ mode, recipeId })
+      ingredientError.value = ''
+      form.reset({ mode, recipeId })
     }
   },
 )
@@ -196,15 +196,6 @@ watch(
           />
         </ElFormItem>
 
-        <ElFormItem label="描述">
-          <ElInput
-            v-model="form.formData.description"
-            type="textarea"
-            :rows="3"
-            placeholder="请输入菜品描述"
-          />
-        </ElFormItem>
-
         <ElFormItem label="宝宝友好">
           <ElSwitch v-model="form.formData.isBabyFriendly" />
         </ElFormItem>
@@ -215,7 +206,7 @@ watch(
       </section>
 
       <!-- 食材（必填） -->
-      <section class="recipe-form-drawer__section">
+      <section ref="ingredientSectionRef" class="recipe-form-drawer__section">
         <IngredientEditor v-model="form.formData.ingredients" />
         <p
           v-if="ingredientError"
