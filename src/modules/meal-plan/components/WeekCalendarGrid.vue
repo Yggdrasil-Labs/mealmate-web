@@ -179,11 +179,11 @@ function formatDayLabel(dateStr: string): string {
 
 .week-grid__cell {
   background: var(--color-surface);
-  padding: var(--space-2);
+  padding: 4px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
-  min-height: 90px;
+  gap: 3px;
+  min-height: 64px;
   transition: background-color var(--duration-fast) var(--ease-out);
 }
 
@@ -192,12 +192,12 @@ function formatDayLabel(dateStr: string): string {
 }
 
 .week-grid__add-btn {
-  min-height: var(--btn-height-sm);
+  min-height: 22px;
   border: 1px dashed var(--color-border-strong);
-  border-radius: var(--space-1);
+  border-radius: 4px;
   background: transparent;
-  color: var(--color-text-muted);
-  font-size: var(--text-xs);
+  color: var(--color-text-soft);
+  font-size: 11px;
   cursor: pointer;
   transition: background-color var(--duration-fast) var(--ease-out);
 }
