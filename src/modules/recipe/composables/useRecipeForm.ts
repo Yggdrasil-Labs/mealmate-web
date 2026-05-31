@@ -45,8 +45,8 @@ function createDefaultFormData(): RecipeFormData {
   return {
     name: '',
     recipeType: 'HOME_COOKING',
-    crowdTag: 'FAMILY',
-    seasonTag: 'ALL',
+    crowdTag: 'GENERAL',
+    seasonTag: 'ALL_SEASON',
     difficultyLevel: 'MEDIUM',
     cookingTimeMin: 30,
     description: '',
@@ -107,7 +107,7 @@ export function useRecipeForm(options: UseRecipeFormOptions) {
 
     try {
       if (options.mode === 'add') {
-        // 新增模式：创建菜品
+        // 新增模式：创建菜品（含食材，后端要求 ingredients 非空）
         const created = await createRecipe({
           name: formData.name,
           recipeType: formData.recipeType as any,
@@ -115,16 +115,20 @@ export function useRecipeForm(options: UseRecipeFormOptions) {
           seasonTag: formData.seasonTag as any,
           difficultyLevel: formData.difficultyLevel as any,
           cookingTimeMin: formData.cookingTimeMin,
-          description: formData.description,
-          isBabyFriendly: formData.isBabyFriendly,
-          isWeightLossFriendly: formData.isWeightLossFriendly,
+          babyFriendly: formData.isBabyFriendly,
+          weightLossFriendly: formData.isWeightLossFriendly,
+          ingredients: formData.ingredients.map((ing, idx) => ({
+            ingredientName: ing.ingredientName,
+            ingredientType: ing.ingredientType || undefined,
+            quantity: ing.quantity ? Number(ing.quantity) : undefined,
+            unit: ing.unit || undefined,
+            mainIngredient: ing.isMain,
+            sortNo: idx + 1,
+          })),
         })
         recipeId.value = created.recipeId
 
-        // 保存食材、步骤和营养信息
-        if (formData.ingredients.length > 0) {
-          await updateRecipeIngredients(created.recipeId, formData.ingredients)
-        }
+        // 步骤和营养信息单独保存
         if (formData.steps.length > 0) {
           await updateRecipeSteps(created.recipeId, formData.steps)
         }
@@ -144,9 +148,8 @@ export function useRecipeForm(options: UseRecipeFormOptions) {
           seasonTag: formData.seasonTag as any,
           difficultyLevel: formData.difficultyLevel as any,
           cookingTimeMin: formData.cookingTimeMin,
-          description: formData.description,
-          isBabyFriendly: formData.isBabyFriendly,
-          isWeightLossFriendly: formData.isWeightLossFriendly,
+          babyFriendly: formData.isBabyFriendly,
+          weightLossFriendly: formData.isWeightLossFriendly,
         })
 
         // 更新食材、步骤和营养信息

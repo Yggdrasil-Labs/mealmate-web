@@ -161,7 +161,7 @@ export const recipeSearchSchema: SearchFieldSchema[] = [
       layout: { group: 'advanced', span: 8 },
       options: [
         createOption('', '全部人群'),
-        ...(['FAMILY', 'CHILD_FRIENDLY', 'ELDER_FRIENDLY', 'PARTY'] as RecipeCrowdTag[])
+        ...(['GENERAL', 'BABY', 'WEIGHT_LOSS'] as RecipeCrowdTag[])
           .map(value => createOption(value, getRecipeCrowdTagLabel(value, label))),
       ],
     },

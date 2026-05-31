@@ -85,7 +85,7 @@ function updateIngredient(index: number, field: keyof RecipeIngredientItem, valu
   <div class="ingredient-editor">
     <div class="ingredient-editor__header">
       <h4 class="ingredient-editor__title">
-        食材列表
+        <span class="ingredient-editor__required">*</span>食材列表
       </h4>
       <ElButton
         type="primary"
@@ -184,6 +184,11 @@ function updateIngredient(index: number, field: keyof RecipeIngredientItem, valu
   font-size: 1rem;
   font-weight: 600;
   color: #0f172a;
+}
+
+.ingredient-editor__required {
+  color: var(--el-color-danger, #f56c6c);
+  margin-right: 4px;
 }
 
 .ingredient-editor__list {

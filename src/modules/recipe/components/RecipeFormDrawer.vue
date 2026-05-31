@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ElButton, ElDrawer, ElForm, ElFormItem, ElInput, ElInputNumber, ElOption, ElSelect, ElSwitch } from 'element-plus'
-import { computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRecipeForm } from '../composables/useRecipeForm'
 import {
@@ -49,10 +49,22 @@ const title = computed(() => {
 })
 
 function handleClose() {
+  ingredientError.value = ''
   emit('update:visible', false)
 }
 
+const ingredientError = ref('')
+
 async function handleSave() {
+  // 前端校验：食材不能为空
+  if (form.formData.ingredients.length === 0) {
+    ingredientError.value = '请至少添加一个食材'
+    // 滚动到食材区域让用户看到错误
+    const el = document.querySelector('.ingredient-editor')
+    el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    return
+  }
+  ingredientError.value = ''
   try {
     await form.save()
     emit('saved', form.recipeId.value || '')
@@ -145,20 +157,16 @@ watch(
         <ElFormItem label="人群">
           <ElSelect v-model="form.formData.crowdTag">
             <ElOption
-              value="FAMILY"
-              :label="getRecipeCrowdTagLabel('FAMILY', t)"
+              value="GENERAL"
+              :label="getRecipeCrowdTagLabel('GENERAL', t)"
             />
             <ElOption
-              value="CHILD_FRIENDLY"
-              :label="getRecipeCrowdTagLabel('CHILD_FRIENDLY', t)"
+              value="BABY"
+              :label="getRecipeCrowdTagLabel('BABY', t)"
             />
             <ElOption
-              value="ELDER_FRIENDLY"
-              :label="getRecipeCrowdTagLabel('ELDER_FRIENDLY', t)"
-            />
-            <ElOption
-              value="PARTY"
-              :label="getRecipeCrowdTagLabel('PARTY', t)"
+              value="WEIGHT_LOSS"
+              :label="getRecipeCrowdTagLabel('WEIGHT_LOSS', t)"
             />
           </ElSelect>
         </ElFormItem>
@@ -206,9 +214,15 @@ watch(
         </ElFormItem>
       </section>
 
-      <!-- 食材 -->
+      <!-- 食材（必填） -->
       <section class="recipe-form-drawer__section">
         <IngredientEditor v-model="form.formData.ingredients" />
+        <p
+          v-if="ingredientError"
+          class="recipe-form-drawer__field-error"
+        >
+          {{ ingredientError }}
+        </p>
       </section>
 
       <!-- 步骤 -->
@@ -294,5 +308,11 @@ watch(
   display: flex;
   justify-content: flex-end;
   gap: 0.5rem;
+}
+
+.recipe-form-drawer__field-error {
+  margin: 0.5rem 0 0;
+  font-size: 12px;
+  color: var(--el-color-danger, #f56c6c);
 }
 </style>

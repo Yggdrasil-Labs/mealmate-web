@@ -93,9 +93,27 @@ export interface RecipeFormValues extends RecipeBaseFormValues {
   nutrition: RecipeNutrition
 }
 
-export interface CreateRecipePayload extends RecipeBaseFormValues {}
+export interface CreateRecipePayload {
+  name: string
+  recipeType: RecipeType | ''
+  crowdTag?: RecipeCrowdTag | ''
+  seasonTag?: RecipeSeasonTag | ''
+  difficultyLevel?: RecipeDifficultyLevel | ''
+  cookingTimeMin?: number | null
+  coverImageUrl?: string
+  babyFriendly?: boolean
+  weightLossFriendly?: boolean
+  ingredients?: Array<{
+    ingredientName: string
+    ingredientType?: string
+    quantity?: number
+    unit?: string
+    mainIngredient?: boolean
+    sortNo?: number
+  }>
+}
 
-export interface UpdateRecipePayload extends RecipeBaseFormValues {}
+export interface UpdateRecipePayload extends CreateRecipePayload {}
 
 export type UpdateRecipeIngredientsPayload = RecipeIngredientItem[]
 
