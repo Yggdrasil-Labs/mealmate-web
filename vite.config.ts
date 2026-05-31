@@ -94,13 +94,11 @@ export default defineConfig(({ mode, command }) => {
       allowedHosts: true, // E2E: 允许 Docker 容器名访问
       // 启用 HTTPS（可选）
       // https: isDev && envVars.VITE_HTTPS === 'true',
-      // 代理配置
+      // 代理配置：转发 /api/* 到后端，保留完整路径
       proxy: {
         '/api': {
           target: envVars.VITE_API_PROXY_TARGET || envVars.VITE_API_BASE_URL || 'http://localhost:8080',
           changeOrigin: true,
-          rewrite: path => path.replace(API_PREFIX_RE, ''),
-          // 配置代理超时
           timeout: 10000,
         },
       },
