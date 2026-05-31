@@ -13,21 +13,27 @@ export function useWeeklyPlan() {
   const isDraft = computed(() => plan.value?.status === 'DRAFT')
   const isConfirmed = computed(() => plan.value?.status === 'CONFIRMED')
 
-  /** 获取当前周起始日期（周一） */
+  /** 获取当前周起始日期（周一），使用本地时间避免时区问题 */
   function getCurrentWeekStart(): string {
     const now = new Date()
     const day = now.getDay()
-    const diff = now.getDate() - day + (day === 0 ? -6 : 1)
-    const monday = new Date(now.setDate(diff))
-    return monday.toISOString().slice(0, 10)
+    const offset = day === 0 ? -6 : 1 - day
+    const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + offset)
+    const y = monday.getFullYear()
+    const m = String(monday.getMonth() + 1).padStart(2, '0')
+    const d = String(monday.getDate()).padStart(2, '0')
+    return `${y}-${m}-${d}`
   }
 
   /** 切换周 */
   function navigateWeek(offset: number) {
     const current = store.selectedWeekStart || getCurrentWeekStart()
-    const date = new Date(current)
+    const date = new Date(current + 'T00:00:00')
     date.setDate(date.getDate() + offset * 7)
-    store.selectedWeekStart = date.toISOString().slice(0, 10)
+    const y = date.getFullYear()
+    const m = String(date.getMonth() + 1).padStart(2, '0')
+    const d = String(date.getDate()).padStart(2, '0')
+    store.selectedWeekStart = `${y}-${m}-${d}`
     store.loadCurrentPlan()
   }
 
