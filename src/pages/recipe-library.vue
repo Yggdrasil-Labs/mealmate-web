@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ElButton } from 'element-plus'
+import { ElButton, ElPagination } from 'element-plus'
 import { ref } from 'vue'
 import PageHeader from '@/components/PageHeader.vue'
 import { deleteRecipe } from '@/modules/recipe/api'
@@ -126,6 +126,17 @@ async function handleSaved() {
             @edit-recipe="handleEdit"
             @delete-recipe="handleDelete"
           />
+          <ElPagination
+            v-if="list.total.value > list.filters.pageSize"
+            :current-page="list.filters.pageNum"
+            :page-size="list.filters.pageSize"
+            :total="list.total.value"
+            :page-sizes="[12, 24, 48]"
+            layout="total, sizes, prev, pager, next"
+            class="recipe-library-page__pagination"
+            @current-change="(page: number) => list.setPage(page)"
+            @size-change="(size: number) => list.setPage(1, size)"
+          />
         </section>
       </template>
     </div>
@@ -219,6 +230,10 @@ async function handleSaved() {
 .recipe-library-page__section:first-of-type {
   /* 筛选栏稍紧凑 */
   padding: var(--space-4);
+}
+
+.recipe-library-page__pagination {
+  justify-content: center;
 }
 
 @media (max-width: 640px) {
