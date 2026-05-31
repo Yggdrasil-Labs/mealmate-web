@@ -7,19 +7,7 @@ import type {
   UpdateFamilyMemberPayload,
   UpdateFamilyMemberPreferencePayload,
 } from './types'
-import { env } from '@/config/env'
 import http from '@/utils/api/http'
-import {
-  mockCreateFamilyMember,
-  mockDeleteFamilyMember,
-  mockFetchFamilyMemberDetail,
-  mockFetchFamilyMembers,
-  mockFetchFamilySummary,
-  mockUpdateFamilyMember,
-  mockUpdateFamilyMemberPreference,
-} from './mock'
-
-const USE_FAMILY_MOCK = env.USE_MOCK
 
 type FamilyApiRoleType = 'ADULT' | 'BABY' | 'GUEST'
 type FamilyApiGender = 'MALE' | 'FEMALE' | 'UNKNOWN'
@@ -397,24 +385,15 @@ async function resolveCreatedMemberId(familyId: string, previousIds: Set<string>
 }
 
 export async function fetchFamilySummary(familyId: string): Promise<FamilySummary> {
-  if (USE_FAMILY_MOCK)
-    return mockFetchFamilySummary(familyId)
-
   return mapFamilySummaryFromApi(await fetchFamilySummaryDto(familyId))
 }
 
 export async function fetchFamilyMembers(familyId: string): Promise<FamilyMemberSummary[]> {
-  if (USE_FAMILY_MOCK)
-    return mockFetchFamilyMembers(familyId)
-
   const members = await fetchFamilyMembersDto(familyId)
   return members.map(mapFamilyMemberSummaryFromApi)
 }
 
 export async function fetchFamilyMemberDetail(familyId: string, memberId: string): Promise<FamilyMemberDetail> {
-  if (USE_FAMILY_MOCK)
-    return mockFetchFamilyMemberDetail(familyId, memberId)
-
   return mapFamilyMemberDetailFromApi(await fetchFamilyMemberDetailDto(familyId, memberId))
 }
 
@@ -422,9 +401,6 @@ export async function createFamilyMember(
   familyId: string,
   payload: CreateFamilyMemberPayload,
 ): Promise<FamilyMemberDetail> {
-  if (USE_FAMILY_MOCK)
-    return mockCreateFamilyMember(familyId, payload)
-
   const previousMembers = await fetchFamilyMembersDto(familyId)
   const previousIds = new Set(previousMembers.map(member => String(member.id)))
 
@@ -441,9 +417,6 @@ export async function updateFamilyMember(
   memberId: string,
   payload: UpdateFamilyMemberPayload,
 ): Promise<FamilyMemberDetail> {
-  if (USE_FAMILY_MOCK)
-    return mockUpdateFamilyMember(familyId, memberId, payload)
-
   await submitUpdateFamilyMember(familyId, memberId, payload)
   return fetchFamilyMemberDetail(familyId, memberId)
 }
@@ -453,19 +426,11 @@ export async function updateFamilyMemberPreference(
   memberId: string,
   payload: UpdateFamilyMemberPreferencePayload,
 ): Promise<MemberPreference> {
-  if (USE_FAMILY_MOCK)
-    return mockUpdateFamilyMemberPreference(familyId, memberId, payload)
-
   await submitUpdateFamilyMemberPreference(familyId, memberId, payload)
   const detail = await fetchFamilyMemberDetail(familyId, memberId)
   return detail.preference
 }
 
 export async function deleteFamilyMember(familyId: string, memberId: string): Promise<void> {
-  if (USE_FAMILY_MOCK) {
-    await mockDeleteFamilyMember(familyId, memberId)
-    return
-  }
-
   await http.delete(`/api/families/${familyId}/members/${memberId}`)
 }

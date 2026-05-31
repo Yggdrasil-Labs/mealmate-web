@@ -12,7 +12,7 @@ import {
   updateFamilyMember,
   updateFamilyMemberPreference,
 } from '../api'
-import { createDefaultFamilyMemberFormValues } from '../mock'
+import { createDefaultFamilyMemberFormValues } from '../constants'
 import { useFamilyStore } from '../store'
 
 type EditorMode = 'add' | 'edit'

@@ -120,3 +120,10 @@ export type UpdateRecipeIngredientsPayload = RecipeIngredientItem[]
 export type UpdateRecipeStepsPayload = RecipeStepItem[]
 
 export type UpdateRecipeNutritionPayload = RecipeNutrition
+
+export interface RecipePageResult {
+  list: RecipeSummary[]
+  total: number
+  pageNum: number
+  pageSize: number
+}

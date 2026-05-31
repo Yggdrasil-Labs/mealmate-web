@@ -1,29 +1,15 @@
-import type { RecipePageResult } from './mock'
 import type {
   CreateRecipePayload,
   RecipeDetail,
   RecipeFilters,
   RecipeIngredientItem,
   RecipeNutrition,
+  RecipePageResult,
   RecipeStepItem,
   RecipeSummary,
   UpdateRecipePayload,
 } from './types'
-import { env } from '@/config/env'
 import http from '@/utils/api/http'
-import {
-  mockCreateRecipe,
-  mockDeleteRecipe,
-  mockFetchRecipeDetail,
-  mockFetchRecipePage,
-  mockUpdateRecipe,
-  mockUpdateRecipeIngredients,
-  mockUpdateRecipeNutrition,
-  mockUpdateRecipeSteps,
-  mockUploadRecipeStepImage,
-} from './mock'
-
-const USE_RECIPE_MOCK = env.USE_MOCK
 
 interface RecipeApiEnvelope<T> {
   data?: T
@@ -63,19 +49,6 @@ interface RecipeDetailDto extends RecipeSummaryDto {
   nutrition?: RecipeNutrition | null
 }
 
-const recipeRealModeAssumptions = {
-  updateRecipeSteps: 'Recipe step update backend contract is not frozen yet.',
-  uploadRecipeStepImage: 'Recipe step image upload backend contract is not frozen yet.',
-} as const
-
-function createAdapterAssumptionError(message: string) {
-  return new Error(`[recipe api assumption] ${message}`)
-}
-
-function assertResolvedRealMode<K extends keyof typeof recipeRealModeAssumptions>(key: K): never {
-  throw createAdapterAssumptionError(recipeRealModeAssumptions[key])
-}
-
 async function unwrapResponseData<T>(request: Promise<unknown>): Promise<T> {
   const response = await request as RecipeApiEnvelope<RecipeApiEnvelope<T> | T>
   const payload = response.data
@@ -86,7 +59,7 @@ async function unwrapResponseData<T>(request: Promise<unknown>): Promise<T> {
   if (payload !== undefined)
     return payload as T
 
-  throw createAdapterAssumptionError('Recipe API returned empty data payload.')
+  throw new Error('[recipe api] API returned empty data payload.')
 }
 
 function mapRecipeSummaryFromApi(summary: RecipeSummaryDto): RecipeSummary {
@@ -125,9 +98,6 @@ function mapRecipeDetailFromApi(detail: RecipeDetailDto): RecipeDetail {
 }
 
 export async function fetchRecipePage(filters: RecipeFilters): Promise<RecipePageResult> {
-  if (USE_RECIPE_MOCK)
-    return mockFetchRecipePage(filters)
-
   const params: Record<string, unknown> = {}
   if (filters.keyword)
     params.keyword = filters.keyword
@@ -160,71 +130,46 @@ export async function fetchRecipePage(filters: RecipeFilters): Promise<RecipePag
 }
 
 export async function fetchRecipeDetail(recipeId: string): Promise<RecipeDetail> {
-  if (USE_RECIPE_MOCK)
-    return mockFetchRecipeDetail(recipeId)
-
   const detail = await unwrapResponseData<RecipeDetailDto>(http.get(`/api/recipes/${recipeId}`))
   return mapRecipeDetailFromApi(detail)
 }
 
 export async function createRecipe(payload: CreateRecipePayload): Promise<RecipeDetail> {
-  if (USE_RECIPE_MOCK)
-    return mockCreateRecipe(payload)
-
   const detail = await unwrapResponseData<RecipeDetailDto>(
     http.post('/api/recipes', payload),
   )
-
   return mapRecipeDetailFromApi(detail)
 }
 
 export async function updateRecipe(recipeId: string, payload: UpdateRecipePayload): Promise<RecipeDetail> {
-  if (USE_RECIPE_MOCK)
-    return mockUpdateRecipe(recipeId, payload)
-
   const detail = await unwrapResponseData<RecipeDetailDto>(
     http.put(`/api/recipes/${recipeId}`, payload),
   )
-
   return mapRecipeDetailFromApi(detail)
 }
 
 export async function updateRecipeIngredients(recipeId: string, ingredients: RecipeIngredientItem[]): Promise<RecipeIngredientItem[]> {
-  if (USE_RECIPE_MOCK)
-    return mockUpdateRecipeIngredients(recipeId, ingredients)
-
   await http.put(`/api/recipes/${recipeId}/ingredients`, ingredients)
   return structuredClone(ingredients)
 }
 
 export async function updateRecipeSteps(recipeId: string, steps: RecipeStepItem[]): Promise<RecipeStepItem[]> {
-  if (USE_RECIPE_MOCK)
-    return mockUpdateRecipeSteps(recipeId, steps)
-
-  void recipeId
-  void steps
-  assertResolvedRealMode('updateRecipeSteps')
+  await http.put(`/api/recipes/${recipeId}/steps`, steps)
+  return structuredClone(steps)
 }
 
 export async function updateRecipeNutrition(recipeId: string, nutrition: RecipeNutrition): Promise<RecipeNutrition> {
-  if (USE_RECIPE_MOCK)
-    return mockUpdateRecipeNutrition(recipeId, nutrition)
-
   await http.put(`/api/recipes/${recipeId}/nutrition`, nutrition)
   return structuredClone(nutrition)
 }
 
 export async function deleteRecipe(recipeId: string): Promise<void> {
-  if (USE_RECIPE_MOCK)
-    return mockDeleteRecipe(recipeId)
-
   await http.delete(`/api/recipes/${recipeId}`)
 }
 
 export async function uploadRecipeStepImage(file: File): Promise<string> {
-  if (USE_RECIPE_MOCK)
-    return mockUploadRecipeStepImage(file)
-
-  void file
-  assertResolvedRealMode('uploadRecipeStepImage')
+  const formData = new FormData()
+  formData.append('file', file)
+  const response = await http.post<{ url: string }>('/api/recipes/step-image', formData)
+  return (response as unknown as { data: { url: string } }).data?.url ?? ''
 }
