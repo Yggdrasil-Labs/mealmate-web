@@ -225,51 +225,52 @@ watch(
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
+  gap: var(--space-4);
+  padding: var(--space-8);
   text-align: center;
+  color: var(--color-text-muted);
 }
 
 .recipe-form-drawer__form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 1rem 0;
+  gap: var(--space-5);
+  padding: var(--space-4) 0;
 }
 
 .recipe-form-drawer__section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-  border-radius: 8px;
-  background: #f8fafc;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--btn-radius);
+  background: var(--color-surface-muted);
 }
 
 .recipe-form-drawer__section-title {
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 600;
-  color: #0f172a;
+  color: var(--color-text);
 }
 
 .recipe-form-drawer__error-message {
-  padding: 0.75rem;
-  border-radius: 8px;
-  background: #fee2e2;
-  color: #dc2626;
-  font-size: 0.875rem;
+  padding: var(--space-3);
+  border-radius: var(--btn-radius);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+  font-size: var(--text-sm);
 }
 
 .recipe-form-drawer__footer {
   display: flex;
   justify-content: flex-end;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .recipe-form-drawer__field-error {
-  margin: 0.5rem 0 0;
-  font-size: 12px;
-  color: var(--el-color-danger, #f56c6c);
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-xs);
+  color: var(--color-danger);
 }
 </style>

@@ -26,6 +26,12 @@ const { t } = useI18n()
       class="recipe-grid__empty"
       data-testid="recipe-grid-empty"
     >
+      <svg class="recipe-grid__empty-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <rect x="6" y="10" width="36" height="28" rx="4" stroke="currentColor" stroke-width="2" />
+        <path d="M6 18h36M18 18v20" stroke="currentColor" stroke-width="2" />
+        <circle cx="30" cy="28" r="4" stroke="currentColor" stroke-width="2" />
+        <path d="M30 32v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
       <div class="recipe-grid__empty-copy">
         <h3 class="recipe-grid__empty-title">
           {{ t('recipe.empty.title') }}
@@ -76,11 +82,17 @@ const { t } = useI18n()
   display: grid;
   gap: var(--space-4);
   place-items: center;
-  padding: var(--space-8) var(--space-6);
+  padding: var(--space-12) var(--space-6);
   border: 1px dashed var(--color-border-strong);
-  border-radius: var(--btn-radius);
+  border-radius: var(--card-radius);
   background: var(--color-surface-muted);
   text-align: center;
+}
+
+.recipe-grid__empty-icon {
+  width: 3rem;
+  height: 3rem;
+  color: var(--color-text-soft);
 }
 
 .recipe-grid__empty-copy {
@@ -96,23 +108,35 @@ const { t } = useI18n()
 .recipe-grid__empty-title {
   color: var(--color-text);
   font-size: var(--text-base);
+  font-weight: 600;
 }
 
 .recipe-grid__empty-description {
-  color: var(--color-text-secondary);
+  color: var(--color-text-muted);
   line-height: 1.6;
 }
 
 .recipe-grid__empty-button {
-  min-height: var(--btn-height-lg);
+  min-height: var(--btn-height-md);
   border: none;
-  border-radius: var(--btn-radius);
-  padding: var(--space-3) var(--space-4);
+  border-radius: var(--btn-radius-pill);
+  padding: var(--space-3) var(--space-6);
   background: var(--color-primary);
   color: #fff;
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.recipe-grid__empty-button:hover {
+  opacity: 0.9;
+}
+
+.recipe-grid__empty-button:active {
+  transform: scale(0.97);
 }
 
 @media (max-width: 640px) {

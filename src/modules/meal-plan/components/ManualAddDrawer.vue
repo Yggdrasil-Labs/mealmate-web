@@ -31,47 +31,45 @@ function handleClose() {
 </script>
 
 <template>
-  <Teleport to="body">
-    <div v-if="visible" class="manual-drawer-mask" @click.self="handleClose">
-      <aside class="manual-drawer" role="dialog" :aria-label="t('mealPlan.manualAdd')">
-        <header class="manual-drawer__header">
-          <h3 class="manual-drawer__title">
-            {{ t('mealPlan.manualAdd') }}
-          </h3>
-          <button type="button" class="manual-drawer__close" @click="handleClose">
-            ✕
-          </button>
-        </header>
+  <div v-if="visible" class="manual-drawer-mask" @click.self="handleClose">
+    <aside class="manual-drawer" role="dialog" :aria-label="t('mealPlan.manualAdd')">
+      <header class="manual-drawer__header">
+        <h3 class="manual-drawer__title">
+          {{ t('mealPlan.manualAdd') }}
+        </h3>
+        <button type="button" class="manual-drawer__close" @click="handleClose">
+          ✕
+        </button>
+      </header>
 
-        <div class="manual-drawer__body">
-          <label class="manual-drawer__label">
-            {{ t('mealPlan.recipeName', '菜品名称') }}
-          </label>
-          <input
-            v-model="recipeName"
-            type="text"
-            class="manual-drawer__input"
-            :placeholder="t('mealPlan.inputRecipeName', '请输入菜品名称')"
-            @keyup.enter="handleSubmit"
-          >
-        </div>
+      <div class="manual-drawer__body">
+        <label class="manual-drawer__label">
+          {{ t('mealPlan.recipeName', '菜品名称') }}
+        </label>
+        <input
+          v-model="recipeName"
+          type="text"
+          class="manual-drawer__input"
+          :placeholder="t('mealPlan.inputRecipeName', '请输入菜品名称')"
+          @keyup.enter="handleSubmit"
+        >
+      </div>
 
-        <footer class="manual-drawer__footer">
-          <button type="button" class="manual-drawer__btn manual-drawer__btn--cancel" @click="handleClose">
-            {{ t('mealPlan.cancel', '取消') }}
-          </button>
-          <button
-            type="button"
-            class="manual-drawer__btn manual-drawer__btn--confirm"
-            :disabled="!recipeName.trim()"
-            @click="handleSubmit"
-          >
-            {{ t('mealPlan.add') }}
-          </button>
-        </footer>
-      </aside>
-    </div>
-  </Teleport>
+      <footer class="manual-drawer__footer">
+        <button type="button" class="manual-drawer__btn manual-drawer__btn--cancel" @click="handleClose">
+          {{ t('mealPlan.cancel', '取消') }}
+        </button>
+        <button
+          type="button"
+          class="manual-drawer__btn manual-drawer__btn--confirm"
+          :disabled="!recipeName.trim()"
+          @click="handleSubmit"
+        >
+          {{ t('mealPlan.add') }}
+        </button>
+      </footer>
+    </aside>
+  </div>
 </template>
 
 <style scoped>

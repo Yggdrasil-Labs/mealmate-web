@@ -137,10 +137,15 @@ function formatDayLabel(dateStr: string): string {
 </template>
 
 <style scoped>
+.week-grid {
+  overflow-x: auto;
+}
+
 .week-grid__desktop {
   display: grid;
-  grid-template-columns: 4rem repeat(7, 1fr);
+  grid-template-columns: 4rem repeat(7, minmax(120px, 1fr));
   gap: 1px;
+  min-width: 900px;
   background: var(--color-border-strong);
   border-radius: var(--btn-radius);
   overflow: hidden;
@@ -178,7 +183,7 @@ function formatDayLabel(dateStr: string): string {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  min-height: 80px;
+  min-height: 90px;
   transition: background-color var(--duration-fast) var(--ease-out);
 }
 

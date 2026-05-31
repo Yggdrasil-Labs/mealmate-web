@@ -164,7 +164,7 @@ async function handleSaved() {
   width: min(1180px, 100%);
   margin: 0 auto;
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 
 .recipe-library-page__state,
@@ -185,8 +185,7 @@ async function handleSaved() {
   background: var(--color-danger-soft);
 }
 
-.recipe-library-page__state-label,
-.recipe-library-page__eyebrow {
+.recipe-library-page__state-label {
   margin: 0;
   letter-spacing: 0.08em;
   font-size: var(--text-xs);
@@ -200,75 +199,26 @@ async function handleSaved() {
 }
 
 .recipe-library-page__state-button {
-  min-height: var(--btn-height-lg);
+  min-height: var(--btn-height-md);
   border: none;
   border-radius: var(--btn-radius-pill);
   padding: var(--space-3) var(--space-6);
   background: var(--color-primary);
   color: #fff;
   font: inherit;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .recipe-library-page__section {
   display: grid;
   gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.recipe-library-page__section:first-of-type {
+  /* 筛选栏稍紧凑 */
   padding: var(--space-4);
-}
-
-.recipe-library-page__section-head h2 {
-  margin: 0;
-  font-size: var(--text-base);
-  color: var(--color-text);
-}
-
-.recipe-library-page__section-head p {
-  margin: var(--space-1) 0 0;
-  color: var(--color-text-muted);
-}
-
-.recipe-library-page__placeholder {
-  border-radius: var(--card-radius);
-  border: 1px dashed var(--color-border-strong);
-  background: var(--color-surface-muted);
-}
-
-.recipe-library-page__placeholder--bar {
-  min-height: 72px;
-}
-
-.recipe-library-page__grid-placeholder {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.recipe-library-page__placeholder--card {
-  min-height: 180px;
-}
-
-.recipe-library-page__section--supporting {
-  margin-bottom: 0.25rem;
-}
-
-.recipe-library-page__supporting {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.recipe-library-page__placeholder--panel {
-  min-height: 160px;
-}
-
-.recipe-library-page__placeholder--dialog {
-  min-height: 112px;
-}
-
-@media (max-width: 960px) {
-  .recipe-library-page__grid-placeholder,
-  .recipe-library-page__supporting {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 640px) {
@@ -276,7 +226,6 @@ async function handleSaved() {
     padding: var(--space-4);
   }
 
-  .recipe-library-page__hero,
   .recipe-library-page__section,
   .recipe-library-page__state {
     padding: var(--space-4);

@@ -58,7 +58,7 @@ const friendlyBadges = computed(() => {
 
 <template>
   <article class="recipe-card">
-    <div class="recipe-card__cover" :class="{ 'recipe-card__cover--no-image': !props.recipe.coverImageUrl }" :style="!props.recipe.coverImageUrl ? { background: coverGradient } : undefined">
+    <div class="recipe-card__cover" :style="!props.recipe.coverImageUrl ? { background: coverGradient } : undefined">
       <img
         v-if="props.recipe.coverImageUrl"
         class="recipe-card__image"
@@ -194,19 +194,23 @@ const friendlyBadges = computed(() => {
   background: var(--color-surface);
   box-shadow: var(--card-shadow);
   transition:
-    transform var(--duration-fast) var(--ease-out),
-    box-shadow var(--duration-fast) var(--ease-out);
+    transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
 }
 
 .recipe-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+  border-color: var(--color-primary-soft);
 }
 
+/* 封面区：统一 16/9 比例，有图无图一致 */
 .recipe-card__cover {
   display: grid;
   place-items: center;
   aspect-ratio: 16 / 9;
+  overflow: hidden;
   background: linear-gradient(
     135deg,
     var(--color-surface-muted) 0%,
@@ -215,14 +219,15 @@ const friendlyBadges = computed(() => {
   );
 }
 
-.recipe-card__cover--no-image {
-  aspect-ratio: 4 / 3;
-}
-
 .recipe-card__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.recipe-card:hover .recipe-card__image {
+  transform: scale(1.03);
 }
 
 .recipe-card__initial {
@@ -235,17 +240,18 @@ const friendlyBadges = computed(() => {
   color: var(--color-success);
   font-size: 1.4rem;
   font-weight: 700;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
 }
 
 .recipe-card__body {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-3);
   padding: var(--card-padding);
 }
 
 .recipe-card__heading {
   display: grid;
-  gap: var(--space-1);
+  gap: 2px;
   min-width: 0;
 }
 
@@ -260,69 +266,82 @@ const friendlyBadges = computed(() => {
   overflow-wrap: anywhere;
   color: var(--color-text);
   font-size: var(--text-base);
-  line-height: 1.35;
+  font-weight: 600;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .recipe-card__source {
-  color: var(--color-text-muted);
-  font-size: var(--text-sm);
+  color: var(--color-text-soft);
+  font-size: var(--text-xs);
 }
 
+/* meta 区：用紧凑 pill 横排 */
 .recipe-card__meta {
-  display: grid;
-  gap: var(--space-3);
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
 }
 
 .recipe-card__meta-item {
-  display: grid;
-  gap: var(--space-1);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   min-width: 0;
 }
 
 .recipe-card__meta-label {
-  color: var(--color-text-muted);
+  color: var(--color-text-soft);
   font-size: var(--text-xs);
 }
 
 .recipe-card__meta-value {
   overflow-wrap: anywhere;
-  color: var(--color-text);
+  color: var(--color-text-secondary);
+  font-size: var(--text-xs);
   font-weight: 600;
 }
 
+/* badges 区：溢出省略 */
 .recipe-card__badges {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
-  min-height: var(--badge-height);
+  gap: var(--space-1);
+  overflow: hidden;
+  max-height: calc(var(--badge-height) * 2 + var(--space-1));
 }
 
 .recipe-card__badge {
   display: inline-flex;
   align-items: center;
-  min-height: var(--badge-height);
+  height: var(--badge-height);
   border-radius: var(--badge-radius);
   padding: var(--badge-padding);
   background: var(--color-success-soft);
   color: var(--color-success);
   font-size: var(--badge-font-size);
   font-weight: 600;
+  white-space: nowrap;
 }
 
+/* 操作区 */
 .recipe-card__actions {
-  display: grid;
-  gap: var(--space-3);
-  grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+  display: flex;
+  gap: var(--space-2);
   padding: 0 var(--card-padding) var(--card-padding);
 }
 
 .recipe-card__button {
-  min-height: var(--btn-height-lg);
+  flex: 1;
+  min-height: var(--btn-height-sm);
   border: none;
-  border-radius: var(--btn-radius);
-  padding: var(--space-3);
+  border-radius: var(--btn-radius-pill);
+  padding: var(--space-2) var(--space-3);
   font: inherit;
+  font-size: var(--text-sm);
   font-weight: 600;
   cursor: pointer;
   transition:
@@ -335,7 +354,7 @@ const friendlyBadges = computed(() => {
 }
 
 .recipe-card__button:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 
 .recipe-card__button:focus-visible {
@@ -356,11 +375,5 @@ const friendlyBadges = computed(() => {
 .recipe-card__button--danger {
   background: var(--color-danger-soft);
   color: var(--color-danger);
-}
-
-@media (max-width: 420px) {
-  .recipe-card__meta {
-    grid-template-columns: 1fr;
-  }
 }
 </style>

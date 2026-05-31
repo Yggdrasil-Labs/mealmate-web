@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import type { MealPlanItem } from '../types'
-import { ref } from 'vue'
+import type { RecipeSummary } from '@/modules/recipe/types'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { fetchRecipePage } from '@/modules/recipe/api'
 
 defineOptions({ name: 'ReplaceRecipeDrawer' })
 
-defineProps<{
+const props = defineProps<{
   visible: boolean
   targetItem: MealPlanItem | null
 }>()
@@ -18,6 +20,41 @@ const emit = defineEmits<{
 const { t } = useI18n()
 const searchQuery = ref('')
 const selectedRecipeId = ref<number | null>(null)
+const candidates = ref<RecipeSummary[]>([])
+const loading = ref(false)
+
+let debounceTimer: ReturnType<typeof setTimeout> | null = null
+
+async function search(keyword: string) {
+  loading.value = true
+  try {
+    const result = await fetchRecipePage({ keyword, pageNum: 1, pageSize: 20 })
+    candidates.value = result.list
+  }
+  catch {
+    candidates.value = []
+  }
+  finally {
+    loading.value = false
+  }
+}
+
+watch(searchQuery, (val) => {
+  if (debounceTimer)
+    clearTimeout(debounceTimer)
+  debounceTimer = setTimeout(() => search(val.trim()), 300)
+})
+
+// 抽屉打开时加载全部菜品
+watch(() => props.visible, (val) => {
+  if (val) {
+    search('')
+  }
+})
+
+function selectRecipe(id: number) {
+  selectedRecipeId.value = id
+}
 
 function handleConfirm() {
   if (selectedRecipeId.value != null)
@@ -27,58 +64,71 @@ function handleConfirm() {
 function handleClose() {
   searchQuery.value = ''
   selectedRecipeId.value = null
+  candidates.value = []
   emit('close')
 }
 </script>
 
 <template>
-  <Teleport to="body">
-    <div v-if="visible" class="replace-drawer-mask" @click.self="handleClose">
-      <aside class="replace-drawer" role="dialog" :aria-label="t('mealPlan.replace')">
-        <header class="replace-drawer__header">
-          <h3 class="replace-drawer__title">
-            {{ t('mealPlan.replace') }}
-          </h3>
-          <span v-if="targetItem" class="replace-drawer__subtitle">
-            {{ targetItem.recipeName }}
-          </span>
-          <button type="button" class="replace-drawer__close" @click="handleClose">
-            ✕
-          </button>
-        </header>
+  <div v-if="visible" class="replace-drawer-mask" @click.self="handleClose">
+    <aside class="replace-drawer" role="dialog" :aria-label="t('mealPlan.replace')">
+      <header class="replace-drawer__header">
+        <h3 class="replace-drawer__title">
+          {{ t('mealPlan.replace') }}
+        </h3>
+        <span v-if="targetItem" class="replace-drawer__subtitle">
+          {{ targetItem.recipeName }}
+        </span>
+        <button type="button" class="replace-drawer__close" @click="handleClose">
+          ✕
+        </button>
+      </header>
 
-        <div class="replace-drawer__search">
-          <input
-            v-model="searchQuery"
-            type="search"
-            class="replace-drawer__input"
-            :placeholder="t('mealPlan.searchRecipe', '搜索菜品...')"
+      <div class="replace-drawer__search">
+        <input
+          v-model="searchQuery"
+          type="search"
+          class="replace-drawer__input"
+          :placeholder="t('mealPlan.searchRecipe', '搜索菜品...')"
+        >
+      </div>
+
+      <div class="replace-drawer__body">
+        <p v-if="loading" class="replace-drawer__placeholder">
+          搜索中...
+        </p>
+        <ul v-else-if="candidates.length > 0" class="replace-drawer__list">
+          <li
+            v-for="recipe in candidates"
+            :key="recipe.recipeId"
+            class="replace-drawer__item"
+            :class="{ 'is-selected': selectedRecipeId === Number(recipe.recipeId) }"
+            @click="selectRecipe(Number(recipe.recipeId))"
           >
-        </div>
+            <span class="replace-drawer__item-name">{{ recipe.name }}</span>
+            <span class="replace-drawer__item-meta">{{ recipe.cookingTimeMin }}min</span>
+          </li>
+        </ul>
+        <p v-else class="replace-drawer__placeholder">
+          未找到匹配菜品
+        </p>
+      </div>
 
-        <div class="replace-drawer__body">
-          <!-- 候选菜品列表占位，后续接入菜品搜索 API -->
-          <p class="replace-drawer__placeholder">
-            {{ t('mealPlan.searchHint', '输入关键词搜索候选菜品') }}
-          </p>
-        </div>
-
-        <footer class="replace-drawer__footer">
-          <button type="button" class="replace-drawer__btn replace-drawer__btn--cancel" @click="handleClose">
-            {{ t('mealPlan.cancel', '取消') }}
-          </button>
-          <button
-            type="button"
-            class="replace-drawer__btn replace-drawer__btn--confirm"
-            :disabled="selectedRecipeId == null"
-            @click="handleConfirm"
-          >
-            {{ t('mealPlan.confirmReplace', '确认替换') }}
-          </button>
-        </footer>
-      </aside>
-    </div>
-  </Teleport>
+      <footer class="replace-drawer__footer">
+        <button type="button" class="replace-drawer__btn replace-drawer__btn--cancel" @click="handleClose">
+          {{ t('mealPlan.cancel', '取消') }}
+        </button>
+        <button
+          type="button"
+          class="replace-drawer__btn replace-drawer__btn--confirm"
+          :disabled="selectedRecipeId == null"
+          @click="handleConfirm"
+        >
+          {{ t('mealPlan.confirmReplace', '确认替换') }}
+        </button>
+      </footer>
+    </aside>
+  </div>
 </template>
 
 <style scoped>
@@ -151,6 +201,44 @@ function handleClose() {
   color: #94a3b8;
   text-align: center;
   margin-top: 2rem;
+}
+
+.replace-drawer__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.replace-drawer__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  border-radius: var(--btn-radius);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.replace-drawer__item:hover {
+  background: var(--color-surface-muted);
+}
+
+.replace-drawer__item.is-selected {
+  background: var(--color-primary-soft);
+  outline: 2px solid var(--color-primary);
+}
+
+.replace-drawer__item-name {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.replace-drawer__item-meta {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
 }
 
 .replace-drawer__footer {

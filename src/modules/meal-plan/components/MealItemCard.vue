@@ -58,9 +58,9 @@ const initial = computed(() => props.item.recipeName.slice(0, 1))
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-2);
-  border-radius: var(--btn-radius);
+  border-radius: 6px;
   background: var(--color-surface);
-  border: var(--card-border);
+  border: 1px solid var(--color-border);
   transition:
     background-color var(--duration-fast) var(--ease-out),
     box-shadow var(--duration-fast) var(--ease-out);
@@ -68,7 +68,7 @@ const initial = computed(() => props.item.recipeName.slice(0, 1))
 
 .meal-item-card:hover {
   background: var(--color-surface-muted);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
 }
 
 .meal-item-card--duplicate {
@@ -77,14 +77,15 @@ const initial = computed(() => props.item.recipeName.slice(0, 1))
 
 .meal-item-card__cover {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 6px;
   overflow: hidden;
   background: var(--color-surface-muted);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: var(--text-sm);
 }
 
 .meal-item-card__image {
@@ -95,6 +96,7 @@ const initial = computed(() => props.item.recipeName.slice(0, 1))
 
 .meal-item-card__initial {
   font-weight: 600;
+  font-size: var(--text-sm);
   color: var(--color-text-muted);
 }
 
@@ -104,24 +106,24 @@ const initial = computed(() => props.item.recipeName.slice(0, 1))
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-1);
+  gap: 2px;
 }
 
 .meal-item-card__name {
   font-size: var(--text-sm);
   font-weight: 500;
   color: var(--color-text);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  word-break: break-all;
 }
 
 .meal-item-card__badge {
-  font-size: var(--badge-font-size);
-  padding: 0 var(--space-1);
-  border-radius: var(--space-1);
+  font-size: 10px;
+  padding: 1px 4px;
+  border-radius: 3px;
   background: var(--color-info-soft);
   color: var(--color-info);
+  line-height: 1.5;
+  white-space: nowrap;
 }
 
 .meal-item-card__badge--dup {
@@ -131,7 +133,7 @@ const initial = computed(() => props.item.recipeName.slice(0, 1))
 
 .meal-item-card__actions {
   display: flex;
-  gap: var(--space-1);
+  gap: 2px;
   flex-shrink: 0;
   opacity: 0;
   transition: opacity var(--duration-fast) var(--ease-out);
@@ -142,14 +144,12 @@ const initial = computed(() => props.item.recipeName.slice(0, 1))
 }
 
 .meal-item-card__action {
-  min-width: 44px;
-  min-height: var(--btn-height-sm);
   border: none;
-  border-radius: var(--space-1);
-  padding: var(--space-1) var(--space-2);
+  border-radius: 4px;
+  padding: 2px 6px;
   background: var(--color-surface-muted);
   color: var(--color-text-secondary);
-  font-size: var(--text-xs);
+  font-size: 11px;
   cursor: pointer;
   transition: background-color var(--duration-fast) var(--ease-out);
 }
