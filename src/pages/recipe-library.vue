@@ -128,8 +128,8 @@ async function handleSaved() {
           />
           <ElPagination
             v-if="list.total.value > list.filters.pageSize"
-            :current-page="list.filters.pageNum"
-            :page-size="list.filters.pageSize"
+            v-model:current-page="list.filters.pageNum"
+            v-model:page-size="list.filters.pageSize"
             :total="list.total.value"
             :page-sizes="[12, 24, 48]"
             layout="total, sizes, prev, pager, next"
