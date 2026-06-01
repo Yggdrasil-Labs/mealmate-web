@@ -204,6 +204,6 @@ const preferenceSummary = computed(() => {
 
 .family-member-card__button--danger {
   background: var(--color-danger-soft);
-  color: var(--color-danger);
+  color: #b91c1c;
 }
 </style>

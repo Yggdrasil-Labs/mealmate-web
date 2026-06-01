@@ -119,6 +119,7 @@ const mealGoal = computed(() => props.summary?.mealGoal ?? '-')
 
 .family-profile-header__button {
   min-height: var(--btn-height-lg);
+  color: #1d4ed8;
 }
 
 @media (max-width: 640px) {

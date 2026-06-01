@@ -48,6 +48,7 @@ function handleRefresh() {
           v-for="item in items"
           :key="item.key"
           class="app-tabs__item"
+          role="none"
           :class="{
             'is-active': item.key === activeKey,
             'is-pinned': item.pinned,
@@ -62,10 +63,8 @@ function handleRefresh() {
             class="app-tabs__item-trigger"
             :data-testid="`tab-${item.key}`"
             role="tab"
-            :aria-pressed="item.key === activeKey"
             :aria-selected="item.key === activeKey"
             :tabindex="item.key === activeKey ? 0 : -1"
-            :aria-controls="`panel-${item.key}`"
             @click="handleSelect(item.key)"
           >
             <span class="app-tabs__title">{{ item.title }}</span>

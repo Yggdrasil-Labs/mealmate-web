@@ -186,7 +186,7 @@ const brandInitial = computed(() => {
 }
 
 .app-header__brand-meta {
-  color: var(--shell-text-muted);
+  color: var(--shell-text);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -201,7 +201,7 @@ const brandInitial = computed(() => {
 
 .app-header__title {
   overflow: hidden;
-  color: var(--shell-text-muted);
+  color: var(--shell-text);
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 0.84rem;
@@ -253,7 +253,7 @@ const brandInitial = computed(() => {
   min-height: var(--shell-control-height);
   padding: 0 var(--shell-space-3);
   border-radius: var(--shell-radius-full);
-  color: var(--shell-text);
+  color: var(--shell-text) !important;
   font-weight: 600;
 }
 

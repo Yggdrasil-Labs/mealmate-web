@@ -140,6 +140,7 @@ const friendlyBadges = computed(() => {
       <div
         class="recipe-card__badges"
         data-testid="recipe-card-badges"
+        role="group"
         aria-label="recipe friendly badges"
       >
         <span
