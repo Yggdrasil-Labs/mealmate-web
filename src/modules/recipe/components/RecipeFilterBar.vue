@@ -35,7 +35,7 @@ function handleValuesChange(changedValues: Record<string, unknown>, allValues: R
     :model-value="modelValue"
     :loading="loading"
     :sync-route="true"
-    :default-collapsed="false"
+    :default-collapsed="true"
     :default-visible-count="3"
     label-width="92px"
     @update:model-value="handleModelUpdate"

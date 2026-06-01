@@ -75,7 +75,7 @@ const { t } = useI18n()
 .recipe-grid__list {
   display: grid;
   gap: var(--space-4);
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
 }
 
 .recipe-grid__empty {
