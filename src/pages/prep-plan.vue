@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import PageHeader from '@/components/PageHeader.vue'
+import WeekNavigator from '@/modules/meal-plan/components/WeekNavigator.vue'
 import { useMealPlanStore } from '@/modules/meal-plan/store'
 import PrepTaskList from '@/modules/prep/components/PrepTaskList.vue'
 import { usePrepPlan } from '@/modules/prep/composables/usePrepPlan'
@@ -12,19 +13,46 @@ const router = useRouter()
 const store = useMealPlanStore()
 const { prepPlan, loading, load, toggleItemStatus } = usePrepPlan(() => store.currentPlan?.planId)
 
-onMounted(() => load())
+const weekStart = computed(() => store.currentPlan?.weekStartDate || store.selectedWeekStart)
+const isConfirmed = computed(() => store.currentPlan?.status === 'CONFIRMED')
+
+function navigateWeek(offset: number) {
+  const current = store.selectedWeekStart || store.currentPlan?.weekStartDate || ''
+  if (!current) return
+  const date = new Date(current + 'T00:00:00')
+  date.setDate(date.getDate() + offset * 7)
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, '0')
+  const d = String(date.getDate()).padStart(2, '0')
+  store.selectedWeekStart = `${y}-${m}-${d}`
+  store.loadCurrentPlan()
+}
+
+watch(() => store.currentPlan?.planId, () => load())
+onMounted(() => {
+  if (!store.currentPlan) store.loadCurrentPlan()
+  else load()
+})
 </script>
 
 <template>
   <div class="prep-plan-page">
-    <PageHeader :title="t('mealPlan.prepPlan')" />
+    <PageHeader :title="t('mealPlan.prepPlan')">
+      <template #actions>
+        <WeekNavigator
+          :week-start-date="weekStart"
+          @prev="navigateWeek(-1)"
+          @next="navigateWeek(1)"
+        />
+      </template>
+    </PageHeader>
 
     <div v-if="loading" class="prep-plan-page__skeleton">
       <div v-for="i in 5" :key="i" class="skeleton" style="height: 48px;" />
     </div>
 
     <!-- 无计划时引导 -->
-    <div v-else-if="!store.currentPlan?.planId" class="prep-plan-page__empty">
+    <div v-else-if="!isConfirmed" class="prep-plan-page__empty">
       <span class="prep-plan-page__empty-icon" aria-hidden="true">备</span>
       <h2 class="prep-plan-page__empty-title">
         暂无备菜计划
