@@ -3,8 +3,11 @@ import type { RecipeFilters } from '../types'
 import type { SearchBarSearchPayload } from '@/types/search-bar'
 import { registerDefaultSearchFieldComponents, SearchBar } from '@/components/search-bar'
 import { recipeSearchSchema } from '../composables/useRecipeList'
+import { useAppBreakpoint } from '@/composables/useAppBreakpoint'
 
 defineOptions({ name: 'RecipeFilterBar' })
+
+const { isMobile } = useAppBreakpoint()
 
 defineProps<{
   modelValue: RecipeFilters
@@ -36,7 +39,7 @@ function handleValuesChange(changedValues: Record<string, unknown>, allValues: R
     :loading="loading"
     :sync-route="true"
     :default-collapsed="true"
-    :default-visible-count="3"
+    :default-visible-count="isMobile ? 1 : 3"
     label-width="92px"
     @update:model-value="handleModelUpdate"
     @values-change="handleValuesChange"
