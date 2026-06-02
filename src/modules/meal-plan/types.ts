@@ -24,11 +24,14 @@ export interface MealPlanItem {
   recipeName: string
   crowdType: CrowdType
   mealType: MealType
-  weightLoss: boolean
+  isWeightLoss: boolean
+  isBabyMeal: boolean
+  duplicateFlag: boolean
   manuallyAdjusted: boolean
   adjustCount: number
   coverImageUrl?: string
   cookTimeMinutes?: number
+  sortOrder?: number
 }
 
 export interface RecipeBrief {
