@@ -3,25 +3,40 @@ import type { MealPlanItem } from '../types'
 
 defineOptions({ name: 'MealItemCard' })
 
-const props = defineProps<{
+defineProps<{
   item: MealPlanItem
   readonly?: boolean
 }>()
 
 const emit = defineEmits<{
-  (e: 'replace', item: MealPlanItem): void
+  (e: 'adjust', item: MealPlanItem): void
   (e: 'delete', item: MealPlanItem): void
+  (e: 'history', item: MealPlanItem): void
 }>()
 </script>
 
 <template>
   <article class="meal-item-card" :class="{ 'meal-item-card--duplicate': item.duplicateFlag }">
+    <!-- 已调整角标：manuallyAdjusted 时显示调整次数，点击触发 history 事件 -->
+    <span
+      v-if="item.manuallyAdjusted"
+      class="meal-item-card__badge"
+      :title="`已调整 ${item.adjustCount} 次`"
+      @click.stop="emit('history', item)"
+    >
+      {{ item.adjustCount }}
+    </span>
+
     <span class="meal-item-card__name">{{ item.recipeName }}</span>
     <span v-if="item.isBabyMeal" class="meal-item-card__tag meal-item-card__tag--baby">宝</span>
     <span v-if="item.isWeightLoss" class="meal-item-card__tag meal-item-card__tag--diet">轻</span>
     <div v-if="!readonly" class="meal-item-card__actions">
-      <button type="button" class="meal-item-card__action" @click="emit('replace', item)">↻</button>
-      <button type="button" class="meal-item-card__action meal-item-card__action--danger" @click="emit('delete', item)">✕</button>
+      <button type="button" class="meal-item-card__action" @click="emit('adjust', item)">
+        换
+      </button>
+      <button type="button" class="meal-item-card__action meal-item-card__action--danger" @click="emit('delete', item)">
+        ✕
+      </button>
     </div>
   </article>
 </template>
@@ -115,6 +130,25 @@ const emit = defineEmits<{
 .meal-item-card__action--danger:hover {
   background: var(--color-danger-soft);
   color: var(--color-danger);
+}
+
+.meal-item-card__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  background: var(--el-color-warning, #e6a23c);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  cursor: pointer;
+  z-index: 1;
 }
 
 @media (max-width: 768px) {

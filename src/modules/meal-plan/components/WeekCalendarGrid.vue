@@ -14,7 +14,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'replace', item: MealPlanItem): void
+  (e: 'adjust', item: MealPlanItem): void
   (e: 'delete', item: MealPlanItem): void
   (e: 'add', date: string, mealType: string): void
 }>()
@@ -89,7 +89,7 @@ function formatDayLabel(dateStr: string): string {
             :key="item.itemId"
             :item="item"
             :readonly="readonly"
-            @replace="emit('replace', $event)"
+            @adjust="emit('adjust', $event)"
             @delete="emit('delete', $event)"
           />
           <button
@@ -119,7 +119,7 @@ function formatDayLabel(dateStr: string): string {
             :key="item.itemId"
             :item="item"
             :readonly="readonly"
-            @replace="emit('replace', $event)"
+            @adjust="emit('adjust', $event)"
             @delete="emit('delete', $event)"
           />
           <button

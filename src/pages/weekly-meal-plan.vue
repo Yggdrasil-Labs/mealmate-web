@@ -62,7 +62,7 @@ async function handleDelete(item: { itemId: number }) {
       :day-meals="plan.dayMeals"
       :week-start-date="plan.weekStartDate"
       :readonly="isConfirmed"
-      @replace="replaceItem.open"
+      @adjust="replaceItem.open"
       @delete="handleDelete"
       @add="manualAdd.open"
     />
