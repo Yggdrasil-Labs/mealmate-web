@@ -1,14 +1,14 @@
-export interface MealPlanItem {
-  itemId: number
-  recipeId: number
-  recipeName: string
-  crowdType: string | null
-  isWeightLoss: boolean
-  isBabyMeal: boolean
-  duplicateFlag: boolean
-  coverImageUrl: string | null
-  cookingTimeMin: number | null
-  sortOrder: number
+export type MealType = 'BREAKFAST' | 'LUNCH' | 'DINNER'
+export type CrowdType = 'ALL' | 'ADULT' | 'BABY'
+export type PlanStatus = 'DRAFT' | 'CONFIRMED' | 'ARCHIVED'
+export type AdjustReason = 'LACK_INGREDIENT' | 'TASTE_CHANGE' | 'OUTING' | 'OTHER'
+
+export interface WeeklyMealPlan {
+  planId: number
+  weekStartDate: string
+  weekEndDate: string
+  status: PlanStatus
+  dayMeals: Record<string, DayMeal>
 }
 
 export interface DayMeal {
@@ -18,25 +18,37 @@ export interface DayMeal {
   dinner: MealPlanItem[]
 }
 
-export interface WeeklyMealPlan {
-  planId: number
-  weekStartDate: string
-  weekEndDate: string
-  status: 'DRAFT' | 'CONFIRMED' | 'ARCHIVED'
-  planSource: string
-  dayMeals: Record<string, DayMeal>
+export interface MealPlanItem {
+  itemId: number
+  recipeId: number
+  recipeName: string
+  crowdType: CrowdType
+  mealType: MealType
+  weightLoss: boolean
+  manuallyAdjusted: boolean
+  adjustCount: number
+  coverImageUrl?: string
+  cookTimeMinutes?: number
 }
 
-export interface ConfirmPlanResult {
-  planId: number
-  status: string
-  prepPlanId: number
-  prepItemCount: number
-  shoppingItemCount: number
+export interface RecipeBrief {
+  recipeId: number
+  name: string
+  recipeType: string
+  seasonTag: string
+  coverImageUrl?: string
+  cookTimeMinutes?: number
 }
 
-export interface GenerateRequest {
-  familyId?: string
-  weekStartDate: string
-  forceRegenerate?: boolean
+export interface MealPlanItemHistory {
+  historyId: number
+  oldRecipeName: string
+  newRecipeName: string
+  adjustReason: string | null
+  adjustedAt: string
+}
+
+export interface AdjustMealItemParams {
+  newRecipeId: number
+  adjustReason?: AdjustReason
 }
