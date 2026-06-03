@@ -8,10 +8,11 @@ updated: 2026-05-26
 
 ## 业务需求归档
 
-| 需求 slug | 归档日期 | 保留至 | 包含文档 | 路径 |
-|-----------|----------|--------|----------|------|
-| family-profile | 2026-03-31 | 2027-03-31 | design.md, plan.md | `docs/archive/2026-03-31-family-profile/` |
-| recipe-library | 2026-05-10 | 2027-05-10 | design.md, plan.md | `docs/archive/2026-05-10-recipe-library/` |
+| 版本 | 归档日期 | 保留至 | 前序版本 | 包含需求 (slug) | 路径 |
+|------|----------|--------|----------|----------------|------|
+| 1.2.0 | 2026-03-31 | 2027-03-31 | — | family-profile | `docs/archive/2026-03-31-family-profile/` |
+| 1.2.1 | 2026-05-10 | 2027-05-10 | 1.2.0 | recipe-library | `docs/archive/2026-05-10-recipe-library/` |
+| 1.3.0 | 2026-06-03 | 2027-06-03 | 1.2.1 | uc3-weekly-meal-plan, uc4-adjust-meal-item | `docs/archive/1.3.0/` |
 
 ## 文档系统迁移记录
 
