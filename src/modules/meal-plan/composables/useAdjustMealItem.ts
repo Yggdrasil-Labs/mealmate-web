@@ -1,6 +1,7 @@
 import type { AdjustReason, MealPlanItem, MealPlanItemHistory, RecipeBrief } from '../types'
 
 import { useDebounceFn } from '@vueuse/core'
+import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
 
 import { adjustMealItem, getItemHistory, getRecommendRecipes, searchRecipes } from '../api'
@@ -59,6 +60,16 @@ export function useAdjustMealItem() {
       })
       store.updateItem(updated)
       return updated
+    }
+    catch (e: any) {
+      const code = e?.response?.data?.errCode
+      if (code === 'RECIPE_DUPLICATE_IN_WEEK')
+        ElMessage.warning('该菜品本周已使用，请选择其他菜品')
+      else if (code === 'MEAL_PLAN_FROZEN')
+        ElMessage.error('计划已锁定，无法调整')
+      else
+        ElMessage.error('操作失败，请重试')
+      return null
     }
     finally {
       adjustLoading.value = false
