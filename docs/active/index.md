@@ -6,6 +6,5 @@ Last updated: 2026-05-26
 
 | Requirement | Status | Files | Scope |
 | --- | --- | --- | --- |
-| _(无活跃需求)_ | — | — | — |
 
 活跃工作结束后，应移动到 [docs/archive/](../archive/)，并同步本索引。

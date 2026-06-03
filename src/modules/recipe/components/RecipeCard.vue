@@ -31,6 +31,18 @@ const crowdLabel = computed(() => getRecipeCrowdTagLabel(props.recipe.crowdTag, 
 const canEdit = computed(() => props.recipe.sourceType !== 'SYSTEM')
 const canDelete = computed(() => props.recipe.sourceType === 'MANUAL')
 const coverInitial = computed(() => props.recipe.name.slice(0, 1))
+
+/** 无图卡片渐变色方案，根据 recipeId 散列分配 */
+const coverGradient = computed(() => {
+  const g = [
+    'linear-gradient(135deg, #dbeafe 0%, #e0f2fe 50%, #fef3c7 100%)',
+    'linear-gradient(225deg, #dcfce7 0%, #d1fae5 50%, #e0f2fe 100%)',
+    'linear-gradient(180deg, #fef3c7 0%, #fff7ed 50%, #fce7f3 100%)',
+    'linear-gradient(315deg, #ede9fe 0%, #e0e7ff 50%, #dbeafe 100%)',
+  ]
+  const hash = props.recipe.recipeId.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
+  return g[hash % g.length]
+})
 const friendlyBadges = computed(() => {
   const badges: string[] = []
 
@@ -46,7 +58,7 @@ const friendlyBadges = computed(() => {
 
 <template>
   <article class="recipe-card">
-    <div class="recipe-card__cover">
+    <div class="recipe-card__cover" :style="!props.recipe.coverImageUrl ? { background: coverGradient } : undefined">
       <img
         v-if="props.recipe.coverImageUrl"
         class="recipe-card__image"
@@ -128,6 +140,7 @@ const friendlyBadges = computed(() => {
       <div
         class="recipe-card__badges"
         data-testid="recipe-card-badges"
+        role="group"
         aria-label="recipe friendly badges"
       >
         <span
@@ -177,23 +190,45 @@ const friendlyBadges = computed(() => {
   grid-template-rows: auto 1fr auto;
   min-width: 0;
   overflow: hidden;
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  background: var(--color-surface);
+  box-shadow: var(--card-shadow);
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
 }
 
+.recipe-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+  border-color: var(--color-primary-soft);
+}
+
+/* 封面区：统一 16/9 比例，有图无图一致 */
 .recipe-card__cover {
   display: grid;
   place-items: center;
   aspect-ratio: 16 / 9;
-  background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 55%, #fef3c7 100%);
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    var(--color-surface-muted) 0%,
+    var(--color-info-soft) 55%,
+    var(--color-warning-soft) 100%
+  );
 }
 
 .recipe-card__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.recipe-card:hover .recipe-card__image {
+  transform: scale(1.03);
 }
 
 .recipe-card__initial {
@@ -202,21 +237,22 @@ const friendlyBadges = computed(() => {
   width: 3.25rem;
   height: 3.25rem;
   border-radius: 50%;
-  background: #fff;
-  color: #0f766e;
+  background: var(--color-surface);
+  color: var(--color-success);
   font-size: 1.4rem;
   font-weight: 700;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
 }
 
 .recipe-card__body {
   display: grid;
-  gap: 1rem;
-  padding: 1rem;
+  gap: var(--space-3);
+  padding: var(--card-padding);
 }
 
 .recipe-card__heading {
   display: grid;
-  gap: 0.35rem;
+  gap: 2px;
   min-width: 0;
 }
 
@@ -229,93 +265,116 @@ const friendlyBadges = computed(() => {
 
 .recipe-card__name {
   overflow-wrap: anywhere;
-  color: #0f172a;
-  font-size: 1.05rem;
-  line-height: 1.35;
+  color: var(--color-text);
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .recipe-card__source {
-  color: #64748b;
-  font-size: 0.9rem;
+  color: var(--color-text-soft);
+  font-size: var(--text-xs);
 }
 
+/* meta 区：用紧凑 pill 横排 */
 .recipe-card__meta {
-  display: grid;
-  gap: 0.7rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
 }
 
 .recipe-card__meta-item {
-  display: grid;
-  gap: 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   min-width: 0;
 }
 
 .recipe-card__meta-label {
-  color: #64748b;
-  font-size: 0.78rem;
+  color: var(--color-text-soft);
+  font-size: var(--text-xs);
 }
 
 .recipe-card__meta-value {
   overflow-wrap: anywhere;
-  color: #1e293b;
+  color: var(--color-text-secondary);
+  font-size: var(--text-xs);
   font-weight: 600;
 }
 
+/* badges 区：溢出省略 */
 .recipe-card__badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  min-height: 1.75rem;
+  gap: var(--space-1);
+  overflow: hidden;
+  max-height: calc(var(--badge-height) * 2 + var(--space-1));
 }
 
 .recipe-card__badge {
   display: inline-flex;
   align-items: center;
-  min-height: 1.75rem;
-  border-radius: 999px;
-  padding: 0 0.7rem;
-  background: #ecfdf5;
-  color: #047857;
-  font-size: 0.82rem;
+  height: var(--badge-height);
+  border-radius: var(--badge-radius);
+  padding: var(--badge-padding);
+  background: var(--color-success-soft);
+  color: var(--color-success);
+  font-size: var(--badge-font-size);
   font-weight: 600;
+  white-space: nowrap;
 }
 
+/* 操作区 */
 .recipe-card__actions {
-  display: grid;
-  gap: 0.65rem;
-  grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
-  padding: 0 1rem 1rem;
+  display: flex;
+  gap: var(--space-2);
+  padding: 0 var(--card-padding) var(--card-padding);
 }
 
 .recipe-card__button {
-  min-height: 44px;
+  flex: 1;
+  min-height: var(--btn-height-sm);
   border: none;
-  border-radius: 8px;
-  padding: 0.7rem 0.85rem;
+  border-radius: var(--btn-radius-pill);
+  padding: var(--space-2) var(--space-3);
   font: inherit;
+  font-size: var(--text-sm);
   font-weight: 600;
   cursor: pointer;
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.recipe-card__button:hover {
+  opacity: 0.85;
+}
+
+.recipe-card__button:active {
+  transform: scale(0.96);
+}
+
+.recipe-card__button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .recipe-card__button--primary {
-  background: #0f766e;
+  background: var(--color-primary);
   color: #fff;
 }
 
 .recipe-card__button--secondary {
-  background: #e2e8f0;
-  color: #0f172a;
+  background: var(--color-surface-muted);
+  color: var(--color-text);
 }
 
 .recipe-card__button--danger {
-  background: #fee2e2;
-  color: #b91c1c;
-}
-
-@media (max-width: 420px) {
-  .recipe-card__meta {
-    grid-template-columns: 1fr;
-  }
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
 }
 </style>

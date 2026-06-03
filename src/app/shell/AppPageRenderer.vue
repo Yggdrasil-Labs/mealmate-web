@@ -28,12 +28,38 @@ watch(
 
 <template>
   <RouterView v-slot="{ Component }">
-    <KeepAlive :include="includeNames">
-      <component
-        :is="Component"
-        v-if="Component"
-        :key="renderKey"
-      />
-    </KeepAlive>
+    <Transition
+      name="page-fade"
+      mode="out-in"
+    >
+      <KeepAlive :include="includeNames">
+        <component
+          :is="Component"
+          v-if="Component"
+          :key="renderKey"
+        />
+      </KeepAlive>
+    </Transition>
   </RouterView>
 </template>
+
+<style scoped>
+.page-fade-enter-active {
+  transition:
+    opacity 200ms ease-out,
+    transform 200ms ease-out;
+}
+
+.page-fade-leave-active {
+  transition: opacity 100ms ease-in;
+}
+
+.page-fade-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-fade-leave-to {
+  opacity: 0;
+}
+</style>

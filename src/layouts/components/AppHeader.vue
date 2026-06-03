@@ -74,7 +74,7 @@ const brandInitial = computed(() => {
         </span>
         <span class="app-header__brand-copy">
           <span class="app-header__brand-name">{{ brand }}</span>
-          <span class="app-header__brand-meta">Enterprise control panel</span>
+          <span class="app-header__brand-meta">家庭饮食规划</span>
         </span>
       </RouterLink>
       <span class="app-header__divider" aria-hidden="true" />
@@ -126,7 +126,7 @@ const brandInitial = computed(() => {
   padding: var(--shell-space-3) var(--shell-space-4);
   border: 1px solid var(--shell-border);
   border-radius: var(--shell-radius-xl);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), var(--shell-surface));
+  background: linear-gradient(180deg, var(--shell-glass-strong), var(--shell-surface));
   box-shadow: var(--shell-shadow-soft);
   backdrop-filter: blur(18px);
 }
@@ -162,6 +162,11 @@ const brandInitial = computed(() => {
   font-weight: 700;
   letter-spacing: 0.04em;
   flex: none;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.app-header__brand-link:hover .app-header__brand-mark {
+  transform: rotate(3deg) scale(1.05);
 }
 
 .app-header__brand-copy {
@@ -181,7 +186,7 @@ const brandInitial = computed(() => {
 }
 
 .app-header__brand-meta {
-  color: var(--shell-text-muted);
+  color: var(--shell-text);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -196,7 +201,7 @@ const brandInitial = computed(() => {
 
 .app-header__title {
   overflow: hidden;
-  color: var(--shell-text-muted);
+  color: var(--shell-text);
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 0.84rem;
@@ -248,7 +253,7 @@ const brandInitial = computed(() => {
   min-height: var(--shell-control-height);
   padding: 0 var(--shell-space-3);
   border-radius: var(--shell-radius-full);
-  color: var(--shell-text);
+  color: var(--shell-text) !important;
   font-weight: 600;
 }
 

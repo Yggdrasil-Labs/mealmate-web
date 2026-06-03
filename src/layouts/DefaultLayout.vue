@@ -203,8 +203,8 @@ function getTabCacheKey(routeName: string, fullPath: string) {
   overflow: hidden;
   padding: var(--shell-frame-padding);
   background:
-    radial-gradient(circle at top left, rgba(47, 111, 235, 0.08), transparent 28%),
-    radial-gradient(circle at top right, rgba(15, 118, 110, 0.06), transparent 24%),
+    radial-gradient(circle at top left, var(--shell-bg-accent-1), transparent 28%),
+    radial-gradient(circle at top right, var(--shell-bg-accent-2), transparent 24%),
     linear-gradient(180deg, var(--shell-bg) 0%, var(--shell-bg-strong) 100%);
   color: var(--shell-text);
 }
@@ -235,7 +235,7 @@ function getTabCacheKey(routeName: string, fullPath: string) {
   overflow: hidden;
   border: 1px solid var(--shell-border);
   border-radius: var(--shell-radius-xl);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0.9));
+  background: linear-gradient(180deg, var(--shell-glass), var(--shell-glass-strong));
   box-shadow: var(--shell-shadow);
 }
 
@@ -248,20 +248,18 @@ function getTabCacheKey(routeName: string, fullPath: string) {
 
 .default-layout__main-surface {
   min-height: 100%;
-  border: 1px solid var(--shell-border);
-  border-radius: calc(var(--shell-radius-xl) - 10px);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), var(--shell-surface));
-  box-shadow: var(--shell-shadow-soft);
+  border-radius: var(--shell-radius-md);
+  background: var(--shell-surface-strong);
 }
 
 .default-layout__page-container {
   display: flex;
+  flex-direction: column;
   min-height: 100%;
   width: 100%;
   max-width: var(--shell-page-max-width);
   margin: 0 auto;
   padding: var(--shell-page-padding-block) var(--shell-page-padding-inline);
-  justify-content: center;
 }
 
 @media (max-width: 768px) {
@@ -270,7 +268,7 @@ function getTabCacheKey(routeName: string, fullPath: string) {
   }
 
   .default-layout__content {
-    border-radius: calc(var(--shell-radius-lg) + 2px);
+    border-radius: var(--shell-radius-lg);
   }
 
   .default-layout__main {

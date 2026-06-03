@@ -118,9 +118,13 @@
       },
       "recipeType": {
         "HOME_COOKING": "Home Cooking",
+        "MAIN_DISH": "Main Dish",
+        "SIDE_DISH": "Side Dish",
         "SOUP": "Soup",
         "STAPLE": "Staple",
-        "SNACK": "Snack"
+        "SNACK": "Snack",
+        "DESSERT": "Dessert",
+        "OTHER": "Other"
       },
       "difficultyLevel": {
         "EASY": "Easy",
@@ -129,9 +133,20 @@
       },
       "crowdTag": {
         "FAMILY": "Family",
+        "GENERAL": "General",
         "CHILD_FRIENDLY": "Child Friendly",
         "ELDER_FRIENDLY": "Elder Friendly",
+        "BABY": "Baby",
+        "WEIGHT_LOSS": "Weight Loss",
         "PARTY": "Party"
+      },
+      "seasonTag": {
+        "SPRING": "Spring",
+        "SUMMER": "Summer",
+        "AUTUMN": "Autumn",
+        "WINTER": "Winter",
+        "ALL": "All Seasons",
+        "ALL_SEASON": "All Seasons"
       }
     }
   }

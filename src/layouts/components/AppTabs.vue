@@ -48,6 +48,7 @@ function handleRefresh() {
           v-for="item in items"
           :key="item.key"
           class="app-tabs__item"
+          role="none"
           :class="{
             'is-active': item.key === activeKey,
             'is-pinned': item.pinned,
@@ -62,10 +63,8 @@ function handleRefresh() {
             class="app-tabs__item-trigger"
             :data-testid="`tab-${item.key}`"
             role="tab"
-            :aria-pressed="item.key === activeKey"
             :aria-selected="item.key === activeKey"
             :tabindex="item.key === activeKey ? 0 : -1"
-            :aria-controls="`panel-${item.key}`"
             @click="handleSelect(item.key)"
           >
             <span class="app-tabs__title">{{ item.title }}</span>
@@ -180,6 +179,8 @@ function handleRefresh() {
   padding: 0;
   scrollbar-width: thin;
   scrollbar-gutter: stable both-edges;
+  mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent);
 }
 
 .app-tabs__item {
@@ -190,8 +191,8 @@ function handleRefresh() {
   gap: var(--shell-space-1);
   min-width: 0;
   border: 1px solid var(--shell-border);
-  border-radius: calc(var(--shell-radius-md) - 2px);
-  background: rgba(255, 255, 255, 0.82);
+  border-radius: var(--shell-radius-sm);
+  background: var(--shell-glass);
   min-height: var(--shell-tabs-height);
   max-width: min(18rem, 70vw);
   padding: var(--shell-space-1) var(--shell-space-1) var(--shell-space-1) var(--shell-space-3);

@@ -118,9 +118,13 @@
       },
       "recipeType": {
         "HOME_COOKING": "家常菜",
+        "MAIN_DISH": "主菜",
+        "SIDE_DISH": "配菜",
         "SOUP": "汤羹",
         "STAPLE": "主食",
-        "SNACK": "小吃"
+        "SNACK": "小吃",
+        "DESSERT": "甜品",
+        "OTHER": "其他"
       },
       "difficultyLevel": {
         "EASY": "简单",
@@ -129,9 +133,20 @@
       },
       "crowdTag": {
         "FAMILY": "家庭",
+        "GENERAL": "通用",
         "CHILD_FRIENDLY": "儿童友好",
         "ELDER_FRIENDLY": "老人友好",
+        "BABY": "宝宝",
+        "WEIGHT_LOSS": "减脂",
         "PARTY": "聚会"
+      },
+      "seasonTag": {
+        "SPRING": "春季",
+        "SUMMER": "夏季",
+        "AUTUMN": "秋季",
+        "WINTER": "冬季",
+        "ALL": "四季",
+        "ALL_SEASON": "四季"
       }
     }
   }

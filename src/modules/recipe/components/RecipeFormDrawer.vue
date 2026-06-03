@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { useWindowSize } from '@vueuse/core'
 import { ElButton, ElDrawer, ElForm, ElFormItem, ElInput, ElInputNumber, ElOption, ElSelect, ElSwitch } from 'element-plus'
-import { computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRecipeForm } from '../composables/useRecipeForm'
 import {
-  getRecipeCrowdTagLabel,
-  getRecipeDifficultyLabel,
-  getRecipeTypeLabel,
+  getRecipeCrowdTagOptions,
+  getRecipeDifficultyOptions,
+  getRecipeTypeOptions,
 } from '../constants'
 import IngredientEditor from './IngredientEditor.vue'
 import NutritionForm from './NutritionForm.vue'
@@ -32,13 +34,21 @@ interface Emits {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
-let form = useRecipeForm({
+const { t } = useI18n()
+
+// 响应式状态集中声明
+const ingredientError = ref('')
+const ingredientSectionRef = ref<HTMLElement>()
+
+const form = useRecipeForm({
   mode: props.mode,
   recipeId: props.recipeId,
 })
 
+const { width: windowWidth } = useWindowSize()
+
 const drawerSize = computed(() => {
-  return window.innerWidth < 768 ? '100%' : '70%'
+  return windowWidth.value < 768 ? '100%' : '70%'
 })
 
 const title = computed(() => {
@@ -46,10 +56,17 @@ const title = computed(() => {
 })
 
 function handleClose() {
+  ingredientError.value = ''
   emit('update:visible', false)
 }
 
 async function handleSave() {
+  if (form.formData.ingredients.length === 0) {
+    ingredientError.value = t('recipe.form.validation.required', { field: t('recipe.form.fields.ingredients') })
+    ingredientSectionRef.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    return
+  }
+  ingredientError.value = ''
   try {
     await form.save()
     emit('saved', form.recipeId.value || '')
@@ -60,12 +77,13 @@ async function handleSave() {
   }
 }
 
+// 当 drawer 重新打开时，通过 reset 切换模式（保持模板引用不变）
 watch(
   () => [props.visible, props.mode, props.recipeId] as const,
   ([visible, mode, recipeId]) => {
     if (visible) {
-      // 重新初始化 form
-      form = useRecipeForm({ mode, recipeId })
+      ingredientError.value = ''
+      form.reset({ mode, recipeId })
     }
   },
 )
@@ -120,60 +138,19 @@ watch(
 
         <ElFormItem label="类型">
           <ElSelect v-model="form.formData.recipeType">
-            <ElOption
-              value="HOME_COOKING"
-              :label="getRecipeTypeLabel('HOME_COOKING', (key) => key)"
-            />
-            <ElOption
-              value="SOUP"
-              :label="getRecipeTypeLabel('SOUP', (key) => key)"
-            />
-            <ElOption
-              value="STAPLE"
-              :label="getRecipeTypeLabel('STAPLE', (key) => key)"
-            />
-            <ElOption
-              value="SNACK"
-              :label="getRecipeTypeLabel('SNACK', (key) => key)"
-            />
+            <ElOption v-for="opt in getRecipeTypeOptions(t)" :key="opt.value" :value="opt.value" :label="opt.label" />
           </ElSelect>
         </ElFormItem>
 
         <ElFormItem label="人群">
           <ElSelect v-model="form.formData.crowdTag">
-            <ElOption
-              value="FAMILY"
-              :label="getRecipeCrowdTagLabel('FAMILY', (key) => key)"
-            />
-            <ElOption
-              value="CHILD_FRIENDLY"
-              :label="getRecipeCrowdTagLabel('CHILD_FRIENDLY', (key) => key)"
-            />
-            <ElOption
-              value="ELDER_FRIENDLY"
-              :label="getRecipeCrowdTagLabel('ELDER_FRIENDLY', (key) => key)"
-            />
-            <ElOption
-              value="PARTY"
-              :label="getRecipeCrowdTagLabel('PARTY', (key) => key)"
-            />
+            <ElOption v-for="opt in getRecipeCrowdTagOptions(t)" :key="opt.value" :value="opt.value" :label="opt.label" />
           </ElSelect>
         </ElFormItem>
 
         <ElFormItem label="难度">
           <ElSelect v-model="form.formData.difficultyLevel">
-            <ElOption
-              value="EASY"
-              :label="getRecipeDifficultyLabel('EASY', (key) => key)"
-            />
-            <ElOption
-              value="MEDIUM"
-              :label="getRecipeDifficultyLabel('MEDIUM', (key) => key)"
-            />
-            <ElOption
-              value="HARD"
-              :label="getRecipeDifficultyLabel('HARD', (key) => key)"
-            />
+            <ElOption v-for="opt in getRecipeDifficultyOptions(t)" :key="opt.value" :value="opt.value" :label="opt.label" />
           </ElSelect>
         </ElFormItem>
 
@@ -182,15 +159,6 @@ watch(
             v-model="form.formData.cookingTimeMin"
             :min="1"
             :max="480"
-          />
-        </ElFormItem>
-
-        <ElFormItem label="描述">
-          <ElInput
-            v-model="form.formData.description"
-            type="textarea"
-            :rows="3"
-            placeholder="请输入菜品描述"
           />
         </ElFormItem>
 
@@ -203,9 +171,15 @@ watch(
         </ElFormItem>
       </section>
 
-      <!-- 食材 -->
-      <section class="recipe-form-drawer__section">
+      <!-- 食材（必填） -->
+      <section ref="ingredientSectionRef" class="recipe-form-drawer__section">
         <IngredientEditor v-model="form.formData.ingredients" />
+        <p
+          v-if="ingredientError"
+          class="recipe-form-drawer__field-error"
+        >
+          {{ ingredientError }}
+        </p>
       </section>
 
       <!-- 步骤 -->
@@ -251,45 +225,52 @@ watch(
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
+  gap: var(--space-4);
+  padding: var(--space-8);
   text-align: center;
+  color: var(--color-text-muted);
 }
 
 .recipe-form-drawer__form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 1rem 0;
+  gap: var(--space-5);
+  padding: var(--space-4) 0;
 }
 
 .recipe-form-drawer__section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-  border-radius: 8px;
-  background: #f8fafc;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--btn-radius);
+  background: var(--color-surface-muted);
 }
 
 .recipe-form-drawer__section-title {
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 600;
-  color: #0f172a;
+  color: var(--color-text);
 }
 
 .recipe-form-drawer__error-message {
-  padding: 0.75rem;
-  border-radius: 8px;
-  background: #fee2e2;
-  color: #dc2626;
-  font-size: 0.875rem;
+  padding: var(--space-3);
+  border-radius: var(--btn-radius);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+  font-size: var(--text-sm);
 }
 
 .recipe-form-drawer__footer {
   display: flex;
   justify-content: flex-end;
-  gap: 0.5rem;
+  gap: var(--space-2);
+}
+
+.recipe-form-drawer__field-error {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-xs);
+  color: var(--color-danger);
 }
 </style>

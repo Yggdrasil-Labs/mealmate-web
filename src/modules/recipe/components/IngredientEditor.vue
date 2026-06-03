@@ -23,6 +23,7 @@ const emit = defineEmits<Emits>()
 
 const ingredients = computed(() => props.modelValue)
 
+/** 生成前端临时 key（非后端 ID），仅用于列表渲染的 :key 绑定。 */
 function generateId() {
   return `ing-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
 }
@@ -85,7 +86,7 @@ function updateIngredient(index: number, field: keyof RecipeIngredientItem, valu
   <div class="ingredient-editor">
     <div class="ingredient-editor__header">
       <h4 class="ingredient-editor__title">
-        食材列表
+        <span class="ingredient-editor__required">*</span>食材列表
       </h4>
       <ElButton
         type="primary"
@@ -170,7 +171,7 @@ function updateIngredient(index: number, field: keyof RecipeIngredientItem, valu
 .ingredient-editor {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .ingredient-editor__header {
@@ -181,24 +182,29 @@ function updateIngredient(index: number, field: keyof RecipeIngredientItem, valu
 
 .ingredient-editor__title {
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 600;
-  color: #0f172a;
+  color: var(--color-text);
+}
+
+.ingredient-editor__required {
+  color: var(--color-danger);
+  margin-right: 4px;
 }
 
 .ingredient-editor__list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .ingredient-editor__item {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--space-3);
   align-items: flex-start;
-  padding: 0.75rem;
-  border-radius: 8px;
-  background: #f8fafc;
+  padding: var(--space-3);
+  border-radius: var(--btn-radius);
+  background: var(--color-surface-muted);
 }
 
 .ingredient-editor__item-number {
@@ -209,30 +215,30 @@ function updateIngredient(index: number, field: keyof RecipeIngredientItem, valu
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #0f766e;
+  background: var(--color-success);
   color: #fff;
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
 }
 
 .ingredient-editor__item-fields {
   flex: 1;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .ingredient-editor__item-actions {
   display: flex;
-  gap: 0.25rem;
+  gap: 4px;
 }
 
 .ingredient-editor__empty {
-  padding: 2rem;
+  padding: var(--space-8);
   text-align: center;
-  color: #64748b;
-  background: #f8fafc;
-  border-radius: 8px;
+  color: var(--color-text-muted);
+  background: var(--color-surface-muted);
+  border-radius: var(--btn-radius);
 }
 
 .ingredient-editor__empty p {

@@ -39,7 +39,7 @@ function getSeasonTagLabel(value: RecipeSeasonTag) {
     SUMMER: '夏季',
     AUTUMN: '秋季',
     WINTER: '冬季',
-    ALL: '四季',
+    ALL_SEASON: '四季',
   }
   return labels[value]
 }
@@ -143,7 +143,7 @@ export const recipeSearchSchema: SearchFieldSchema[] = [
       layout: { group: 'basic', span: 8 },
       options: [
         createOption('', '全部季节'),
-        ...(['SPRING', 'SUMMER', 'AUTUMN', 'WINTER', 'ALL'] as RecipeSeasonTag[])
+        ...(['SPRING', 'SUMMER', 'AUTUMN', 'WINTER', 'ALL_SEASON'] as RecipeSeasonTag[])
           .map(value => createOption(value, getSeasonTagLabel(value))),
       ],
     },
@@ -161,7 +161,7 @@ export const recipeSearchSchema: SearchFieldSchema[] = [
       layout: { group: 'advanced', span: 8 },
       options: [
         createOption('', '全部人群'),
-        ...(['FAMILY', 'CHILD_FRIENDLY', 'ELDER_FRIENDLY', 'PARTY'] as RecipeCrowdTag[])
+        ...(['GENERAL', 'BABY', 'WEIGHT_LOSS'] as RecipeCrowdTag[])
           .map(value => createOption(value, getRecipeCrowdTagLabel(value, label))),
       ],
     },
@@ -291,6 +291,7 @@ function normalizeFilterValues(values: Record<string, unknown>): Partial<RecipeF
 }
 
 export function useRecipeList(options: UseRecipeListOptions = {}) {
+  // 防御式获取路由：允许 composable 在非组件上下文（如单元测试）中运行
   const instance = getCurrentInstance()
   const route = instance ? useRoute() : undefined
   const router = instance ? useRouter() : undefined

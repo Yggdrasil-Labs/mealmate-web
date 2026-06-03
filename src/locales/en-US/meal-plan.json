@@ -1,0 +1,38 @@
+{
+  "mealPlan": {
+    "title": "Weekly Meal Plan",
+    "generate": "Generate Plan",
+    "confirm": "Confirm Plan",
+    "replace": "Replace",
+    "add": "Add",
+    "delete": "Delete",
+    "manualAdd": "Manual Add",
+    "prepPlan": "Prep Plan",
+    "shoppingList": "Shopping List",
+    "cancel": "Cancel",
+    "confirmReplace": "Confirm Replace",
+    "recipeName": "Recipe Name",
+    "inputRecipeName": "Enter recipe name",
+    "searchRecipe": "Search recipes...",
+    "searchHint": "Enter keywords to search candidate recipes",
+    "emptyHint": "No plan for this week yet, click below to generate",
+    "duplicate": "Duplicate",
+    "prevWeek": "Previous Week",
+    "nextWeek": "Next Week",
+    "priorityHigh": "High",
+    "priorityNormal": "Normal",
+    "priorityLow": "Low",
+    "noPrepItems": "No prep tasks",
+    "noShoppingItems": "No shopping items",
+    "status": {
+      "draft": "Draft",
+      "confirmed": "Confirmed",
+      "archived": "Archived"
+    },
+    "mealType": {
+      "breakfast": "Breakfast",
+      "lunch": "Lunch",
+      "dinner": "Dinner"
+    }
+  }
+}

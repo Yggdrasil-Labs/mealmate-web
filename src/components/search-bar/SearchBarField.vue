@@ -64,6 +64,7 @@ const fieldValue = computed({
 const mergedFieldProps = computed(() => ({
   ...(props.schema.ui.props ?? {}),
   disabled: effectiveDisabled.value,
+  'aria-label': props.schema.meta.label,
 }))
 
 const hasCustomRender = computed(() => Boolean(slots['custom-render']))

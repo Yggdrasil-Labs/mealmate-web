@@ -15,7 +15,6 @@ declare global {
   interface ImportMetaEnv {
     readonly VITE_APP_NAME?: string
     readonly VITE_API_BASE_URL?: string
-    readonly VITE_USE_MOCK?: string
   }
 }
 
@@ -38,13 +37,6 @@ const ENV_DEFAULTS = {
 // 环境变量获取函数（允许使用默认值）
 function validateEnvVar<T>(value: T | undefined, fallback: T, _name: string): T {
   return value === undefined || value === '' ? fallback : value
-}
-
-function parseBooleanEnvVar(value: string | undefined, fallback: boolean): boolean {
-  if (value === undefined || value === '')
-    return fallback
-
-  return value === 'true'
 }
 
 // 获取当前模式（MODE 决定加载哪套配置）
@@ -84,11 +76,6 @@ const API_BASE_URL = validateEnvVar(
   'VITE_API_BASE_URL',
 )
 
-const USE_MOCK = parseBooleanEnvVar(
-  import.meta.env.VITE_USE_MOCK,
-  false,
-)
-
 // 环境判断（PROD / DEV 决定代码行为，直接使用 Vite 提供的值）
 export const isDev = import.meta.env.DEV
 export const isProd = import.meta.env.PROD
@@ -101,7 +88,6 @@ export const env = {
   APP_NAME,
   APP_VERSION,
   API_BASE_URL,
-  USE_MOCK,
   isDev,
   isProd,
   isTest,
@@ -114,7 +100,6 @@ export const {
   APP_NAME: appName,
   APP_VERSION: appVersion,
   API_BASE_URL: apiBaseUrl,
-  USE_MOCK: useMock,
 } = env
 
 // 默认导出

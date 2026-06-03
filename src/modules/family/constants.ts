@@ -1,4 +1,5 @@
 import type {
+  CreateFamilyMemberPayload,
   FamilyRoleType,
   FamilyTargetType,
   OilLevel,
@@ -91,4 +92,29 @@ export function getSaltLevelOptions(t: Translate) {
     createOption('MEDIUM', getSaltLevelLabel('MEDIUM', t)),
     createOption('HEAVY', getSaltLevelLabel('HEAVY', t)),
   ] satisfies Array<{ value: SaltLevel, label: string }>
+}
+
+/** 创建家庭成员表单默认值。 */
+export function createDefaultFamilyMemberFormValues(): CreateFamilyMemberPayload {
+  return {
+    name: '',
+    roleType: 'OTHER',
+    gender: 'OTHER',
+    birthday: '',
+    region: '杭州',
+    targetType: 'BALANCED',
+    avatarUrl: '',
+    sortNo: 99,
+    preference: {
+      tasteTags: [],
+      avoidIngredients: [],
+      allergyIngredients: [],
+      spicyLevel: 'NONE',
+      sweetLevel: 'NONE',
+      oilLevel: 'LIGHT',
+      saltLevel: 'LIGHT',
+      nutritionGoal: '',
+      extraRule: '',
+    },
+  }
 }

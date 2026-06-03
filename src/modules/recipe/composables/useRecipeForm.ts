@@ -1,8 +1,13 @@
 import type {
+  CreateRecipePayload,
+  RecipeCrowdTag,
   RecipeDetail,
+  RecipeDifficultyLevel,
   RecipeIngredientItem,
   RecipeNutrition,
+  RecipeSeasonTag,
   RecipeStepItem,
+  RecipeType,
 } from '../types'
 import { reactive, ref, shallowRef } from 'vue'
 import {
@@ -18,17 +23,16 @@ import {
  * useRecipeForm composable
  *
  * 管理菜品表单的状态和保存逻辑。
- * 支持新增和编辑模式，处理部分保存失败场景。
+ * 支持新增和编辑模式，通过 reset() 切换模式而不需要重新创建实例。
  */
 
 export interface RecipeFormData {
   name: string
-  recipeType: string
-  crowdTag: string
-  seasonTag: string
-  difficultyLevel: string
+  recipeType: RecipeType
+  crowdTag: RecipeCrowdTag
+  seasonTag: RecipeSeasonTag
+  difficultyLevel: RecipeDifficultyLevel
   cookingTimeMin: number
-  description: string
   isBabyFriendly: boolean
   isWeightLossFriendly: boolean
   ingredients: RecipeIngredientItem[]
@@ -45,11 +49,10 @@ function createDefaultFormData(): RecipeFormData {
   return {
     name: '',
     recipeType: 'HOME_COOKING',
-    crowdTag: 'FAMILY',
-    seasonTag: 'ALL',
+    crowdTag: 'GENERAL',
+    seasonTag: 'ALL_SEASON',
     difficultyLevel: 'MEDIUM',
     cookingTimeMin: 30,
-    description: '',
     isBabyFriendly: false,
     isWeightLossFriendly: false,
     ingredients: [],
@@ -66,7 +69,6 @@ function hydrateFormData(detail: RecipeDetail): RecipeFormData {
     seasonTag: detail.seasonTag,
     difficultyLevel: detail.difficultyLevel,
     cookingTimeMin: detail.cookingTimeMin,
-    description: detail.description || '',
     isBabyFriendly: detail.isBabyFriendly,
     isWeightLossFriendly: detail.isWeightLossFriendly,
     ingredients: detail.ingredients || [],
@@ -75,29 +77,69 @@ function hydrateFormData(detail: RecipeDetail): RecipeFormData {
   }
 }
 
-export function useRecipeForm(options: UseRecipeFormOptions) {
+export function useRecipeForm(initialOptions: UseRecipeFormOptions) {
   const formData = reactive<RecipeFormData>(createDefaultFormData())
   const loading = shallowRef(false)
   const saving = shallowRef(false)
   const error = shallowRef<Error | null>(null)
-  const recipeId = ref(options.recipeId)
+  const recipeId = ref(initialOptions.recipeId)
+
+  let currentOptions = { ...initialOptions }
+  let loadToken = 0
 
   async function loadDetail() {
-    if (options.mode !== 'edit' || !options.recipeId)
+    if (currentOptions.mode !== 'edit' || !currentOptions.recipeId)
       return
 
+    const token = ++loadToken
     loading.value = true
     error.value = null
 
     try {
-      const detail = await fetchRecipeDetail(options.recipeId)
+      const detail = await fetchRecipeDetail(currentOptions.recipeId)
+      // 竞态保护：忽略过期的请求结果
+      if (token !== loadToken)
+        return
       Object.assign(formData, hydrateFormData(detail))
     }
     catch (err) {
+      if (token !== loadToken)
+        return
       error.value = err instanceof Error ? err : new Error('加载菜品详情失败')
     }
     finally {
-      loading.value = false
+      if (token === loadToken)
+        loading.value = false
+    }
+  }
+
+  /** 重置表单状态并切换模式，支持 await 等待加载完成。 */
+  async function reset(options: UseRecipeFormOptions) {
+    currentOptions = { ...options }
+    recipeId.value = options.recipeId
+    error.value = null
+    Object.assign(formData, createDefaultFormData())
+    await loadDetail()
+  }
+
+  function buildPayload(): CreateRecipePayload {
+    return {
+      name: formData.name,
+      recipeType: formData.recipeType,
+      crowdTag: formData.crowdTag,
+      seasonTag: formData.seasonTag,
+      difficultyLevel: formData.difficultyLevel,
+      cookingTimeMin: formData.cookingTimeMin,
+      babyFriendly: formData.isBabyFriendly,
+      weightLossFriendly: formData.isWeightLossFriendly,
+      ingredients: formData.ingredients.map((ing, idx) => ({
+        ingredientName: ing.ingredientName,
+        ingredientType: ing.ingredientType || undefined,
+        quantity: ing.quantity ? Number(ing.quantity) : undefined,
+        unit: ing.unit || undefined,
+        mainIngredient: ing.isMain,
+        sortNo: idx + 1,
+      })),
     }
   }
 
@@ -106,25 +148,10 @@ export function useRecipeForm(options: UseRecipeFormOptions) {
     error.value = null
 
     try {
-      if (options.mode === 'add') {
-        // 新增模式：创建菜品
-        const created = await createRecipe({
-          name: formData.name,
-          recipeType: formData.recipeType as any,
-          crowdTag: formData.crowdTag as any,
-          seasonTag: formData.seasonTag as any,
-          difficultyLevel: formData.difficultyLevel as any,
-          cookingTimeMin: formData.cookingTimeMin,
-          description: formData.description,
-          isBabyFriendly: formData.isBabyFriendly,
-          isWeightLossFriendly: formData.isWeightLossFriendly,
-        })
+      if (currentOptions.mode === 'add') {
+        const created = await createRecipe(buildPayload())
         recipeId.value = created.recipeId
 
-        // 保存食材、步骤和营养信息
-        if (formData.ingredients.length > 0) {
-          await updateRecipeIngredients(created.recipeId, formData.ingredients)
-        }
         if (formData.steps.length > 0) {
           await updateRecipeSteps(created.recipeId, formData.steps)
         }
@@ -133,23 +160,10 @@ export function useRecipeForm(options: UseRecipeFormOptions) {
         }
       }
       else {
-        // 编辑模式：更新菜品
         if (!recipeId.value)
           throw new Error('缺少菜品 ID')
 
-        await updateRecipe(recipeId.value, {
-          name: formData.name,
-          recipeType: formData.recipeType as any,
-          crowdTag: formData.crowdTag as any,
-          seasonTag: formData.seasonTag as any,
-          difficultyLevel: formData.difficultyLevel as any,
-          cookingTimeMin: formData.cookingTimeMin,
-          description: formData.description,
-          isBabyFriendly: formData.isBabyFriendly,
-          isWeightLossFriendly: formData.isWeightLossFriendly,
-        })
-
-        // 更新食材、步骤和营养信息
+        await updateRecipe(recipeId.value, buildPayload())
         await updateRecipeIngredients(recipeId.value, formData.ingredients)
         await updateRecipeSteps(recipeId.value, formData.steps)
         if (formData.nutrition) {
@@ -166,7 +180,7 @@ export function useRecipeForm(options: UseRecipeFormOptions) {
     }
   }
 
-  const ready = loadDetail()
+  loadDetail()
 
   return {
     formData,
@@ -174,7 +188,7 @@ export function useRecipeForm(options: UseRecipeFormOptions) {
     saving,
     error,
     recipeId,
-    ready,
     save,
+    reset,
   }
 }

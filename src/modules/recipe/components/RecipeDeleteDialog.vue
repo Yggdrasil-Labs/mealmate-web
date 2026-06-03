@@ -69,28 +69,28 @@ function handleCancel() {
 .recipe-delete-dialog__content {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .recipe-delete-dialog__message {
   margin: 0;
-  color: #0f172a;
+  color: var(--color-text);
   line-height: 1.6;
 }
 
 .recipe-delete-dialog__message strong {
-  color: #dc2626;
+  color: var(--color-danger);
 }
 
 .recipe-delete-dialog__warning {
   margin: 0;
-  color: #64748b;
-  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
 }
 
 .recipe-delete-dialog__footer {
   display: flex;
   justify-content: flex-end;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 </style>

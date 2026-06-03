@@ -1,0 +1,38 @@
+{
+  "mealPlan": {
+    "title": "周计划",
+    "generate": "生成计划",
+    "confirm": "确认计划",
+    "replace": "替换",
+    "add": "添加",
+    "delete": "删除",
+    "manualAdd": "手动添加",
+    "prepPlan": "备菜计划",
+    "shoppingList": "采购清单",
+    "cancel": "取消",
+    "confirmReplace": "确认替换",
+    "recipeName": "菜品名称",
+    "inputRecipeName": "请输入菜品名称",
+    "searchRecipe": "搜索菜品...",
+    "searchHint": "输入关键词搜索候选菜品",
+    "emptyHint": "当前周暂无计划，点击下方按钮生成",
+    "duplicate": "重复",
+    "prevWeek": "上一周",
+    "nextWeek": "下一周",
+    "priorityHigh": "高",
+    "priorityNormal": "中",
+    "priorityLow": "低",
+    "noPrepItems": "暂无备菜任务",
+    "noShoppingItems": "暂无采购项",
+    "status": {
+      "draft": "草稿",
+      "confirmed": "已确认",
+      "archived": "已归档"
+    },
+    "mealType": {
+      "breakfast": "早餐",
+      "lunch": "午餐",
+      "dinner": "晚餐"
+    }
+  }
+}

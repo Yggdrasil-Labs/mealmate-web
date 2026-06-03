@@ -104,34 +104,42 @@ const preferenceSummary = computed(() => {
 <style scoped>
 .family-member-card {
   display: grid;
-  gap: 1rem;
-  padding: 1.25rem;
-  border-radius: 18px;
-  background: #fff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 18px 32px rgba(15, 23, 42, 0.06);
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--card-radius);
+  background: var(--color-surface);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.family-member-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
 }
 
 .family-member-card__header {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
+  gap: var(--space-3);
 }
 
 .family-member-card__avatar {
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: #ffedd5;
-  color: #c2410c;
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
   font-weight: 700;
 }
 
 .family-member-card__identity {
   display: grid;
-  gap: 0.25rem;
+  gap: var(--space-1);
 }
 
 .family-member-card__name,
@@ -142,40 +150,60 @@ const preferenceSummary = computed(() => {
 }
 
 .family-member-card__name {
-  color: #0f172a;
+  color: var(--color-text);
 }
 
 .family-member-card__role,
 .family-member-card__target {
-  color: #475569;
+  color: var(--color-text-secondary);
 }
 
 .family-member-card__preference {
   line-height: 1.65;
-  color: #334155;
+  color: var(--color-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .family-member-card__actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .family-member-card__button {
-  min-height: 44px;
-  border-radius: 14px;
+  min-height: var(--btn-height-lg);
+  border-radius: var(--card-radius);
   border: none;
   font: inherit;
   cursor: pointer;
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    opacity var(--duration-fast) var(--ease-out);
+}
+
+.family-member-card__button:hover {
+  opacity: 0.85;
+}
+
+.family-member-card__button:active {
+  transform: scale(0.97);
+}
+
+.family-member-card__button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .family-member-card__button--secondary {
-  background: #e2e8f0;
-  color: #0f172a;
+  background: var(--color-surface-muted);
+  color: var(--color-text);
 }
 
 .family-member-card__button--danger {
-  background: #fee2e2;
+  background: var(--color-danger-soft);
   color: #b91c1c;
 }
 </style>

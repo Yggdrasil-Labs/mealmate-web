@@ -6,6 +6,7 @@ import type { Component } from 'vue'
 import type { SemanticIconName } from '../icon.types'
 
 import IconEpBack from '~icons/ep/back'
+import IconEpCalendar from '~icons/ep/calendar'
 import IconEpClose from '~icons/ep/close'
 import IconEpDelete from '~icons/ep/delete'
 import IconEpDish from '~icons/ep/dish'
@@ -13,14 +14,18 @@ import IconEpEdit from '~icons/ep/edit'
 import IconEpExpand from '~icons/ep/expand'
 import IconEpFold from '~icons/ep/fold'
 import IconEpFolder from '~icons/ep/folder'
+import IconEpHomeFilled from '~icons/ep/home-filled'
 import IconEpInfo from '~icons/ep/info-filled'
+import IconEpKnifeFork from '~icons/ep/knife-fork'
 import IconEpLink from '~icons/ep/link'
 import IconEpAdd from '~icons/ep/plus'
 import IconEpRefresh from '~icons/ep/refresh'
 import IconEpError from '~icons/ep/remove'
 import IconEpSearch from '~icons/ep/search'
 import IconEpSetting from '~icons/ep/setting'
+import IconEpShoppingCart from '~icons/ep/shopping-cart'
 import IconEpSuccess from '~icons/ep/success-filled'
+import IconEpUserFilled from '~icons/ep/user-filled'
 import IconEpWarning from '~icons/ep/warning-filled'
 
 const iconifyMap: Record<SemanticIconName, Component> = {
@@ -33,10 +38,13 @@ const iconifyMap: Record<SemanticIconName, Component> = {
   'expand': IconEpExpand,
   'fold': IconEpFold,
   'info': IconEpInfo,
-  'menu-dashboard': IconEpSuccess, // 暂用 success，后续可换为本地 menu/dashboard.svg
+  'menu-dashboard': IconEpHomeFilled,
   'menu-system': IconEpInfo,
-  'menu-user': IconEpSuccess,
+  'menu-user': IconEpUserFilled,
   'menu-recipe': IconEpDish,
+  'menu-plan': IconEpCalendar,
+  'menu-prep': IconEpKnifeFork,
+  'menu-shopping': IconEpShoppingCart,
   'refresh': IconEpRefresh,
   'search': IconEpSearch,
   'status-error': IconEpError,

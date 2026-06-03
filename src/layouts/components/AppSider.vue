@@ -175,6 +175,7 @@ function handleSelect(key: string) {
   overflow-y: auto;
   border-radius: calc(var(--shell-radius-xl) - 2px);
   box-shadow: 0 22px 48px rgba(15, 23, 42, 0.18);
+  outline: 9999px solid rgba(15, 23, 42, 0.4);
 }
 
 .app-sider.is-collapsed {
@@ -292,7 +293,7 @@ function handleSelect(key: string) {
   gap: var(--shell-space-2);
   border: 1px solid transparent;
   border-radius: var(--shell-radius-md);
-  background: rgba(255, 255, 255, 0.74);
+  background: var(--shell-glass);
   min-height: 44px;
   padding: 0.625rem var(--shell-space-3) 0.625rem var(--shell-space-4);
   color: var(--shell-text);
@@ -323,10 +324,22 @@ function handleSelect(key: string) {
 }
 
 .app-sider__item.is-active {
+  padding-left: calc(var(--shell-space-4) + 4px);
   border-color: var(--shell-border-strong);
   background: linear-gradient(135deg, rgba(47, 111, 235, 0.12), rgba(47, 111, 235, 0.04));
   color: var(--shell-text);
   box-shadow: 0 8px 16px rgba(47, 111, 235, 0.08);
+}
+
+.app-sider__item.is-active::before {
+  width: 3px;
+  height: 60%;
+  border-radius: 9999px;
+  background: var(--shell-accent);
+}
+
+.app-sider__item.is-active .app-sider__icon {
+  color: var(--shell-accent);
 }
 
 .app-sider__item--child {

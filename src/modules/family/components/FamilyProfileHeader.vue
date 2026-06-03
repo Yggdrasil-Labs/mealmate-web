@@ -72,37 +72,41 @@ const mealGoal = computed(() => props.summary?.mealGoal ?? '-')
 .family-profile-header {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1.5rem;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #fff7ed 0%, #ffffff 55%, #fef3c7 100%);
-  border: 1px solid rgba(249, 115, 22, 0.12);
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border-radius: var(--card-radius);
+  background: linear-gradient(
+    135deg,
+    var(--color-warning-soft) 0%,
+    var(--color-surface) 55%,
+    var(--color-warning-soft) 100%
+  );
+  border: 1px solid var(--color-border);
 }
 
 .family-profile-header__copy {
   display: grid;
-  gap: 0.55rem;
+  gap: var(--space-2);
 }
 
 .family-profile-header__eyebrow {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #c2410c;
+  color: var(--color-warning);
 }
 
 .family-profile-header__title {
   margin: 0;
-  font-size: clamp(1.6rem, 3vw, 2.3rem);
-  color: #7c2d12;
+  font-size: var(--text-2xl);
+  color: var(--color-text);
 }
 
 .family-profile-header__meta,
 .family-profile-header__description,
 .family-profile-header__count {
   margin: 0;
-  color: #9a3412;
+  color: var(--color-text-secondary);
 }
 
 .family-profile-header__actions {
@@ -110,11 +114,12 @@ const mealGoal = computed(() => props.summary?.mealGoal ?? '-')
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .family-profile-header__button {
-  min-height: 44px;
+  min-height: var(--btn-height-lg);
+  color: #1d4ed8;
 }
 
 @media (max-width: 640px) {

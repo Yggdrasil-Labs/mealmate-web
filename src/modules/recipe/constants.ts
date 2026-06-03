@@ -58,10 +58,9 @@ export function getRecipeCrowdTagLabel(value: RecipeCrowdTag, t: Translate) {
 
 export function getRecipeCrowdTagOptions(t: Translate) {
   return [
-    createOption('FAMILY', getRecipeCrowdTagLabel('FAMILY', t)),
-    createOption('CHILD_FRIENDLY', getRecipeCrowdTagLabel('CHILD_FRIENDLY', t)),
-    createOption('ELDER_FRIENDLY', getRecipeCrowdTagLabel('ELDER_FRIENDLY', t)),
-    createOption('PARTY', getRecipeCrowdTagLabel('PARTY', t)),
+    createOption('GENERAL', getRecipeCrowdTagLabel('GENERAL', t)),
+    createOption('BABY', getRecipeCrowdTagLabel('BABY', t)),
+    createOption('WEIGHT_LOSS', getRecipeCrowdTagLabel('WEIGHT_LOSS', t)),
   ] satisfies Array<{ value: RecipeCrowdTag, label: string }>
 }
 

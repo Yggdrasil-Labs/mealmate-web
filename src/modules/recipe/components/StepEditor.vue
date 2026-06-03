@@ -196,7 +196,7 @@ async function handleImageUpload(index: number, file: UploadRawFile) {
 .step-editor {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .step-editor__header {
@@ -207,24 +207,24 @@ async function handleImageUpload(index: number, file: UploadRawFile) {
 
 .step-editor__title {
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 600;
-  color: #0f172a;
+  color: var(--color-text);
 }
 
 .step-editor__list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .step-editor__item {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--space-3);
   align-items: flex-start;
-  padding: 0.75rem;
-  border-radius: 8px;
-  background: #f8fafc;
+  padding: var(--space-3);
+  border-radius: var(--btn-radius);
+  background: var(--color-surface-muted);
 }
 
 .step-editor__item-number {
@@ -235,44 +235,44 @@ async function handleImageUpload(index: number, file: UploadRawFile) {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #0f766e;
+  background: var(--color-success);
   color: #fff;
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
 }
 
 .step-editor__item-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .step-editor__item-image {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .step-editor__preview {
   width: 100%;
   max-width: 300px;
   height: auto;
-  border-radius: 8px;
+  border-radius: var(--btn-radius);
 }
 
 .step-editor__item-actions {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 4px;
 }
 
 .step-editor__empty {
-  padding: 2rem;
+  padding: var(--space-8);
   text-align: center;
-  color: #64748b;
-  background: #f8fafc;
-  border-radius: 8px;
+  color: var(--color-text-muted);
+  background: var(--color-surface-muted);
+  border-radius: var(--btn-radius);
 }
 
 .step-editor__empty p {

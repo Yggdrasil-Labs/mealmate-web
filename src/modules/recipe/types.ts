@@ -1,14 +1,14 @@
 export type RecipeSourceType = 'MANUAL' | 'AI_GENERATED' | 'SYSTEM'
 
-export type RecipeType = 'HOME_COOKING' | 'SOUP' | 'STAPLE' | 'SNACK'
+export type RecipeType = 'HOME_COOKING' | 'MAIN_DISH' | 'SIDE_DISH' | 'SOUP' | 'STAPLE' | 'SNACK' | 'DESSERT' | 'OTHER'
 
 export type RecipeDifficultyLevel = 'EASY' | 'MEDIUM' | 'HARD'
 
-export type RecipeCrowdTag = 'FAMILY' | 'CHILD_FRIENDLY' | 'ELDER_FRIENDLY' | 'PARTY'
+export type RecipeCrowdTag = 'GENERAL' | 'BABY' | 'WEIGHT_LOSS'
 
-export type RecipeSeasonTag = 'SPRING' | 'SUMMER' | 'AUTUMN' | 'WINTER' | 'ALL'
+export type RecipeSeasonTag = 'SPRING' | 'SUMMER' | 'AUTUMN' | 'WINTER' | 'ALL_SEASON'
 
-export type RecipeStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
+export type RecipeStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' | 'ACTIVE'
 
 export interface RecipeIngredientItem {
   ingredientId?: string
@@ -93,12 +93,37 @@ export interface RecipeFormValues extends RecipeBaseFormValues {
   nutrition: RecipeNutrition
 }
 
-export interface CreateRecipePayload extends RecipeBaseFormValues {}
+export interface CreateRecipePayload {
+  name: string
+  recipeType: RecipeType | ''
+  crowdTag?: RecipeCrowdTag | ''
+  seasonTag?: RecipeSeasonTag | ''
+  difficultyLevel?: RecipeDifficultyLevel | ''
+  cookingTimeMin?: number | null
+  coverImageUrl?: string
+  babyFriendly?: boolean
+  weightLossFriendly?: boolean
+  ingredients?: Array<{
+    ingredientName: string
+    ingredientType?: string
+    quantity?: number
+    unit?: string
+    mainIngredient?: boolean
+    sortNo?: number
+  }>
+}
 
-export interface UpdateRecipePayload extends RecipeBaseFormValues {}
+export interface UpdateRecipePayload extends CreateRecipePayload {}
 
 export type UpdateRecipeIngredientsPayload = RecipeIngredientItem[]
 
 export type UpdateRecipeStepsPayload = RecipeStepItem[]
 
 export type UpdateRecipeNutritionPayload = RecipeNutrition
+
+export interface RecipePageResult {
+  list: RecipeSummary[]
+  total: number
+  pageNum: number
+  pageSize: number
+}

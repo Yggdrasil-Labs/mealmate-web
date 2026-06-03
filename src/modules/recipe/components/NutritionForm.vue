@@ -90,20 +90,20 @@ function updateField(field: keyof RecipeNutrition, value: number | undefined) {
 .nutrition-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .nutrition-form__title {
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 600;
-  color: #0f172a;
+  color: var(--color-text);
 }
 
 .nutrition-form__fields {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 @media (max-width: 640px) {

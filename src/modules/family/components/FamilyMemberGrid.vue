@@ -38,7 +38,7 @@ const { t } = useI18n()
 
     <div
       v-else
-      class="family-member-grid__list"
+      class="family-member-grid__list stagger-enter"
       data-testid="family-member-grid-list"
     >
       <FamilyMemberCard
@@ -55,31 +55,31 @@ const { t } = useI18n()
 <style scoped>
 .family-member-grid__list {
   display: grid;
-  gap: 1rem;
+  gap: var(--space-4);
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .family-member-grid__empty {
   display: grid;
-  gap: 1rem;
+  gap: var(--space-4);
   place-items: center;
-  padding: 2rem 1.5rem;
-  border-radius: 18px;
-  border: 1px dashed rgba(148, 163, 184, 0.7);
-  background: #f8fafc;
+  padding: var(--space-8) var(--space-6);
+  border-radius: var(--card-radius);
+  border: 1px dashed var(--color-border-strong);
+  background: var(--color-surface-muted);
 }
 
 .family-member-grid__empty-copy {
   margin: 0;
-  color: #475569;
+  color: var(--color-text-secondary);
 }
 
 .family-member-grid__empty-button {
-  min-height: 44px;
+  min-height: var(--btn-height-lg);
   border: none;
-  border-radius: 999px;
-  padding: 0.85rem 1.2rem;
-  background: #0f766e;
+  border-radius: var(--btn-radius-pill);
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-primary);
   color: #fff;
   font: inherit;
   cursor: pointer;

@@ -2,6 +2,7 @@
 import type { RecipeDetail } from '../types'
 import { ElButton, ElDescriptions, ElDescriptionsItem, ElDrawer, ElEmpty, ElImage } from 'element-plus'
 import { computed, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { fetchRecipeDetail } from '../api'
 import { getRecipeCrowdTagLabel, getRecipeDifficultyLabel, getRecipeTypeLabel } from '../constants'
 
@@ -23,6 +24,8 @@ interface Emits {
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
+
+const { t } = useI18n()
 
 const detail = ref<RecipeDetail | null>(null)
 const loading = ref(false)
@@ -123,13 +126,13 @@ watch(
           border
         >
           <ElDescriptionsItem label="类型">
-            {{ getRecipeTypeLabel(detail.recipeType, (key) => key) }}
+            {{ getRecipeTypeLabel(detail.recipeType, t) }}
           </ElDescriptionsItem>
           <ElDescriptionsItem label="难度">
-            {{ getRecipeDifficultyLabel(detail.difficultyLevel, (key) => key) }}
+            {{ getRecipeDifficultyLabel(detail.difficultyLevel, t) }}
           </ElDescriptionsItem>
           <ElDescriptionsItem label="人群">
-            {{ getRecipeCrowdTagLabel(detail.crowdTag, (key) => key) }}
+            {{ getRecipeCrowdTagLabel(detail.crowdTag, t) }}
           </ElDescriptionsItem>
           <ElDescriptionsItem label="耗时">
             {{ detail.cookingTimeMin }} 分钟
@@ -259,69 +262,84 @@ watch(
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
+  gap: var(--space-4);
+  padding: var(--space-8);
   text-align: center;
+  color: var(--color-text-muted);
 }
 
 .recipe-detail-drawer__content {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-6);
 }
 
 .recipe-detail-drawer__section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .recipe-detail-drawer__section-title {
   margin: 0;
-  font-size: 1.125rem;
+  font-size: var(--section-title-size);
   font-weight: 600;
-  color: #0f172a;
+  color: var(--color-text);
 }
 
 .recipe-detail-drawer__description {
   margin: 0;
-  color: #64748b;
+  color: var(--color-text-muted);
   line-height: 1.6;
 }
 
 .recipe-detail-drawer__ingredients {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .recipe-detail-drawer__ingredient {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem;
-  border-radius: 8px;
-  background: #f8fafc;
+  padding: var(--space-3);
+  border-radius: var(--btn-radius);
+  background: var(--color-surface-muted);
 }
 
 .recipe-detail-drawer__ingredient-name {
   font-weight: 500;
-  color: #0f172a;
+  color: var(--color-text);
 }
 
 .recipe-detail-drawer__ingredient-quantity {
-  color: #64748b;
+  color: var(--color-text-muted);
 }
 
+/* 步骤时间线 */
 .recipe-detail-drawer__steps {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
+  padding-left: var(--space-2);
 }
 
 .recipe-detail-drawer__step {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-4);
+  position: relative;
+}
+
+/* 时间线连接线 */
+.recipe-detail-drawer__step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: calc(1rem - 1px);
+  top: 2rem;
+  bottom: calc(-1 * var(--space-4));
+  width: 2px;
+  background: var(--color-border-strong);
 }
 
 .recipe-detail-drawer__step-number {
@@ -332,27 +350,30 @@ watch(
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #0f766e;
+  background: var(--color-success);
   color: #fff;
   font-weight: 600;
+  font-size: var(--text-sm);
+  z-index: 1;
 }
 
 .recipe-detail-drawer__step-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-3);
+  padding-top: 4px;
 }
 
 .recipe-detail-drawer__step-description {
   margin: 0;
-  color: #0f172a;
+  color: var(--color-text);
   line-height: 1.6;
 }
 
 .recipe-detail-drawer__step-image {
   width: 100%;
   max-width: 400px;
-  border-radius: 8px;
+  border-radius: var(--btn-radius);
 }
 </style>
