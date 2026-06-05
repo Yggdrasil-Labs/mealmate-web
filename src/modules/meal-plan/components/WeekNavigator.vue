@@ -11,6 +11,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'prev'): void
   (e: 'next'): void
+  (e: 'today'): void
 }>()
 
 const { t } = useI18n()
@@ -24,6 +25,17 @@ const weekLabel = computed(() => {
   end.setDate(end.getDate() + 6)
   const fmt = (d: Date) => `${d.getMonth() + 1}/${d.getDate()}`
   return `${fmt(start)} - ${fmt(end)}`
+})
+
+/** 判断当前是否已在本周 */
+const isCurrentWeek = computed(() => {
+  if (!props.weekStartDate)
+    return true
+  const now = new Date()
+  const day = now.getDay()
+  const offset = day === 0 ? -6 : 1 - day
+  const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + offset)
+  return props.weekStartDate === monday.toISOString().slice(0, 10)
 })
 </script>
 
@@ -45,6 +57,14 @@ const weekLabel = computed(() => {
       @click="emit('next')"
     >
       ›
+    </button>
+    <button
+      v-if="!isCurrentWeek"
+      type="button"
+      class="week-navigator__btn week-navigator__btn--today"
+      @click="emit('today')"
+    >
+      {{ t('mealPlan.today', '本周') }}
     </button>
   </nav>
 </template>
@@ -83,5 +103,12 @@ const weekLabel = computed(() => {
   font-size: var(--text-base);
   font-weight: 600;
   color: var(--color-text);
+}
+
+.week-navigator__btn--today {
+  font-size: var(--text-xs);
+  padding: 0 var(--space-2);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 </style>

@@ -14,7 +14,7 @@ import { useWeeklyPlan } from '@/modules/meal-plan/composables/useWeeklyPlan'
 const { t } = useI18n()
 const router = useRouter()
 
-const { plan, loading, isConfirmed, selectedWeekStart, navigateWeek, generate, confirm } = useWeeklyPlan()
+const { plan, loading, isConfirmed, selectedWeekStart, navigateWeek, goToday, generate, confirm } = useWeeklyPlan()
 const replaceItem = useReplaceItem()
 const manualAdd = useManualAdd()
 
@@ -33,6 +33,7 @@ async function handleDelete(item: { itemId: number }) {
           :week-start-date="selectedWeekStart"
           @prev="navigateWeek(-1)"
           @next="navigateWeek(1)"
+          @today="goToday"
         />
       </template>
     </PageHeader>

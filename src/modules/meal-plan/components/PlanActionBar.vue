@@ -28,7 +28,8 @@ const { t } = useI18n()
         :disabled="loading"
         @click="emit('generate')"
       >
-        {{ t('mealPlan.generate') }}
+        <span v-if="loading" class="plan-action-bar__spinner" />
+        {{ loading ? t('mealPlan.generating', '生成中…') : t('mealPlan.generate') }}
       </button>
     </template>
 
@@ -40,6 +41,7 @@ const { t } = useI18n()
         :disabled="loading"
         @click="emit('generate')"
       >
+        <span v-if="loading" class="plan-action-bar__spinner" />
         {{ t('mealPlan.generate') }}
       </button>
       <button
@@ -109,5 +111,23 @@ const { t } = useI18n()
   background: var(--color-surface-muted);
   color: var(--color-primary);
   border: 1px solid var(--color-primary);
+}
+
+.plan-action-bar__spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentcolor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-right: var(--space-1);
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

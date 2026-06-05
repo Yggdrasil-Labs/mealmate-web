@@ -70,6 +70,12 @@ export function useWeeklyPlan() {
     return store.confirmPlan()
   }
 
+  /** 回到本周 */
+  function goToday() {
+    store.selectedWeekStart = getCurrentWeekStart()
+    store.loadCurrentPlan()
+  }
+
   onMounted(() => {
     if (!store.selectedWeekStart)
       store.selectedWeekStart = getCurrentWeekStart()
@@ -83,6 +89,7 @@ export function useWeeklyPlan() {
     isConfirmed,
     selectedWeekStart: computed(() => store.selectedWeekStart),
     navigateWeek,
+    goToday,
     generate,
     confirm,
   }
