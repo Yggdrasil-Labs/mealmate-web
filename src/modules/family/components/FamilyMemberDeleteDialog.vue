@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import { ElButton, ElDialog } from 'element-plus'
 import { useI18n } from 'vue-i18n'
+import { ProDialog } from '@/components/pro-dialog'
+
+/**
+ * FamilyMemberDeleteDialog — 删除家庭成员确认对话框
+ *
+ * 使用 ProDialog confirm 模式，统一删除确认交互。
+ */
 
 defineOptions({ name: 'FamilyMemberDeleteDialog' })
 
@@ -17,60 +23,33 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 
-function handleCancel() {
-  emit('cancel')
+function handleConfirm() {
+  emit('confirm')
   emit('update:modelValue', false)
 }
 
-function handleConfirm() {
-  emit('confirm')
+function handleCancel() {
+  emit('cancel')
   emit('update:modelValue', false)
 }
 </script>
 
 <template>
-  <ElDialog
+  <ProDialog
     :model-value="props.modelValue"
-    :append-to-body="true"
-    :show-close="false"
+    mode="confirm"
     :title="t('family.deleteDialog.title')"
     width="420px"
+    confirm-type="danger"
+    :confirm-text="t('button.delete')"
+    :cancel-text="t('button.cancel')"
+    :show-close="false"
+    @confirm="handleConfirm"
+    @cancel="handleCancel"
     @update:model-value="emit('update:modelValue', $event)"
   >
-    <p class="family-member-delete-dialog__copy">
+    <p style="margin: 0;">
       {{ t('family.deleteDialog.confirmWithName', { name: props.memberName }) }}
     </p>
-
-    <template #footer>
-      <div class="family-member-delete-dialog__actions">
-        <ElButton
-          class="family-member-delete-dialog__button"
-          data-testid="family-member-delete-cancel"
-          @click="handleCancel"
-        >
-          {{ t('button.cancel') }}
-        </ElButton>
-        <ElButton
-          type="danger"
-          class="family-member-delete-dialog__button"
-          data-testid="family-member-delete-confirm"
-          @click="handleConfirm"
-        >
-          {{ t('button.delete') }}
-        </ElButton>
-      </div>
-    </template>
-  </ElDialog>
+  </ProDialog>
 </template>
-
-<style scoped>
-.family-member-delete-dialog__copy {
-  margin: 0;
-}
-
-.family-member-delete-dialog__actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-}
-</style>

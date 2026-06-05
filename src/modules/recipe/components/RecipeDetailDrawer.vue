@@ -1,29 +1,28 @@
 <script setup lang="ts">
 import type { RecipeDetail } from '../types'
-import { ElButton, ElDescriptions, ElDescriptionsItem, ElDrawer, ElEmpty, ElImage } from 'element-plus'
+import type { FormFieldSchema } from '@/types/pro-form'
+import { ElButton, ElDrawer, ElEmpty, ElImage } from 'element-plus'
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { ProDetail } from '@/components/pro-detail'
 import { fetchRecipeDetail } from '../api'
 import { getRecipeCrowdTagLabel, getRecipeDifficultyLabel, getRecipeTypeLabel } from '../constants'
 
 /**
- * RecipeDetailDrawer 组件
+ * RecipeDetailDrawer — 菜品详情抽屉
  *
- * 只读展示菜品详情，包括基础信息、食材列表、步骤和营养信息。
- * 支持加载状态、错误重试和移动端全屏显示。
+ * 基础信息和营养信息使用 ProDetail schema 驱动展示。
+ * 食材列表和步骤时间线保留自定义渲染。
  */
 
-interface Props {
+const props = defineProps<{
   visible: boolean
   recipeId: string
-}
+}>()
 
-interface Emits {
+const emit = defineEmits<{
   (e: 'update:visible', value: boolean): void
-}
-
-const props = defineProps<Props>()
-const emit = defineEmits<Emits>()
+}>()
 
 const { t } = useI18n()
 
@@ -31,18 +30,57 @@ const detail = ref<RecipeDetail | null>(null)
 const loading = ref(false)
 const error = ref<Error | null>(null)
 
-const drawerSize = computed(() => {
-  // 移动端全屏，桌面端 60%
-  return window.innerWidth < 768 ? '100%' : '60%'
+const drawerSize = computed(() => window.innerWidth < 768 ? '100%' : '60%')
+
+/** 基础信息 ProDetail schema */
+const basicSchema = computed<FormFieldSchema[]>(() => [
+  { meta: { field: 'recipeType', label: '类型', valueType: 'string', required: false }, ui: { component: 'Tag', layout: { span: 12 } } },
+  { meta: { field: 'difficultyLevel', label: '难度', valueType: 'string', required: false }, ui: { component: 'Tag', layout: { span: 12 } } },
+  { meta: { field: 'crowdTag', label: '人群', valueType: 'string', required: false }, ui: { component: 'Tag', layout: { span: 12 } } },
+  { meta: { field: 'cookingTimeMin', label: '耗时', valueType: 'string', required: false }, ui: { layout: { span: 12 } } },
+  { meta: { field: 'isBabyFriendly', label: '宝宝友好', valueType: 'string', required: false }, ui: { layout: { span: 12 } } },
+  { meta: { field: 'isWeightLossFriendly', label: '控脂友好', valueType: 'string', required: false }, ui: { layout: { span: 12 } } },
+])
+
+/** 营养信息 ProDetail schema */
+const nutritionSchema = computed<FormFieldSchema[]>(() => [
+  { meta: { field: 'calories', label: '热量', valueType: 'string', required: false, emptyText: '—' }, ui: { layout: { span: 12, group: '营养信息（每份）' } } },
+  { meta: { field: 'protein', label: '蛋白质', valueType: 'string', required: false, emptyText: '—' }, ui: { layout: { span: 12, group: '营养信息（每份）' } } },
+  { meta: { field: 'fat', label: '脂肪', valueType: 'string', required: false, emptyText: '—' }, ui: { layout: { span: 12, group: '营养信息（每份）' } } },
+  { meta: { field: 'carbohydrate', label: '碳水', valueType: 'string', required: false, emptyText: '—' }, ui: { layout: { span: 12, group: '营养信息（每份）' } } },
+])
+
+/** 将原始数据转换为 ProDetail 展示用的数据 */
+const basicData = computed(() => {
+  if (!detail.value)
+    return {}
+  return {
+    recipeType: getRecipeTypeLabel(detail.value.recipeType, t),
+    difficultyLevel: getRecipeDifficultyLabel(detail.value.difficultyLevel, t),
+    crowdTag: getRecipeCrowdTagLabel(detail.value.crowdTag, t),
+    cookingTimeMin: `${detail.value.cookingTimeMin} 分钟`,
+    isBabyFriendly: detail.value.isBabyFriendly ? '是' : '否',
+    isWeightLossFriendly: detail.value.isWeightLossFriendly ? '是' : '否',
+  }
+})
+
+const nutritionData = computed(() => {
+  const n = detail.value?.nutrition
+  if (!n)
+    return {}
+  return {
+    calories: n.calories ? `${n.calories} 千卡` : undefined,
+    protein: n.protein ? `${n.protein} 克` : undefined,
+    fat: n.fat ? `${n.fat} 克` : undefined,
+    carbohydrate: n.carbohydrate ? `${n.carbohydrate} 克` : undefined,
+  }
 })
 
 async function loadDetail() {
   if (!props.recipeId)
     return
-
   loading.value = true
   error.value = null
-
   try {
     detail.value = await fetchRecipeDetail(props.recipeId)
   }
@@ -58,134 +96,66 @@ function handleClose() {
   emit('update:visible', false)
 }
 
-function retry() {
-  void loadDetail()
-}
-
-watch(
-  () => props.visible,
-  (visible) => {
-    if (visible && props.recipeId) {
-      void loadDetail()
-    }
-  },
-  { immediate: true },
-)
+watch(() => props.visible, (v) => {
+  if (v && props.recipeId)
+    void loadDetail()
+}, { immediate: true })
 </script>
 
 <template>
-  <ElDrawer
-    :model-value="visible"
-    :size="drawerSize"
-    direction="rtl"
-    @close="handleClose"
-  >
+  <ElDrawer :model-value="visible" :size="drawerSize" direction="rtl" @close="handleClose">
     <template #header>
       <h3>菜品详情</h3>
     </template>
 
-    <div
-      v-if="loading"
-      class="recipe-detail-drawer__loading"
-    >
+    <div v-if="loading" class="recipe-detail-drawer__loading">
       <p>加载中...</p>
     </div>
 
-    <div
-      v-else-if="error"
-      class="recipe-detail-drawer__error"
-    >
+    <div v-else-if="error" class="recipe-detail-drawer__error">
       <p>{{ error.message }}</p>
-      <ElButton
-        type="primary"
-        data-testid="recipe-detail-retry"
-        @click="retry"
-      >
+      <ElButton type="primary" data-testid="recipe-detail-retry" @click="loadDetail">
         重试
       </ElButton>
     </div>
 
-    <div
-      v-else-if="detail"
-      class="recipe-detail-drawer__content"
-    >
-      <!-- 基础信息 -->
+    <div v-else-if="detail" class="recipe-detail-drawer__content">
+      <!-- 标题与描述 -->
       <section class="recipe-detail-drawer__section">
         <h4 class="recipe-detail-drawer__section-title">
           {{ detail.name }}
         </h4>
-        <p
-          v-if="detail.description"
-          class="recipe-detail-drawer__description"
-        >
+        <p v-if="detail.description" class="recipe-detail-drawer__description">
           {{ detail.description }}
         </p>
-
-        <ElDescriptions
-          :column="2"
-          border
-        >
-          <ElDescriptionsItem label="类型">
-            {{ getRecipeTypeLabel(detail.recipeType, t) }}
-          </ElDescriptionsItem>
-          <ElDescriptionsItem label="难度">
-            {{ getRecipeDifficultyLabel(detail.difficultyLevel, t) }}
-          </ElDescriptionsItem>
-          <ElDescriptionsItem label="人群">
-            {{ getRecipeCrowdTagLabel(detail.crowdTag, t) }}
-          </ElDescriptionsItem>
-          <ElDescriptionsItem label="耗时">
-            {{ detail.cookingTimeMin }} 分钟
-          </ElDescriptionsItem>
-          <ElDescriptionsItem label="宝宝友好">
-            {{ detail.isBabyFriendly ? '是' : '否' }}
-          </ElDescriptionsItem>
-          <ElDescriptionsItem label="控脂友好">
-            {{ detail.isWeightLossFriendly ? '是' : '否' }}
-          </ElDescriptionsItem>
-        </ElDescriptions>
       </section>
 
-      <!-- 食材列表 -->
+      <!-- 基础信息 (ProDetail) -->
+      <section class="recipe-detail-drawer__section">
+        <ProDetail :schema="basicSchema" :data="basicData" :layout="{ column: 2, border: true }" />
+      </section>
+
+      <!-- 食材列表 (自定义) -->
       <section class="recipe-detail-drawer__section">
         <h4 class="recipe-detail-drawer__section-title">
           食材
         </h4>
-        <div
-          v-if="detail.ingredients && detail.ingredients.length > 0"
-          class="recipe-detail-drawer__ingredients"
-        >
-          <div
-            v-for="ingredient in detail.ingredients"
-            :key="ingredient.ingredientId"
-            class="recipe-detail-drawer__ingredient"
-          >
-            <span class="recipe-detail-drawer__ingredient-name">{{ ingredient.ingredientName }}</span>
-            <span class="recipe-detail-drawer__ingredient-quantity">
-              {{ ingredient.quantity }} {{ ingredient.unit }}
-            </span>
+        <div v-if="detail.ingredients?.length" class="recipe-detail-drawer__ingredients">
+          <div v-for="ing in detail.ingredients" :key="ing.ingredientId" class="recipe-detail-drawer__ingredient">
+            <span class="recipe-detail-drawer__ingredient-name">{{ ing.ingredientName }}</span>
+            <span class="recipe-detail-drawer__ingredient-quantity">{{ ing.quantity }} {{ ing.unit }}</span>
           </div>
         </div>
-        <ElEmpty
-          v-else
-          description="暂无食材"
-        />
+        <ElEmpty v-else description="暂无食材" />
       </section>
 
-      <!-- 步骤 -->
+      <!-- 步骤 (自定义时间线) -->
       <section class="recipe-detail-drawer__section">
         <h4 class="recipe-detail-drawer__section-title">
           步骤
         </h4>
-        <div
-          v-if="detail.steps && detail.steps.length > 0"
-          class="recipe-detail-drawer__steps"
-        >
-          <div
-            v-for="step in detail.steps"
-            :key="step.stepNo"
-            class="recipe-detail-drawer__step"
-          >
+        <div v-if="detail.steps?.length" class="recipe-detail-drawer__steps">
+          <div v-for="step in detail.steps" :key="step.stepNo" class="recipe-detail-drawer__step">
             <div class="recipe-detail-drawer__step-number">
               {{ step.stepNo }}
             </div>
@@ -193,65 +163,20 @@ watch(
               <p class="recipe-detail-drawer__step-description">
                 {{ step.content }}
               </p>
-              <ElImage
-                v-if="step.imageUrl"
-                :src="step.imageUrl"
-                fit="cover"
-                class="recipe-detail-drawer__step-image"
-              />
+              <ElImage v-if="step.imageUrl" :src="step.imageUrl" fit="cover" class="recipe-detail-drawer__step-image" />
             </div>
           </div>
         </div>
-        <ElEmpty
-          v-else
-          description="暂无步骤"
-        />
+        <ElEmpty v-else description="暂无步骤" />
       </section>
 
-      <!-- 营养信息 -->
-      <section
-        v-if="detail.nutrition"
-        class="recipe-detail-drawer__section"
-      >
-        <h4 class="recipe-detail-drawer__section-title">
-          营养信息（每份）
-        </h4>
-        <ElDescriptions
-          :column="2"
-          border
-        >
-          <ElDescriptionsItem
-            v-if="detail.nutrition.calories"
-            label="热量"
-          >
-            {{ detail.nutrition.calories }} 千卡
-          </ElDescriptionsItem>
-          <ElDescriptionsItem
-            v-if="detail.nutrition.protein"
-            label="蛋白质"
-          >
-            {{ detail.nutrition.protein }} 克
-          </ElDescriptionsItem>
-          <ElDescriptionsItem
-            v-if="detail.nutrition.fat"
-            label="脂肪"
-          >
-            {{ detail.nutrition.fat }} 克
-          </ElDescriptionsItem>
-          <ElDescriptionsItem
-            v-if="detail.nutrition.carbohydrate"
-            label="碳水"
-          >
-            {{ detail.nutrition.carbohydrate }} 克
-          </ElDescriptionsItem>
-        </ElDescriptions>
+      <!-- 营养信息 (ProDetail) -->
+      <section v-if="detail.nutrition" class="recipe-detail-drawer__section">
+        <ProDetail :schema="nutritionSchema" :data="nutritionData" :layout="{ column: 2, border: true }" />
       </section>
     </div>
 
-    <ElEmpty
-      v-else
-      description="暂无数据"
-    />
+    <ElEmpty v-else description="暂无数据" />
   </ElDrawer>
 </template>
 
@@ -317,7 +242,6 @@ watch(
   color: var(--color-text-muted);
 }
 
-/* 步骤时间线 */
 .recipe-detail-drawer__steps {
   display: flex;
   flex-direction: column;
@@ -331,7 +255,6 @@ watch(
   position: relative;
 }
 
-/* 时间线连接线 */
 .recipe-detail-drawer__step:not(:last-child)::before {
   content: '';
   position: absolute;

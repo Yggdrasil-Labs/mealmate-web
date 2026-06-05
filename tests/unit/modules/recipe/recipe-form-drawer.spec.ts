@@ -1,9 +1,13 @@
 // @vitest-environment jsdom
 import type { RecipeDetail } from '@/modules/recipe/types'
+import { createPinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createApp, defineComponent, h, nextTick, ref } from 'vue'
+import { registerDefaultFieldComponents } from '@/components/pro-form'
 import i18n from '@/locales/i18n'
 import RecipeFormDrawer from '@/modules/recipe/components/RecipeFormDrawer.vue'
+
+registerDefaultFieldComponents()
 
 vi.mock('@/modules/recipe/api', () => ({
   fetchRecipeDetail: vi.fn(),
@@ -72,6 +76,7 @@ function mountDrawer(visible = true, mode: 'add' | 'edit' = 'add', recipeId?: st
   })
 
   const app = createApp(Host)
+  app.use(createPinia())
   app.use(i18n)
   app.mount(container)
   mountedApps.push(app)

@@ -56,16 +56,20 @@ describe('familyMemberDeleteDialog', () => {
     await setLocale('zh-CN')
     const dialog = mountDeleteDialog()
     await nextTick()
+    await nextTick()
 
-    document.body.querySelector('[data-testid="family-member-delete-cancel"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    document.body.querySelector('[data-testid="dialog-cancel"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await nextTick()
 
     expect(dialog.onCancel).toHaveBeenCalledTimes(1)
     expect(dialog.visible.value).toBe(false)
 
     dialog.visible.value = true
     await nextTick()
+    await nextTick()
 
-    document.body.querySelector('[data-testid="family-member-delete-confirm"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    document.body.querySelector('[data-testid="dialog-confirm"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await nextTick()
 
     expect(dialog.onConfirm).toHaveBeenCalledTimes(1)
     expect(dialog.visible.value).toBe(false)

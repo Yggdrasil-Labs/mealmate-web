@@ -1,32 +1,28 @@
 <script setup lang="ts">
 import type { RecipeNutrition } from '../types'
-import { ElFormItem, ElInputNumber } from 'element-plus'
-import { computed } from 'vue'
+import type { FormFieldSchema } from '@/types/pro-form'
+import { ProForm } from '@/components/pro-form'
 
 /**
- * NutritionForm 组件
+ * NutritionForm — 营养信息表单（ProForm schema 驱动）
  *
- * 营养信息表单，支持热量、蛋白质、脂肪、碳水的输入。
- * 所有字段都是可选的。
+ * 所有字段可选，支持热量、蛋白质、脂肪、碳水。
  */
 
-interface Props {
+defineProps<{
   modelValue?: RecipeNutrition
-}
+}>()
 
-interface Emits {
+const emit = defineEmits<{
   (e: 'update:modelValue', value: RecipeNutrition | undefined): void
-}
+}>()
 
-const props = defineProps<Props>()
-const emit = defineEmits<Emits>()
-
-const nutrition = computed(() => props.modelValue || {})
-
-function updateField(field: keyof RecipeNutrition, value: number | undefined) {
-  const updated = { ...nutrition.value, [field]: value }
-  emit('update:modelValue', updated)
-}
+const schema: FormFieldSchema[] = [
+  { meta: { field: 'calories', label: '热量（千卡）', valueType: 'number', required: false }, ui: { component: 'InputNumber', props: { 'min': 0, 'max': 9999, 'controlsPosition': 'right', 'data-testid': 'nutrition-calories' }, layout: { span: 12 } } },
+  { meta: { field: 'protein', label: '蛋白质（克）', valueType: 'number', required: false }, ui: { component: 'InputNumber', props: { 'min': 0, 'max': 999, 'precision': 1, 'controlsPosition': 'right', 'data-testid': 'nutrition-protein' }, layout: { span: 12 } } },
+  { meta: { field: 'fat', label: '脂肪（克）', valueType: 'number', required: false }, ui: { component: 'InputNumber', props: { 'min': 0, 'max': 999, 'precision': 1, 'controlsPosition': 'right', 'data-testid': 'nutrition-fat' }, layout: { span: 12 } } },
+  { meta: { field: 'carbohydrate', label: '碳水（克）', valueType: 'number', required: false }, ui: { component: 'InputNumber', props: { 'min': 0, 'max': 999, 'precision': 1, 'controlsPosition': 'right', 'data-testid': 'nutrition-carbs' }, layout: { span: 12 } } },
+]
 </script>
 
 <template>
@@ -34,55 +30,12 @@ function updateField(field: keyof RecipeNutrition, value: number | undefined) {
     <h4 class="nutrition-form__title">
       营养信息（每份）
     </h4>
-
-    <div class="nutrition-form__fields">
-      <ElFormItem label="热量（千卡）">
-        <ElInputNumber
-          :model-value="nutrition.calories"
-          :min="0"
-          :max="9999"
-          controls-position="right"
-          data-testid="nutrition-calories"
-          @update:model-value="(value) => updateField('calories', value)"
-        />
-      </ElFormItem>
-
-      <ElFormItem label="蛋白质（克）">
-        <ElInputNumber
-          :model-value="nutrition.protein"
-          :min="0"
-          :max="999"
-          :precision="1"
-          controls-position="right"
-          data-testid="nutrition-protein"
-          @update:model-value="(value) => updateField('protein', value)"
-        />
-      </ElFormItem>
-
-      <ElFormItem label="脂肪（克）">
-        <ElInputNumber
-          :model-value="nutrition.fat"
-          :min="0"
-          :max="999"
-          :precision="1"
-          controls-position="right"
-          data-testid="nutrition-fat"
-          @update:model-value="(value) => updateField('fat', value)"
-        />
-      </ElFormItem>
-
-      <ElFormItem label="碳水（克）">
-        <ElInputNumber
-          :model-value="nutrition.carbohydrate"
-          :min="0"
-          :max="999"
-          :precision="1"
-          controls-position="right"
-          data-testid="nutrition-carbs"
-          @update:model-value="(value) => updateField('carbohydrate', value)"
-        />
-      </ElFormItem>
-    </div>
+    <ProForm
+      :schema="schema"
+      :model-value="modelValue || {}"
+      :loading="false"
+      @update:model-value="emit('update:modelValue', $event as RecipeNutrition)"
+    />
   </div>
 </template>
 
@@ -98,17 +51,5 @@ function updateField(field: keyof RecipeNutrition, value: number | undefined) {
   font-size: var(--text-base);
   font-weight: 600;
   color: var(--color-text);
-}
-
-.nutrition-form__fields {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-4);
-}
-
-@media (max-width: 640px) {
-  .nutrition-form__fields {
-    grid-template-columns: 1fr;
-  }
 }
 </style>

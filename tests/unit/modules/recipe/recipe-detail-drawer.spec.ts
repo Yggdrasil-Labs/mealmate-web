@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 import type { RecipeDetail } from '@/modules/recipe/types'
+import { createPinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createApp, defineComponent, h, nextTick, ref } from 'vue'
 import i18n from '@/locales/i18n'
@@ -73,6 +74,7 @@ function mountDrawer(recipeId: string, visible = true) {
   })
 
   const app = createApp(Host)
+  app.use(createPinia())
   app.use(i18n)
   app.mount(container)
   mountedApps.push(app)

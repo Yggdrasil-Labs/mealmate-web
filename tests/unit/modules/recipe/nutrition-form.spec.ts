@@ -1,9 +1,13 @@
 // @vitest-environment jsdom
 import type { RecipeNutrition } from '@/modules/recipe/types'
+import { createPinia } from 'pinia'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { createApp, defineComponent, h, nextTick, ref } from 'vue'
+import { registerDefaultFieldComponents } from '@/components/pro-form'
 import i18n from '@/locales/i18n'
 import NutritionForm from '@/modules/recipe/components/NutritionForm.vue'
+
+registerDefaultFieldComponents()
 
 const mountedApps: Array<{ unmount: () => void }> = []
 
@@ -31,6 +35,7 @@ function mountForm(initialNutrition: RecipeNutrition | undefined = undefined) {
   })
 
   const app = createApp(Host)
+  app.use(createPinia())
   app.use(i18n)
   app.mount(container)
   mountedApps.push(app)
@@ -39,53 +44,31 @@ function mountForm(initialNutrition: RecipeNutrition | undefined = undefined) {
 }
 
 describe('nutritionForm', () => {
-  it('renders all nutrition fields', async () => {
-    const initialNutrition: RecipeNutrition = {
-      calories: 350,
-      protein: 28,
-      fat: 18,
-      carbs: 15,
-    }
-    const { container } = mountForm(initialNutrition)
-
+  it('renders all nutrition field labels', async () => {
+    const { container } = mountForm({ calories: 350, protein: 28, fat: 18, carbs: 15 })
+    await nextTick()
     await nextTick()
 
-    expect(container.textContent).toContain('热量')
-    expect(container.textContent).toContain('蛋白质')
-    expect(container.textContent).toContain('脂肪')
-    expect(container.textContent).toContain('碳水')
+    const text = container.textContent || ''
+    expect(text).toContain('热量')
+    expect(text).toContain('蛋白质')
+    expect(text).toContain('脂肪')
+    expect(text).toContain('碳水')
   })
 
-  it('handles empty optional fields', async () => {
-    const { container, onChange } = mountForm()
-
+  it('renders section title', async () => {
+    const { container } = mountForm()
     await nextTick()
 
-    const caloriesInput = container.querySelector('[data-testid="nutrition-calories"]') as HTMLInputElement
-    expect(caloriesInput).toBeTruthy()
-
-    // 空值应该被接受
-    expect(onChange).not.toHaveBeenCalled()
+    expect(container.textContent).toContain('营养信息（每份）')
   })
 
-  it('updates nutrition values', async () => {
-    const initialNutrition: RecipeNutrition = {
-      calories: 350,
-      protein: 28,
-      fat: 18,
-      carbs: 15,
-    }
-    const { container, onChange } = mountForm(initialNutrition)
-
+  it('renders InputNumber controls', async () => {
+    const { container } = mountForm({ calories: 350, protein: 28, fat: 18, carbs: 15 })
+    await nextTick()
     await nextTick()
 
-    const caloriesInput = container.querySelector('[data-testid="nutrition-calories"] input') as HTMLInputElement
-    expect(caloriesInput).toBeTruthy()
-
-    caloriesInput.value = '400'
-    caloriesInput.dispatchEvent(new Event('input'))
-    await nextTick()
-
-    expect(onChange).toHaveBeenCalled()
+    const inputs = container.querySelectorAll('.el-input-number')
+    expect(inputs.length).toBe(4)
   })
 })

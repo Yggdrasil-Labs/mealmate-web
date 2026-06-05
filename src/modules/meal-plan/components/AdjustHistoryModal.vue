@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { watch } from 'vue'
-
+import { ProDialog } from '@/components/pro-dialog'
 import { useAdjustMealItem } from '../composables/useAdjustMealItem'
+
+/**
+ * AdjustHistoryModal — 调整历史弹窗
+ *
+ * 使用 ProDialog custom 模式展示调整历史列表。
+ */
 
 defineOptions({ name: 'AdjustHistoryModal' })
 
@@ -17,7 +23,6 @@ const emit = defineEmits<{
 
 const { historyList, historyLoading, loadHistory } = useAdjustMealItem()
 
-/** 调整原因枚举 → 中文标签 */
 const reasonLabels: Record<string, string> = {
   LACK_INGREDIENT: '食材缺货',
   TASTE_CHANGE: '口味变化',
@@ -25,7 +30,6 @@ const reasonLabels: Record<string, string> = {
   OTHER: '其他',
 }
 
-// 弹窗可见时按 planId + itemId 加载历史
 watch(() => props.visible, (v) => {
   if (v)
     loadHistory(props.planId, props.itemId)
@@ -33,11 +37,16 @@ watch(() => props.visible, (v) => {
 </script>
 
 <template>
-  <ElDialog :model-value="visible" title="调整历史" width="420px" @close="emit('close')">
-    <div v-if="historyLoading" class="history-modal__loading">
-      加载中...
-    </div>
-    <ElEmpty v-else-if="!historyList.length" description="暂无调整记录" />
+  <ProDialog
+    :model-value="visible"
+    mode="custom"
+    title="调整历史"
+    width="420px"
+    :show-footer="false"
+    :loading="historyLoading"
+    @update:model-value="!$event && emit('close')"
+  >
+    <ElEmpty v-if="!historyList.length && !historyLoading" description="暂无调整记录" />
     <ul v-else class="history-modal__list">
       <li v-for="h in historyList" :key="h.historyId" class="history-modal__item">
         <div class="history-modal__change">
@@ -53,16 +62,10 @@ watch(() => props.visible, (v) => {
         </div>
       </li>
     </ul>
-  </ElDialog>
+  </ProDialog>
 </template>
 
 <style scoped>
-.history-modal__loading {
-  text-align: center;
-  padding: 20px;
-  color: var(--el-text-color-secondary);
-}
-
 .history-modal__list {
   list-style: none;
   padding: 0;

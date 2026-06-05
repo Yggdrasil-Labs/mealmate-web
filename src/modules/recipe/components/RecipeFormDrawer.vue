@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import type { FormFieldSchema } from '@/types/pro-form'
 import { useWindowSize } from '@vueuse/core'
-import { ElButton, ElDrawer, ElForm, ElFormItem, ElInput, ElInputNumber, ElOption, ElSelect, ElSwitch } from 'element-plus'
+import { ElButton, ElDrawer, ElForm } from 'element-plus'
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { ProForm } from '@/components/pro-form'
 import { useRecipeForm } from '../composables/useRecipeForm'
 import {
   getRecipeCrowdTagOptions,
@@ -14,10 +16,9 @@ import NutritionForm from './NutritionForm.vue'
 import StepEditor from './StepEditor.vue'
 
 /**
- * RecipeFormDrawer 组件
+ * RecipeFormDrawer — 菜品表单抽屉
  *
- * 菜品表单抽屉，支持新增和编辑模式。
- * 集成所有子编辑器组件，处理保存逻辑。
+ * 基础信息区使用 ProForm schema 驱动，食材/步骤/营养保留独立编辑器。
  */
 
 interface Props {
@@ -36,7 +37,6 @@ const emit = defineEmits<Emits>()
 
 const { t } = useI18n()
 
-// 响应式状态集中声明
 const ingredientError = ref('')
 const ingredientSectionRef = ref<HTMLElement>()
 
@@ -46,14 +46,19 @@ const form = useRecipeForm({
 })
 
 const { width: windowWidth } = useWindowSize()
+const drawerSize = computed(() => windowWidth.value < 768 ? '100%' : '70%')
+const title = computed(() => props.mode === 'add' ? '新增菜品' : '编辑菜品')
 
-const drawerSize = computed(() => {
-  return windowWidth.value < 768 ? '100%' : '70%'
-})
-
-const title = computed(() => {
-  return props.mode === 'add' ? '新增菜品' : '编辑菜品'
-})
+/** 基础信息 ProForm schema */
+const basicSchema = computed<FormFieldSchema[]>(() => [
+  { meta: { field: 'name', label: '菜品名称', valueType: 'string', required: true }, ui: { component: 'Input', props: { placeholder: '请输入菜品名称' } } },
+  { meta: { field: 'recipeType', label: '类型', valueType: 'string', required: false }, ui: { component: 'Select', options: getRecipeTypeOptions(t) } },
+  { meta: { field: 'crowdTag', label: '人群', valueType: 'string', required: false }, ui: { component: 'Select', options: getRecipeCrowdTagOptions(t) } },
+  { meta: { field: 'difficultyLevel', label: '难度', valueType: 'string', required: false }, ui: { component: 'Select', options: getRecipeDifficultyOptions(t) } },
+  { meta: { field: 'cookingTimeMin', label: '耗时（分钟）', valueType: 'number', required: false }, ui: { component: 'InputNumber', props: { min: 1, max: 480 } } },
+  { meta: { field: 'isBabyFriendly', label: '宝宝友好', valueType: 'boolean', required: false }, ui: { component: 'Switch' } },
+  { meta: { field: 'isWeightLossFriendly', label: '控脂友好', valueType: 'boolean', required: false }, ui: { component: 'Switch' } },
+])
 
 function handleClose() {
   ingredientError.value = ''
@@ -77,7 +82,6 @@ async function handleSave() {
   }
 }
 
-// 当 drawer 重新打开时，通过 reset 切换模式（保持模板引用不变）
 watch(
   () => [props.visible, props.mode, props.recipeId] as const,
   ([visible, mode, recipeId]) => {
@@ -120,55 +124,17 @@ watch(
       label-width="120px"
       class="recipe-form-drawer__form"
     >
-      <!-- 基础信息 -->
+      <!-- 基础信息 (ProForm schema 驱动) -->
       <section class="recipe-form-drawer__section">
         <h4 class="recipe-form-drawer__section-title">
           基础信息
         </h4>
-
-        <ElFormItem
-          label="菜品名称"
-          required
-        >
-          <ElInput
-            v-model="form.formData.name"
-            placeholder="请输入菜品名称"
-          />
-        </ElFormItem>
-
-        <ElFormItem label="类型">
-          <ElSelect v-model="form.formData.recipeType">
-            <ElOption v-for="opt in getRecipeTypeOptions(t)" :key="opt.value" :value="opt.value" :label="opt.label" />
-          </ElSelect>
-        </ElFormItem>
-
-        <ElFormItem label="人群">
-          <ElSelect v-model="form.formData.crowdTag">
-            <ElOption v-for="opt in getRecipeCrowdTagOptions(t)" :key="opt.value" :value="opt.value" :label="opt.label" />
-          </ElSelect>
-        </ElFormItem>
-
-        <ElFormItem label="难度">
-          <ElSelect v-model="form.formData.difficultyLevel">
-            <ElOption v-for="opt in getRecipeDifficultyOptions(t)" :key="opt.value" :value="opt.value" :label="opt.label" />
-          </ElSelect>
-        </ElFormItem>
-
-        <ElFormItem label="耗时（分钟）">
-          <ElInputNumber
-            v-model="form.formData.cookingTimeMin"
-            :min="1"
-            :max="480"
-          />
-        </ElFormItem>
-
-        <ElFormItem label="宝宝友好">
-          <ElSwitch v-model="form.formData.isBabyFriendly" />
-        </ElFormItem>
-
-        <ElFormItem label="控脂友好">
-          <ElSwitch v-model="form.formData.isWeightLossFriendly" />
-        </ElFormItem>
+        <ProForm
+          :schema="basicSchema"
+          :model-value="form.formData"
+          :loading="false"
+          @update:model-value="Object.assign(form.formData, $event)"
+        />
       </section>
 
       <!-- 食材（必填） -->

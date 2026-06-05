@@ -50,11 +50,12 @@ describe('recipeDeleteDialog', () => {
   })
 
   it('emits confirm action when confirm button is clicked', async () => {
-    const { container, onConfirm } = mountDialog()
+    const { onConfirm } = mountDialog()
 
     await nextTick()
+    await nextTick()
 
-    const confirmButton = container.querySelector('[data-testid="recipe-delete-confirm"]') as HTMLElement
+    const confirmButton = document.body.querySelector('[data-testid="dialog-confirm"]') as HTMLElement
     expect(confirmButton).toBeTruthy()
 
     confirmButton.click()
@@ -64,11 +65,12 @@ describe('recipeDeleteDialog', () => {
   })
 
   it('emits cancel action when cancel button is clicked', async () => {
-    const { container, onCancel } = mountDialog()
+    const { onCancel } = mountDialog()
 
     await nextTick()
+    await nextTick()
 
-    const cancelButton = container.querySelector('[data-testid="recipe-delete-cancel"]') as HTMLElement
+    const cancelButton = document.body.querySelector('[data-testid="dialog-cancel"]') as HTMLElement
     expect(cancelButton).toBeTruthy()
 
     cancelButton.click()
