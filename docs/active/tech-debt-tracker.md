@@ -17,7 +17,6 @@ updated: 2026-05-26
 | TD3 | Shell | 组件公开 API 与文档同步（props/emits 抽取或清单检查） | 中 | 2026-04-28 | ORPHAN | — |
 | TD4 | Shell | 展示 renderer 收敛预研（ProTable/ProDetail 统一） | 低 | 2026-04-28 | ORPHAN | — |
 | TD5 | Recipe | E2E 测试缺失（recipe-library 页面无端到端覆盖） | 中 | 2026-05-10 | ORPHAN | — |
-| TD6 | MealPlan | UC4 meal-plan 依赖 Element Plus 的组件(AdjustMealDrawer/RecipeSearchPanel/AdjustHistoryModal)无单测；vitest 未配置 ElementPlusResolver，组件内 `<ElXxx>` 自动导入在测试中不解析。核心 api/store/composable/MealItemCard 单测已补齐 | 中 | 2026-06-03 | ORPHAN | [uc4-adjust-meal-item/plan.md](./uc4-adjust-meal-item/plan.md) |
 
 ## 优先级含义（智能体行为指南）
 
