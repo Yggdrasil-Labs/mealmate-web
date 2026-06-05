@@ -3,7 +3,7 @@ import type { MealPlanItem, WeeklyMealPlan } from './types'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-import { confirmPlan as confirmPlanApi, deleteItem as deleteItemApi, generatePlan, getCurrentWeekPlan } from './api'
+import { confirmPlan as confirmPlanApi, deleteItem as deleteItemApi, generatePlan, getCurrentWeekPlan, replaceItem as replaceItemApi } from './api'
 
 export const useMealPlanStore = defineStore('mealPlan', () => {
   const currentPlan = ref<WeeklyMealPlan | null>(null)
@@ -45,7 +45,8 @@ export const useMealPlanStore = defineStore('mealPlan', () => {
   }
 
   async function confirmPlan() {
-    if (!currentPlan.value) return
+    if (!currentPlan.value)
+      return
     loading.value = true
     try {
       await confirmPlanApi(currentPlan.value.planId)
@@ -57,8 +58,16 @@ export const useMealPlanStore = defineStore('mealPlan', () => {
   }
 
   async function deleteItem(itemId: number) {
-    if (!currentPlan.value) return
+    if (!currentPlan.value)
+      return
     await deleteItemApi(currentPlan.value.planId, itemId)
+    await loadCurrentPlan()
+  }
+
+  async function replaceItem(itemId: number, newRecipeId: number) {
+    if (!currentPlan.value)
+      return
+    await replaceItemApi(currentPlan.value.planId, itemId, { newRecipeId })
     await loadCurrentPlan()
   }
 
@@ -77,5 +86,5 @@ export const useMealPlanStore = defineStore('mealPlan', () => {
     }
   }
 
-  return { currentPlan, loading, selectedWeekStart, fetchCurrentWeekPlan, loadCurrentPlan, generate, confirmPlan, deleteItem, updateItem }
+  return { currentPlan, loading, selectedWeekStart, fetchCurrentWeekPlan, loadCurrentPlan, generate, confirmPlan, deleteItem, replaceItem, updateItem }
 })

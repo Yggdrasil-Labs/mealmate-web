@@ -28,7 +28,7 @@ export function useWeeklyPlan() {
   /** 切换周 */
   function navigateWeek(offset: number) {
     const current = store.selectedWeekStart || getCurrentWeekStart()
-    const date = new Date(current + 'T00:00:00')
+    const date = new Date(`${current}T00:00:00`)
     date.setDate(date.getDate() + offset * 7)
     const y = date.getFullYear()
     const m = String(date.getMonth() + 1).padStart(2, '0')
@@ -37,10 +37,22 @@ export function useWeeklyPlan() {
     store.loadCurrentPlan()
   }
 
-  /** 生成计划 */
+  /** 生成计划（已有草稿时二次确认覆盖） */
   async function generate(forceRegenerate = false) {
+    if (plan.value?.status === 'DRAFT' && !forceRegenerate) {
+      try {
+        await ElMessageBox.confirm(
+          '当前周已有草稿计划，重新生成将覆盖现有安排，是否继续？',
+          '覆盖确认',
+          { confirmButtonText: '重新生成', cancelButtonText: '取消', type: 'warning' },
+        )
+      }
+      catch {
+        return
+      }
+    }
     const weekStart = store.selectedWeekStart || getCurrentWeekStart()
-    await store.generate({ weekStartDate: weekStart, forceRegenerate })
+    await store.generate({ weekStartDate: weekStart, forceRegenerate: forceRegenerate || !!plan.value })
   }
 
   /** 确认计划（二次确认后提交） */

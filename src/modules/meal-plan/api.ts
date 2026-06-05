@@ -48,6 +48,10 @@ export function confirmPlan(planId: number) {
   return http.post(`${BASE}/${planId}/confirm`)
 }
 
+export function replaceItem(planId: number, itemId: number, body: { newRecipeId: number }) {
+  return http.put(`${BASE}/${planId}/items/${itemId}/replace`, body)
+}
+
 export function deleteItem(planId: number, itemId: number) {
   return http.delete(`${BASE}/${planId}/items/${itemId}`)
 }
