@@ -1,6 +1,7 @@
 import path from 'node:path'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vitest/config'
 import { VueRouterAutoImports } from 'vue-router/unplugin'
@@ -14,6 +15,7 @@ export default defineConfig({
     vue(),
     Components({
       dts: 'src/types/components.d.ts',
+      resolvers: [ElementPlusResolver()],
     }),
     AutoImport({
       imports: [
@@ -24,6 +26,7 @@ export default defineConfig({
         '@vueuse/core',
         VueRouterAutoImports,
       ],
+      resolvers: [ElementPlusResolver()],
       dts: 'src/types/auto-imports.d.ts',
       vueTemplate: true,
     }),
@@ -32,6 +35,12 @@ export default defineConfig({
     // 默认仍以 Playwright E2E 为主；仅开启 unit spec 以支持局部验证
     include: ['tests/unit/**/*.spec.ts'],
     exclude: ['**/node_modules/**', '**/dist/**', '**/.{git,cache,output,temp}/**'],
+    css: false,
+    server: {
+      deps: {
+        inline: ['element-plus'],
+      },
+    },
   },
   css: {
     preprocessorOptions: {

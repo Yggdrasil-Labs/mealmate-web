@@ -1,10 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-// 直接 mock http，验证每个 API 函数的请求方法、路径与参数
+// mock http 返回 COLA 统一响应 { data: ... }
 vi.mock('@/utils/api/http', () => ({
   default: {
-    get: vi.fn(() => Promise.resolve(undefined)),
-    put: vi.fn(() => Promise.resolve(undefined)),
+    get: vi.fn(() => Promise.resolve({ data: null })),
+    put: vi.fn(() => Promise.resolve({ data: null })),
+    post: vi.fn(() => Promise.resolve({ data: null })),
+    delete: vi.fn(() => Promise.resolve({ data: null })),
   },
 }))
 
@@ -16,11 +18,15 @@ const {
   getRecommendRecipes,
   getWeekPlan,
   searchRecipes,
+  replaceItem,
+  generatePlan,
 } = await import('@/modules/meal-plan/api')
 
 beforeEach(() => {
   vi.mocked(http.get).mockClear()
   vi.mocked(http.put).mockClear()
+  vi.mocked(http.post).mockClear()
+  vi.mocked(http.delete).mockClear()
 })
 
 describe('meal-plan api', () => {
@@ -32,7 +38,7 @@ describe('meal-plan api', () => {
 
   it('getCurrentWeekPlan GETs /current with params', async () => {
     await getCurrentWeekPlan({ weekStartDate: '2026-06-01' })
-    expect(http.get).toHaveBeenCalledWith('/api/meal-plans/current', { params: { weekStartDate: '2026-06-01' } })
+    expect(http.get).toHaveBeenCalledWith('/api/meal-plans/current', { weekStartDate: '2026-06-01' })
   })
 
   it('getWeekPlan GETs by planId', async () => {
@@ -52,6 +58,16 @@ describe('meal-plan api', () => {
 
   it('searchRecipes GETs /api/recipes/search with keyword', async () => {
     await searchRecipes('鸡')
-    expect(http.get).toHaveBeenCalledWith('/api/recipes/search', { params: { keyword: '鸡' } })
+    expect(http.get).toHaveBeenCalledWith('/api/recipes/search', { keyword: '鸡' })
+  })
+
+  it('replaceItem PUTs to /api/meal-plans/{planId}/items/{itemId}/replace', async () => {
+    await replaceItem(1, 10, { newRecipeId: 300 })
+    expect(http.put).toHaveBeenCalledWith('/api/meal-plans/1/items/10/replace', { newRecipeId: 300 })
+  })
+
+  it('generatePlan POSTs to /api/meal-plans/generate', async () => {
+    await generatePlan({ weekStartDate: '2026-06-02', forceRegenerate: true })
+    expect(http.post).toHaveBeenCalledWith('/api/meal-plans/generate', { weekStartDate: '2026-06-02', forceRegenerate: true })
   })
 })
