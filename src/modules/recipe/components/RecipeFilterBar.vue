@@ -2,12 +2,10 @@
 import type { RecipeFilters } from '../types'
 import type { SearchBarSearchPayload } from '@/types/search-bar'
 import { registerDefaultSearchFieldComponents, SearchBar } from '@/components/search-bar'
-import { recipeSearchSchema } from '../composables/useRecipeList'
 import { useAppBreakpoint } from '@/composables/useAppBreakpoint'
+import { recipeSearchSchema } from '../composables/useRecipeList'
 
 defineOptions({ name: 'RecipeFilterBar' })
-
-const { isMobile } = useAppBreakpoint()
 
 defineProps<{
   modelValue: RecipeFilters
@@ -20,6 +18,8 @@ const emit = defineEmits<{
   (e: 'reset', payload: SearchBarSearchPayload): void
   (e: 'valuesChange', changedValues: Partial<RecipeFilters>, allValues: RecipeFilters): void
 }>()
+
+const { isMobile } = useAppBreakpoint()
 
 registerDefaultSearchFieldComponents()
 

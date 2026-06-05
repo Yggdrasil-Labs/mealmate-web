@@ -18,8 +18,9 @@ const isConfirmed = computed(() => store.currentPlan?.status === 'CONFIRMED')
 
 function navigateWeek(offset: number) {
   const current = store.selectedWeekStart || store.currentPlan?.weekStartDate || ''
-  if (!current) return
-  const date = new Date(current + 'T00:00:00')
+  if (!current)
+    return
+  const date = new Date(`${current}T00:00:00`)
   date.setDate(date.getDate() + offset * 7)
   const y = date.getFullYear()
   const m = String(date.getMonth() + 1).padStart(2, '0')
@@ -30,7 +31,8 @@ function navigateWeek(offset: number) {
 
 watch(() => store.currentPlan?.planId, () => load())
 onMounted(() => {
-  if (!store.currentPlan) store.loadCurrentPlan()
+  if (!store.currentPlan)
+    store.loadCurrentPlan()
   else load()
 })
 </script>

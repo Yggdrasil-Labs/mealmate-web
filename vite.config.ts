@@ -14,7 +14,7 @@ const VUE_QUERY_RE = /\.vue\?vue/
 const NODE_MODULES_RE = /[\\/]node_modules[\\/]/
 const GIT_RE = /[\\/]\.git[\\/]/
 const NUXT_RE = /[\\/]\.nuxt[\\/]/
-const API_PREFIX_RE = /^\/api/
+const _API_PREFIX_RE = /^\/api/
 
 // https://vite.dev/config/
 export default defineConfig(({ mode, command }) => {
