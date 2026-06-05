@@ -16,7 +16,6 @@ updated: 2026-05-26
 | TD2 | Shell | 活跃计划陈旧检测（`docs/active/` 更新时间检查） | 低 | 2026-04-28 | ORPHAN | — |
 | TD3 | Shell | 组件公开 API 与文档同步（props/emits 抽取或清单检查） | 中 | 2026-04-28 | ORPHAN | — |
 | TD4 | Shell | 展示 renderer 收敛预研（ProTable/ProDetail 统一） | 低 | 2026-04-28 | ORPHAN | — |
-| TD5 | Recipe | E2E 测试缺失（recipe-library 页面无端到端覆盖） | 中 | 2026-05-10 | ORPHAN | — |
 
 ## 优先级含义（智能体行为指南）
 
