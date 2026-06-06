@@ -27,6 +27,7 @@
       "difficultyLevel": "难度",
       "crowdTag": "适合人群",
       "cookingTimeMin": "烹饪时长",
+      "cookingTimeUnit": "分钟",
       "babyFriendly": "宝宝友好",
       "weightLossFriendly": "减脂友好"
     },

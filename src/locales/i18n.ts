@@ -118,7 +118,7 @@ function getInitialLocale(): Locale {
 const i18n = createI18n({
   legacy: false, // 使用 Composition API 模式
   locale: getInitialLocale(), // 动态获取初始语言
-  fallbackLocale: 'en-US', // 备用语言
+  fallbackLocale: 'zh-CN', // 备用语言
   messages: {}, // 初始为空，动态加载
   // 全局属性
   globalInjection: true,

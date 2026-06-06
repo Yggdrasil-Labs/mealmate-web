@@ -27,6 +27,7 @@
       "difficultyLevel": "Difficulty",
       "crowdTag": "Audience",
       "cookingTimeMin": "Cooking Time",
+      "cookingTimeUnit": "min",
       "babyFriendly": "Baby Friendly",
       "weightLossFriendly": "Weight-Loss Friendly"
     },

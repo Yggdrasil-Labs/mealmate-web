@@ -132,7 +132,7 @@ const friendlyBadges = computed(() => {
             class="recipe-card__meta-value"
             data-testid="recipe-card-time"
           >
-            {{ props.recipe.cookingTimeMin }} min
+            {{ props.recipe.cookingTimeMin }} {{ t('recipe.cards.cookingTimeUnit') }}
           </dd>
         </div>
       </dl>
