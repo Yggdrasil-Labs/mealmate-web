@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { RecipeSummary } from '../types'
-import { computed } from 'vue'
+import type { RecipeSummary, RecipeType } from '../types'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   getRecipeCrowdTagLabel,
@@ -30,7 +30,27 @@ const crowdLabel = computed(() => getRecipeCrowdTagLabel(props.recipe.crowdTag, 
 
 const canEdit = computed(() => props.recipe.sourceType !== 'SYSTEM')
 const canDelete = computed(() => props.recipe.sourceType === 'MANUAL')
-const coverInitial = computed(() => props.recipe.name.slice(0, 1))
+
+/** 图片加载失败标记，回退到 emoji fallback */
+const imageError = ref(false)
+
+function onImageError() {
+  imageError.value = true
+}
+
+/** 菜品类型 → emoji 映射，不依赖中文字体渲染 */
+const RECIPE_TYPE_EMOJI: Record<RecipeType, string> = {
+  HOME_COOKING: '🍲',
+  MAIN_DISH: '🥩',
+  SIDE_DISH: '🥗',
+  SOUP: '🍜',
+  STAPLE: '🍚',
+  SNACK: '🥟',
+  DESSERT: '🍰',
+  OTHER: '🍽️',
+}
+
+const coverEmoji = computed(() => RECIPE_TYPE_EMOJI[props.recipe.recipeType] || '🍽️')
 
 /** 无图卡片渐变色方案，根据 recipeId 散列分配 */
 const coverGradient = computed(() => {
@@ -58,19 +78,20 @@ const friendlyBadges = computed(() => {
 
 <template>
   <article class="recipe-card">
-    <div class="recipe-card__cover" :style="!props.recipe.coverImageUrl ? { background: coverGradient } : undefined">
+    <div class="recipe-card__cover" :style="!props.recipe.coverImageUrl || imageError ? { background: coverGradient } : undefined">
       <img
-        v-if="props.recipe.coverImageUrl"
+        v-if="props.recipe.coverImageUrl && !imageError"
         class="recipe-card__image"
         :src="props.recipe.coverImageUrl"
         :alt="props.recipe.name"
+        @error="onImageError"
       >
       <span
         v-else
         class="recipe-card__initial"
         aria-hidden="true"
       >
-        {{ coverInitial }}
+        {{ coverEmoji }}
       </span>
     </div>
 
