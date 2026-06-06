@@ -398,4 +398,11 @@ const friendlyBadges = computed(() => {
   background: var(--color-danger-soft);
   color: var(--color-danger);
 }
+
+@media (max-width: 640px) {
+  .recipe-card__meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
 </style>

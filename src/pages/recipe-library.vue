@@ -176,6 +176,7 @@ async function handleSaved() {
   margin: 0 auto;
   display: grid;
   gap: var(--space-5);
+  overflow: hidden;
 }
 
 .recipe-library-page__state,
