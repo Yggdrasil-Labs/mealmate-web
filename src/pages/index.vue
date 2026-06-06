@@ -43,11 +43,11 @@ const totalItems = computed(() => {
 
 /** 快捷入口 */
 const shortcuts = [
-  { icon: '计', title: '周计划', desc: '管理本周三餐安排', path: '/weekly-meal-plan', color: 'var(--color-primary)', bg: 'var(--color-primary-soft)' },
-  { icon: '菜', title: '菜品库', desc: '浏览和管理菜品', path: '/recipes', color: 'var(--color-success)', bg: 'var(--color-success-soft)' },
-  { icon: '家', title: '家庭画像', desc: '成员和饮食偏好', path: '/family/profile', color: 'var(--color-warning)', bg: 'var(--color-warning-soft)' },
-  { icon: '购', title: '采购清单', desc: '本周采购食材', path: '/shopping-list', color: 'var(--color-info)', bg: 'var(--color-info-soft)' },
-  { icon: '备', title: '备菜计划', desc: '备菜任务和进度', path: '/prep-plan', color: 'var(--color-success)', bg: 'var(--color-success-soft)' },
+  { icon: '📅', title: '周计划', desc: '管理本周三餐安排', path: '/weekly-meal-plan', color: 'var(--color-primary)', bg: 'var(--color-primary-soft)' },
+  { icon: '🍳', title: '菜品库', desc: '浏览和管理菜品', path: '/recipes', color: 'var(--color-success)', bg: 'var(--color-success-soft)' },
+  { icon: '👨‍👩‍👧', title: '家庭画像', desc: '成员和饮食偏好', path: '/family/profile', color: 'var(--color-warning)', bg: 'var(--color-warning-soft)' },
+  { icon: '🛒', title: '采购清单', desc: '本周采购食材', path: '/shopping-list', color: 'var(--color-info)', bg: 'var(--color-info-soft)' },
+  { icon: '🥘', title: '备菜计划', desc: '备菜任务和进度', path: '/prep-plan', color: 'var(--color-success)', bg: 'var(--color-success-soft)' },
 ]
 
 const mealLabels = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' } as const
@@ -67,11 +67,11 @@ const mealLabels = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' } as
     <!-- 本周概览统计 -->
     <div class="home-dashboard__summary">
       <div class="home-dashboard__stat">
-        <span class="home-dashboard__stat-value">{{ planStatusLabel }}</span>
+        <span class="home-dashboard__stat-value home-dashboard__stat-value--status">{{ planStatusLabel }}</span>
         <span class="home-dashboard__stat-label">本周计划</span>
       </div>
       <div class="home-dashboard__stat">
-        <span class="home-dashboard__stat-value">{{ totalItems }}</span>
+        <span class="home-dashboard__stat-value home-dashboard__stat-value--number">{{ totalItems }}</span>
         <span class="home-dashboard__stat-label">安排菜品</span>
       </div>
     </div>
@@ -104,12 +104,13 @@ const mealLabels = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' } as
 
     <!-- 无计划时提示 -->
     <section v-else-if="!store.loading" class="today-meals today-meals--empty">
+      <span class="today-meals__empty-icon" aria-hidden="true">📋</span>
       <p class="today-meals__hint">
-        本周暂无计划，
-        <button type="button" class="today-meals__link" @click="router.push('/weekly-meal-plan')">
-          去生成周计划
-        </button>
+        本周暂无计划
       </p>
+      <button type="button" class="today-meals__cta" @click="router.push('/weekly-meal-plan')">
+        去生成周计划
+      </button>
     </section>
 
     <!-- 快捷入口 -->
@@ -171,10 +172,18 @@ const mealLabels = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' } as
 }
 
 .home-dashboard__stat-value {
-  font-size: var(--text-lg);
+  font-size: var(--text-2xl);
   font-weight: 700;
   color: var(--color-text);
   font-variant-numeric: tabular-nums;
+}
+
+.home-dashboard__stat-value--status {
+  color: var(--color-primary);
+}
+
+.home-dashboard__stat-value--number {
+  color: var(--color-success);
 }
 
 .home-dashboard__stat-label {
@@ -265,6 +274,14 @@ const mealLabels = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' } as
 .today-meals--empty {
   text-align: center;
   padding: var(--space-6) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.today-meals__empty-icon {
+  font-size: 3rem;
 }
 
 .today-meals__hint {
@@ -272,14 +289,32 @@ const mealLabels = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' } as
   margin: 0;
 }
 
-.today-meals__link {
-  background: none;
+.today-meals__cta {
+  padding: var(--space-2) var(--space-5);
   border: none;
-  color: var(--color-primary);
+  border-radius: var(--btn-radius-pill);
+  background: var(--color-primary);
+  color: #fff;
   font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
   cursor: pointer;
-  text-decoration: underline;
-  padding: 0;
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.today-meals__cta:hover {
+  opacity: 0.85;
+}
+
+.today-meals__cta:active {
+  transform: scale(0.96);
+}
+
+.today-meals__cta:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 /* 快捷入口 */
