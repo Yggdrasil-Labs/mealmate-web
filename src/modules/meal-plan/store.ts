@@ -3,6 +3,8 @@ import type { MealPlanItem, WeeklyMealPlan } from './types'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
+import { DEFAULT_FAMILY_ID } from '@/modules/family/constants'
+
 import { confirmPlan as confirmPlanApi, deleteItem as deleteItemApi, generatePlan, getCurrentWeekPlan, replaceItem as replaceItemApi } from './api'
 
 export const useMealPlanStore = defineStore('mealPlan', () => {
@@ -14,7 +16,7 @@ export const useMealPlanStore = defineStore('mealPlan', () => {
     loading.value = true
     try {
       currentPlan.value = await getCurrentWeekPlan(
-        weekStartDate ? { weekStartDate } : undefined,
+        { weekStartDate, familyId: Number(DEFAULT_FAMILY_ID) },
       )
     }
     finally {
@@ -26,7 +28,7 @@ export const useMealPlanStore = defineStore('mealPlan', () => {
     loading.value = true
     try {
       currentPlan.value = await getCurrentWeekPlan(
-        selectedWeekStart.value ? { weekStartDate: selectedWeekStart.value } : undefined,
+        { weekStartDate: selectedWeekStart.value || undefined, familyId: Number(DEFAULT_FAMILY_ID) },
       )
     }
     finally {
@@ -34,7 +36,7 @@ export const useMealPlanStore = defineStore('mealPlan', () => {
     }
   }
 
-  async function generate(params: { weekStartDate: string, forceRegenerate?: boolean }) {
+  async function generate(params: { weekStartDate: string, forceRegenerate?: boolean, familyId?: number }) {
     loading.value = true
     try {
       currentPlan.value = await generatePlan(params)

@@ -1,5 +1,6 @@
 import { ElMessageBox } from 'element-plus'
 import { computed, onMounted } from 'vue'
+import { DEFAULT_FAMILY_ID } from '@/modules/family/constants'
 import { useMealPlanStore } from '../store'
 
 /**
@@ -52,7 +53,7 @@ export function useWeeklyPlan() {
       }
     }
     const weekStart = store.selectedWeekStart || getCurrentWeekStart()
-    await store.generate({ weekStartDate: weekStart, forceRegenerate: forceRegenerate || !!plan.value })
+    await store.generate({ weekStartDate: weekStart, forceRegenerate: forceRegenerate || !!plan.value, familyId: Number(DEFAULT_FAMILY_ID) })
   }
 
   /** 确认计划（二次确认后提交） */

@@ -16,7 +16,7 @@ async function unwrap<T>(request: Promise<any>): Promise<T> {
   return res.data as T
 }
 
-export function getCurrentWeekPlan(params?: { weekStartDate?: string }) {
+export function getCurrentWeekPlan(params?: { weekStartDate?: string, familyId?: number }) {
   return unwrap<WeeklyMealPlan | null>(http.get<WeeklyMealPlan>(`${BASE}/current`, params))
 }
 
@@ -40,7 +40,7 @@ export function searchRecipes(keyword: string) {
   return unwrap<RecipeBrief[]>(http.get<RecipeBrief[]>('/api/recipes/search', { keyword }))
 }
 
-export function generatePlan(params: { weekStartDate: string, forceRegenerate?: boolean }) {
+export function generatePlan(params: { weekStartDate: string, forceRegenerate?: boolean, familyId?: number }) {
   return unwrap<WeeklyMealPlan>(http.post<WeeklyMealPlan>(`${BASE}/generate`, params))
 }
 
