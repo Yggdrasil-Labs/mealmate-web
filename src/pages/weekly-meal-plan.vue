@@ -48,12 +48,15 @@ async function handleDelete(item: { itemId: number }) {
 
     <!-- 空态 -->
     <div v-else-if="!plan" class="weekly-meal-plan__empty">
-      <span class="weekly-meal-plan__empty-icon" aria-hidden="true">计</span>
+      <span class="weekly-meal-plan__empty-icon" aria-hidden="true">📋</span>
       <h2 class="weekly-meal-plan__empty-title">
         暂无本周计划
       </h2>
       <p class="weekly-meal-plan__empty-desc">
         {{ t('mealPlan.emptyHint', '当前周暂无计划，点击下方按钮生成') }}
+      </p>
+      <p class="weekly-meal-plan__empty-sub">
+        生成后可调整每日三餐安排
       </p>
     </div>
 
@@ -124,17 +127,30 @@ async function handleDelete(item: { itemId: number }) {
   gap: var(--space-2);
 }
 
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-muted) 25%,
+    var(--color-border) 50%,
+    var(--color-surface-muted) 75%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--card-radius);
+  animation: skeleton-breathe 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-breathe {
+  0%,
+  100% {
+    background-position: 200% 0;
+  }
+  50% {
+    background-position: -200% 0;
+  }
+}
+
 .weekly-meal-plan__empty-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--color-primary-soft);
-  color: var(--color-primary);
-  font-size: var(--text-xl);
-  font-weight: 700;
+  font-size: 3rem;
 }
 
 .weekly-meal-plan__empty-title {
@@ -146,6 +162,13 @@ async function handleDelete(item: { itemId: number }) {
 .weekly-meal-plan__empty-desc {
   margin: var(--space-2) 0 0;
   color: var(--color-text-muted);
+  text-align: center;
+}
+
+.weekly-meal-plan__empty-sub {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-soft);
+  font-size: var(--text-xs);
   text-align: center;
 }
 </style>
