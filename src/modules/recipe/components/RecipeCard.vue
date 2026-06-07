@@ -400,6 +400,10 @@ const friendlyBadges = computed(() => {
 }
 
 @media (max-width: 640px) {
+  .recipe-card__cover {
+    aspect-ratio: 2 / 1;
+  }
+
   .recipe-card__meta {
     display: grid;
     grid-template-columns: 1fr 1fr;
