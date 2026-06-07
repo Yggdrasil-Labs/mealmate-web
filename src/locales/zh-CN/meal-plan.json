@@ -16,6 +16,7 @@
     "searchRecipe": "搜索菜品...",
     "searchHint": "输入关键词搜索候选菜品",
     "emptyHint": "当前周暂无计划，点击下方按钮生成",
+    "emptySubHint": "生成后可调整每日三餐安排",
     "duplicate": "重复",
     "prevWeek": "上一周",
     "nextWeek": "下一周",

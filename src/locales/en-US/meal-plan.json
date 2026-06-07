@@ -16,6 +16,7 @@
     "searchRecipe": "Search recipes...",
     "searchHint": "Enter keywords to search candidate recipes",
     "emptyHint": "No plan for this week yet, click below to generate",
+    "emptySubHint": "You can adjust daily meals after generation",
     "duplicate": "Duplicate",
     "prevWeek": "Previous Week",
     "nextWeek": "Next Week",

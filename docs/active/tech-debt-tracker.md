@@ -16,6 +16,7 @@ updated: 2026-05-26
 | TD2 | Shell | 活跃计划陈旧检测（`docs/active/` 更新时间检查） | 低 | 2026-04-28 | ORPHAN | — |
 | TD3 | Shell | 组件公开 API 与文档同步（props/emits 抽取或清单检查） | 中 | 2026-04-28 | ORPHAN | — |
 | TD4 | Shell | 展示 renderer 收敛预研（ProTable/ProDetail 统一） | 低 | 2026-04-28 | ORPHAN | — |
+| TD5 | Test | app-routes.spec.ts 动态 import 解析慢需 15s 超时，排查 Vite resolve 性能 | 低 | 2026-06-07 | ORPHAN | — |
 
 ## 优先级含义（智能体行为指南）
 

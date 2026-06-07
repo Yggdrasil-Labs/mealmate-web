@@ -45,7 +45,7 @@ const totalItems = computed(() => {
 const shortcuts = [
   { icon: '📅', title: '周计划', desc: '管理本周三餐安排', path: '/weekly-meal-plan', color: 'var(--color-primary)', bg: 'var(--color-primary-soft)' },
   { icon: '🍳', title: '菜品库', desc: '浏览和管理菜品', path: '/recipes', color: 'var(--color-success)', bg: 'var(--color-success-soft)' },
-  { icon: '👨‍👩‍👧', title: '家庭画像', desc: '成员和饮食偏好', path: '/family/profile', color: 'var(--color-warning)', bg: 'var(--color-warning-soft)' },
+  { icon: '👪', title: '家庭画像', desc: '成员和饮食偏好', path: '/family/profile', color: 'var(--color-warning)', bg: 'var(--color-warning-soft)' },
   { icon: '🛒', title: '采购清单', desc: '本周采购食材', path: '/shopping-list', color: 'var(--color-info)', bg: 'var(--color-info-soft)' },
   { icon: '🥘', title: '备菜计划', desc: '备菜任务和进度', path: '/prep-plan', color: 'var(--color-success)', bg: 'var(--color-success-soft)' },
 ]

@@ -56,7 +56,7 @@ async function handleDelete(item: { itemId: number }) {
         {{ t('mealPlan.emptyHint', '当前周暂无计划，点击下方按钮生成') }}
       </p>
       <p class="weekly-meal-plan__empty-sub">
-        生成后可调整每日三餐安排
+        {{ t('mealPlan.emptySubHint', '生成后可调整每日三餐安排') }}
       </p>
     </div>
 
