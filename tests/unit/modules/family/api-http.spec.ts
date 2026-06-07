@@ -35,14 +35,12 @@ describe('family api backend contract', () => {
   it('maps family summary from wrapped backend response', async () => {
     httpMock.get.mockResolvedValueOnce({
       data: {
-        data: {
-          id: 1001,
-          familyName: 'Yang Family',
-          region: 'Shanghai',
-          mealGoal: {
-            weekday: 'quick',
-            weekend: 'balanced',
-          },
+        id: 1001,
+        familyName: 'Yang Family',
+        region: 'Shanghai',
+        mealGoal: {
+          weekday: 'quick',
+          weekend: 'balanced',
         },
       },
     })
@@ -59,31 +57,29 @@ describe('family api backend contract', () => {
 
   it('maps member list enums and preference summary', async () => {
     httpMock.get.mockResolvedValueOnce({
-      data: {
-        data: [
-          {
-            id: 2001,
-            familyId: 1001,
-            name: 'Alice',
-            roleType: 'ADULT',
-            gender: 'UNKNOWN',
-            birthday: '2018-05-20',
-            region: 'Shanghai',
-            targetType: 'WEIGHT_LOSS',
-            avatarUrl: 'https://cdn.example.com/avatar/alice.png',
-            sortNo: 1,
-            preference: {
-              tasteTags: ['light', 'home-style'],
-              avoidIngredients: ['celery'],
-              allergyIngredients: ['shrimp', 'peanut'],
-              spicyLevel: 'MILD',
-              sweetLevel: 'MODERATE',
-              oilLevel: 'RICH',
-              saltLevel: 'SALTY',
-            },
+      data: [
+        {
+          id: 2001,
+          familyId: 1001,
+          name: 'Alice',
+          roleType: 'ADULT',
+          gender: 'UNKNOWN',
+          birthday: '2018-05-20',
+          region: 'Shanghai',
+          targetType: 'WEIGHT_LOSS',
+          avatarUrl: 'https://cdn.example.com/avatar/alice.png',
+          sortNo: 1,
+          preference: {
+            tasteTags: ['light', 'home-style'],
+            avoidIngredients: ['celery'],
+            allergyIngredients: ['shrimp', 'peanut'],
+            spicyLevel: 'MILD',
+            sweetLevel: 'MODERATE',
+            oilLevel: 'RICH',
+            saltLevel: 'SALTY',
           },
-        ],
-      },
+        },
+      ],
     })
 
     await expect(fetchFamilyMembers('1001')).resolves.toEqual([
@@ -113,44 +109,38 @@ describe('family api backend contract', () => {
   it('creates a member with mapped payload and resolves created detail', async () => {
     httpMock.get
       .mockResolvedValueOnce({
-        data: {
-          data: [
-            { id: 1, sortNo: 1 },
-          ],
-        },
+        data: [
+          { id: 1, sortNo: 1 },
+        ],
+      })
+      .mockResolvedValueOnce({
+        data: [
+          { id: 1, sortNo: 1 },
+          { id: 2, sortNo: 99 },
+        ],
       })
       .mockResolvedValueOnce({
         data: {
-          data: [
-            { id: 1, sortNo: 1 },
-            { id: 2, sortNo: 99 },
-          ],
-        },
-      })
-      .mockResolvedValueOnce({
-        data: {
-          data: {
-            id: 2,
-            familyId: 1001,
-            name: '奶奶',
-            roleType: 'ADULT',
-            gender: 'FEMALE',
-            birthday: '1958-02-01',
-            region: 'Hangzhou',
-            targetType: 'BALANCED',
-            avatarUrl: '',
-            sortNo: 99,
-            preference: {
-              tasteTags: [],
-              avoidIngredients: [],
-              allergyIngredients: [],
-              spicyLevel: 'NONE',
-              sweetLevel: 'NONE',
-              oilLevel: 'LIGHT',
-              saltLevel: 'LIGHT',
-              nutritionGoal: { summary: 'eat well' },
-              extraRule: { summary: 'soft meals' },
-            },
+          id: 2,
+          familyId: 1001,
+          name: '奶奶',
+          roleType: 'ADULT',
+          gender: 'FEMALE',
+          birthday: '1958-02-01',
+          region: 'Hangzhou',
+          targetType: 'BALANCED',
+          avatarUrl: '',
+          sortNo: 99,
+          preference: {
+            tasteTags: [],
+            avoidIngredients: [],
+            allergyIngredients: [],
+            spicyLevel: 'NONE',
+            sweetLevel: 'NONE',
+            oilLevel: 'LIGHT',
+            saltLevel: 'LIGHT',
+            nutritionGoal: { summary: 'eat well' },
+            extraRule: { summary: 'soft meals' },
           },
         },
       })
@@ -232,28 +222,26 @@ describe('family api backend contract', () => {
     })
     httpMock.get.mockResolvedValueOnce({
       data: {
-        data: {
-          id: 2001,
-          familyId: 1001,
-          name: 'Alice',
-          roleType: 'BABY',
-          gender: 'UNKNOWN',
-          birthday: '2023-07-01',
-          region: 'Shanghai',
-          targetType: 'HEALTH_MANAGEMENT',
-          avatarUrl: '',
-          sortNo: 3,
-          preference: {
-            tasteTags: ['light'],
-            avoidIngredients: ['cilantro'],
-            allergyIngredients: ['shrimp'],
-            spicyLevel: 'MILD',
-            sweetLevel: 'SWEET',
-            oilLevel: 'MODERATE',
-            saltLevel: 'SALTY',
-            nutritionGoal: { summary: 'more protein' },
-            extraRule: { summary: 'warm breakfast only' },
-          },
+        id: 2001,
+        familyId: 1001,
+        name: 'Alice',
+        roleType: 'BABY',
+        gender: 'UNKNOWN',
+        birthday: '2023-07-01',
+        region: 'Shanghai',
+        targetType: 'HEALTH_MANAGEMENT',
+        avatarUrl: '',
+        sortNo: 3,
+        preference: {
+          tasteTags: ['light'],
+          avoidIngredients: ['cilantro'],
+          allergyIngredients: ['shrimp'],
+          spicyLevel: 'MILD',
+          sweetLevel: 'SWEET',
+          oilLevel: 'MODERATE',
+          saltLevel: 'SALTY',
+          nutritionGoal: { summary: 'more protein' },
+          extraRule: { summary: 'warm breakfast only' },
         },
       },
     })
@@ -307,26 +295,24 @@ describe('family api backend contract', () => {
     })
     httpMock.get.mockResolvedValueOnce({
       data: {
-        data: {
-          id: 2002,
-          familyId: 1001,
-          name: '伴侣',
-          roleType: 'ADULT',
-          gender: 'FEMALE',
-          birthday: '1994-08-16',
-          region: 'Shanghai',
-          targetType: 'WEIGHT_LOSS',
-          avatarUrl: '',
-          sortNo: 2,
-          preference: {
-            tasteTags: [],
-            avoidIngredients: [],
-            allergyIngredients: [],
-            spicyLevel: 'NONE',
-            sweetLevel: 'LIGHT',
-            oilLevel: 'LIGHT',
-            saltLevel: 'LIGHT',
-          },
+        id: 2002,
+        familyId: 1001,
+        name: '伴侣',
+        roleType: 'ADULT',
+        gender: 'FEMALE',
+        birthday: '1994-08-16',
+        region: 'Shanghai',
+        targetType: 'WEIGHT_LOSS',
+        avatarUrl: '',
+        sortNo: 2,
+        preference: {
+          tasteTags: [],
+          avoidIngredients: [],
+          allergyIngredients: [],
+          spicyLevel: 'NONE',
+          sweetLevel: 'LIGHT',
+          oilLevel: 'LIGHT',
+          saltLevel: 'LIGHT',
         },
       },
     })

@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 import type { RecipeSummary } from '@/modules/recipe/types'
+import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createApp, defineComponent, h, nextTick } from 'vue'
 import { createMemoryHistory, createRouter } from 'vue-router'
@@ -58,6 +59,7 @@ async function mountPage() {
   })
 
   const app = createApp(Host)
+  app.use(createPinia())
   app.use(i18n)
   app.use(router)
   app.mount(container)
@@ -68,6 +70,7 @@ async function mountPage() {
 
 describe('recipeLibraryPage', () => {
   beforeEach(() => {
+    setActivePinia(createPinia())
     vi.clearAllMocks()
     fetchRecipePageMock.mockResolvedValue({
       list: [recipeSummary],

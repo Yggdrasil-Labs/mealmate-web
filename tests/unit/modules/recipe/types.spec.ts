@@ -54,13 +54,12 @@ describe('recipe module constants', () => {
 
   it('builds localized crowd-tag options', () => {
     expect(getRecipeCrowdTagOptions(tZh)).toEqual([
-      { label: '家庭', value: 'FAMILY' },
-      { label: '儿童友好', value: 'CHILD_FRIENDLY' },
-      { label: '老人友好', value: 'ELDER_FRIENDLY' },
-      { label: '聚会', value: 'PARTY' },
+      { label: '通用', value: 'GENERAL' },
+      { label: '宝宝', value: 'BABY' },
+      { label: '减脂', value: 'WEIGHT_LOSS' },
     ])
 
-    expect(getRecipeCrowdTagLabel('ELDER_FRIENDLY', tEn)).toBe('Elder Friendly')
+    expect(getRecipeCrowdTagLabel('WEIGHT_LOSS', tEn)).toBe('Weight Loss')
   })
 
   it('creates stable default recipe filters', () => {

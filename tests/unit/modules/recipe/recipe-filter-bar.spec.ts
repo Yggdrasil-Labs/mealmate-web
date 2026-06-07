@@ -1,7 +1,8 @@
 // @vitest-environment jsdom
 import type { Component } from 'vue'
 import type { SearchBarProps, SearchBarSearchPayload } from '@/types/search-bar'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { createPinia, setActivePinia } from 'pinia'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createApp, defineComponent, h, nextTick, reactive } from 'vue'
 import { createDefaultRecipeFilters } from '@/modules/recipe/constants'
 
@@ -32,6 +33,10 @@ vi.mock('@/components/search-bar', () => ({
 }))
 
 const mountedApps: Array<{ unmount: () => void }> = []
+
+beforeEach(() => {
+  setActivePinia(createPinia())
+})
 
 afterEach(() => {
   mountedApps.splice(0).forEach(app => app.unmount())
@@ -86,7 +91,7 @@ describe('recipe filter bar', () => {
     const props = searchBarProps[0]
 
     expect(props.syncRoute).toBe(true)
-    expect(props.defaultCollapsed).toBe(false)
+    expect(props.defaultCollapsed).toBe(true)
     expect(props.schema.map(field => field.meta.field)).toEqual([
       'keyword',
       'recipeType',

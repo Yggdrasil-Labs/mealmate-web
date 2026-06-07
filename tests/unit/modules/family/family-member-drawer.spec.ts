@@ -1,10 +1,15 @@
+import { createPinia, setActivePinia } from 'pinia'
 // @vitest-environment jsdom
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createApp, defineComponent, h, nextTick, reactive, ref } from 'vue'
 import i18n, { setLocale } from '@/locales/i18n'
 import FamilyMemberDrawer from '@/modules/family/components/FamilyMemberDrawer.vue'
 
 const mountedApps: Array<{ unmount: () => void }> = []
+
+beforeEach(() => {
+  setActivePinia(createPinia())
+})
 
 afterEach(() => {
   mountedApps.splice(0).forEach(app => app.unmount())

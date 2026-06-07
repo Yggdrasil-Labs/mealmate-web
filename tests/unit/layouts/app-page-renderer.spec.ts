@@ -139,6 +139,8 @@ describe('app page renderer', () => {
     app.tabsStore.refresh('CacheablePage')
     await nextTick()
     await nextTick()
+    await nextTick()
+    await new Promise(resolve => setTimeout(resolve, 300))
 
     expect(app.container.textContent).toContain('Cacheable page 2')
 

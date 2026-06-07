@@ -1,6 +1,6 @@
 # Active Requirements Index
 
-Last updated: 2026-05-26
+Last updated: 2026-06-07
 
 本目录是一等活跃工作区。每个子目录代表一个仍在推进的需求、重构或文档系统任务。
 

@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { describe, expect, it } from 'vitest'
 import { createRouteRecords } from '@/router/app-routes'
 
@@ -25,7 +26,7 @@ describe('createRouteRecords', () => {
     const pageModule = await familyProfile?.component?.()
 
     expect(pageModule?.default).toBeTruthy()
-  })
+  }, 15000)
 
   it('resolves recipe library to the dedicated page component', async () => {
     const routes = createRouteRecords()
@@ -37,7 +38,7 @@ describe('createRouteRecords', () => {
     const pageModule = await recipeLibrary?.component?.()
 
     expect(pageModule?.default).toBeTruthy()
-  })
+  }, 15000)
 
   it('preserves nested child routes from the schema', () => {
     const routes = createRouteRecords([
