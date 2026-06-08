@@ -55,10 +55,10 @@ const coverEmoji = computed(() => RECIPE_TYPE_EMOJI[props.recipe.recipeType] || 
 /** 无图卡片渐变色方案，根据 recipeId 散列分配 */
 const coverGradient = computed(() => {
   const g = [
-    'linear-gradient(135deg, #dbeafe 0%, #e0f2fe 50%, #fef3c7 100%)',
-    'linear-gradient(225deg, #dcfce7 0%, #d1fae5 50%, #e0f2fe 100%)',
-    'linear-gradient(180deg, #fef3c7 0%, #fff7ed 50%, #fce7f3 100%)',
-    'linear-gradient(315deg, #ede9fe 0%, #e0e7ff 50%, #dbeafe 100%)',
+    'linear-gradient(135deg, var(--color-info-soft) 0%, var(--color-info-soft) 50%, var(--color-warning-soft) 100%)',
+    'linear-gradient(225deg, var(--color-success-soft) 0%, var(--color-success-soft) 50%, var(--color-info-soft) 100%)',
+    'linear-gradient(180deg, var(--color-warning-soft) 0%, var(--color-surface-muted) 50%, var(--color-danger-soft) 100%)',
+    'linear-gradient(315deg, var(--color-primary-soft) 0%, var(--color-primary-soft) 50%, var(--color-info-soft) 100%)',
   ]
   const hash = props.recipe.recipeId.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
   return g[hash % g.length]
