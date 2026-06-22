@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import PageHeader from '@/components/PageHeader.vue'
 import WeekNavigator from '@/modules/meal-plan/components/WeekNavigator.vue'
+import { useWeekNavigation } from '@/modules/meal-plan/composables/useWeekNavigation'
 import { useMealPlanStore } from '@/modules/meal-plan/store'
 import PrepTaskList from '@/modules/prep/components/PrepTaskList.vue'
 import { usePrepPlan } from '@/modules/prep/composables/usePrepPlan'
@@ -12,29 +12,7 @@ const { t } = useI18n()
 const router = useRouter()
 const store = useMealPlanStore()
 const { prepPlan, loading, load, toggleItemStatus } = usePrepPlan(() => store.currentPlan?.planId)
-
-const weekStart = computed(() => store.currentPlan?.weekStartDate || store.selectedWeekStart)
-const isConfirmed = computed(() => store.currentPlan?.status === 'CONFIRMED')
-
-function navigateWeek(offset: number) {
-  const current = store.selectedWeekStart || store.currentPlan?.weekStartDate || ''
-  if (!current)
-    return
-  const date = new Date(`${current}T00:00:00`)
-  date.setDate(date.getDate() + offset * 7)
-  const y = date.getFullYear()
-  const m = String(date.getMonth() + 1).padStart(2, '0')
-  const d = String(date.getDate()).padStart(2, '0')
-  store.selectedWeekStart = `${y}-${m}-${d}`
-  store.loadCurrentPlan()
-}
-
-watch(() => store.currentPlan?.planId, () => load())
-onMounted(() => {
-  if (!store.currentPlan)
-    store.loadCurrentPlan()
-  else load()
-})
+const { weekStart, isConfirmed, navigateWeek } = useWeekNavigation(() => load())
 </script>
 
 <template>

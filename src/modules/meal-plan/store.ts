@@ -10,14 +10,19 @@ import { confirmPlan as confirmPlanApi, deleteItem as deleteItemApi, generatePla
 export const useMealPlanStore = defineStore('mealPlan', () => {
   const currentPlan = ref<WeeklyMealPlan | null>(null)
   const loading = ref(false)
+  const error = ref<string | null>(null)
   const selectedWeekStart = ref('')
 
   async function fetchCurrentWeekPlan(weekStartDate?: string) {
     loading.value = true
+    error.value = null
     try {
       currentPlan.value = await getCurrentWeekPlan(
         { weekStartDate, familyId: Number(DEFAULT_FAMILY_ID) },
       )
+    }
+    catch (e: any) {
+      error.value = e.message || '加载失败'
     }
     finally {
       loading.value = false
@@ -26,10 +31,14 @@ export const useMealPlanStore = defineStore('mealPlan', () => {
 
   async function loadCurrentPlan() {
     loading.value = true
+    error.value = null
     try {
       currentPlan.value = await getCurrentWeekPlan(
         { weekStartDate: selectedWeekStart.value || undefined, familyId: Number(DEFAULT_FAMILY_ID) },
       )
+    }
+    catch (e: any) {
+      error.value = e.message || '加载失败'
     }
     finally {
       loading.value = false
@@ -38,8 +47,12 @@ export const useMealPlanStore = defineStore('mealPlan', () => {
 
   async function generate(params: { weekStartDate: string, forceRegenerate?: boolean, familyId?: number }) {
     loading.value = true
+    error.value = null
     try {
       currentPlan.value = await generatePlan(params)
+    }
+    catch (e: any) {
+      error.value = e.message || '生成失败'
     }
     finally {
       loading.value = false
@@ -50,9 +63,13 @@ export const useMealPlanStore = defineStore('mealPlan', () => {
     if (!currentPlan.value)
       return
     loading.value = true
+    error.value = null
     try {
       await confirmPlanApi(currentPlan.value.planId)
       await loadCurrentPlan()
+    }
+    catch (e: any) {
+      error.value = e.message || '确认失败'
     }
     finally {
       loading.value = false
@@ -62,15 +79,25 @@ export const useMealPlanStore = defineStore('mealPlan', () => {
   async function deleteItem(itemId: number) {
     if (!currentPlan.value)
       return
-    await deleteItemApi(currentPlan.value.planId, itemId)
-    await loadCurrentPlan()
+    try {
+      await deleteItemApi(currentPlan.value.planId, itemId)
+      await loadCurrentPlan()
+    }
+    catch (e: any) {
+      error.value = e.message || '删除失败'
+    }
   }
 
   async function replaceItem(itemId: number, newRecipeId: number) {
     if (!currentPlan.value)
       return
-    await replaceItemApi(currentPlan.value.planId, itemId, { newRecipeId })
-    await loadCurrentPlan()
+    try {
+      await replaceItemApi(currentPlan.value.planId, itemId, { newRecipeId })
+      await loadCurrentPlan()
+    }
+    catch (e: any) {
+      error.value = e.message || '替换失败'
+    }
   }
 
   /** 遍历所有天的所有餐次，替换匹配的 item */
@@ -88,5 +115,5 @@ export const useMealPlanStore = defineStore('mealPlan', () => {
     }
   }
 
-  return { currentPlan, loading, selectedWeekStart, fetchCurrentWeekPlan, loadCurrentPlan, generate, confirmPlan, deleteItem, replaceItem, updateItem }
+  return { currentPlan, loading, error, selectedWeekStart, fetchCurrentWeekPlan, loadCurrentPlan, generate, confirmPlan, deleteItem, replaceItem, updateItem }
 })

@@ -93,8 +93,8 @@ const mealLabels = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' } as
           <ul v-if="todayMeals[mealKey].length" class="today-meals__list">
             <li v-for="item in todayMeals[mealKey]" :key="item.itemId" class="today-meals__item">
               <span class="today-meals__recipe-name">{{ item.recipeName }}</span>
-              <span v-if="item.isBabyMeal" class="today-meals__tag today-meals__tag--baby">宝</span>
-              <span v-if="item.isWeightLoss" class="today-meals__tag today-meals__tag--diet">轻</span>
+              <span v-if="item.babyMeal" class="today-meals__tag today-meals__tag--baby">宝</span>
+              <span v-if="item.weightLoss" class="today-meals__tag today-meals__tag--diet">轻</span>
             </li>
           </ul>
           <span v-else class="today-meals__empty">暂无安排</span>
