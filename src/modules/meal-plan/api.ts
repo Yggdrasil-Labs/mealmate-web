@@ -25,7 +25,7 @@ export function getWeekPlan(planId: number) {
 }
 
 export function adjustMealItem(planId: number, itemId: number, body: AdjustMealItemParams) {
-  return unwrap<MealPlanItem>(http.put<MealPlanItem>(`${BASE}/${planId}/items/${itemId}`, body))
+  return unwrap<MealPlanItem>(http.put<MealPlanItem>(`${BASE}/${planId}/items/${itemId}`, body, { _silent: true } as any))
 }
 
 export function getRecommendRecipes(planId: number, itemId: number) {

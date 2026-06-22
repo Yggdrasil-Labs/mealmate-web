@@ -1,6 +1,7 @@
 import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import type { ApiResponse } from '@/types/api'
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
 import { env } from '@/config/env'
 
 // 创建axios实例
@@ -139,8 +140,10 @@ request.interceptors.response.use(
       errorCode = 'TIMEOUT'
     }
 
-    // 可以在这里添加全局错误提示
-    // ElMessage.error(errorMessage)
+    // 全局错误提示兜底：请求未配置 _silent 时向用户展示错误信息
+    if (!(error.config as any)?._silent) {
+      ElMessage.error(errorMessage)
+    }
 
     // 创建带错误码的错误对象
     const customError = new Error(errorMessage)

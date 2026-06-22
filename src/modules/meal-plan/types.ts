@@ -24,8 +24,8 @@ export interface MealPlanItem {
   recipeName: string
   crowdType: CrowdType
   mealType: MealType
-  isWeightLoss: boolean
-  isBabyMeal: boolean
+  weightLoss: boolean
+  babyMeal: boolean
   duplicateFlag: boolean
   manuallyAdjusted: boolean
   adjustCount: number

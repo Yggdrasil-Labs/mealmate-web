@@ -28,8 +28,8 @@ const emit = defineEmits<{
     </span>
 
     <span class="meal-item-card__name">{{ item.recipeName }}</span>
-    <span v-if="item.isBabyMeal" class="meal-item-card__tag meal-item-card__tag--baby">宝</span>
-    <span v-if="item.isWeightLoss" class="meal-item-card__tag meal-item-card__tag--diet">轻</span>
+    <span v-if="item.babyMeal" class="meal-item-card__tag meal-item-card__tag--baby">宝</span>
+    <span v-if="item.weightLoss" class="meal-item-card__tag meal-item-card__tag--diet">轻</span>
     <div v-if="!readonly" class="meal-item-card__actions">
       <button type="button" class="meal-item-card__action" @click="emit('adjust', item)">
         换

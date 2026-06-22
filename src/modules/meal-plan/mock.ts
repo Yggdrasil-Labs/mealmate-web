@@ -8,6 +8,8 @@ function mockItem(id: number, name: string, adjusted = false): MealPlanItem {
     crowdType: 'ALL',
     mealType: 'LUNCH',
     weightLoss: false,
+    babyMeal: false,
+    duplicateFlag: false,
     manuallyAdjusted: adjusted,
     adjustCount: adjusted ? 1 : 0,
   }
