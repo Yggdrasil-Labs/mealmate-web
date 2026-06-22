@@ -76,6 +76,16 @@ const mealLabels = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' } as
       </div>
     </div>
 
+    <!-- 加载失败提示 -->
+    <div v-if="store.error" class="index-page__error">
+      <p>
+        {{ store.error }}
+      </p>
+      <button type="button" @click="store.loadCurrentPlan()">
+        重试
+      </button>
+    </div>
+
     <!-- 今日三餐 -->
     <section v-if="todayMeals" class="today-meals">
       <h2 class="today-meals__title">
@@ -103,7 +113,7 @@ const mealLabels = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' } as
     </section>
 
     <!-- 无计划时提示 -->
-    <section v-else-if="!store.loading" class="today-meals today-meals--empty">
+    <section v-else-if="!store.loading && !store.error" class="today-meals today-meals--empty">
       <span class="today-meals__empty-icon" aria-hidden="true">📋</span>
       <p class="today-meals__hint">
         本周暂无计划
@@ -378,6 +388,32 @@ const mealLabels = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' } as
 .home-dashboard__card-desc {
   font-size: var(--text-xs);
   color: var(--color-text-muted);
+}
+
+/* 加载失败提示 */
+.index-page__error {
+  text-align: center;
+  padding: var(--space-4);
+  border: 1px solid var(--color-danger, #f56c6c);
+  border-radius: var(--card-radius);
+  background: var(--color-danger-soft, #fef0f0);
+}
+
+.index-page__error p {
+  margin: 0 0 var(--space-2);
+  color: var(--color-danger, #f56c6c);
+  font-size: var(--text-sm);
+}
+
+.index-page__error button {
+  padding: var(--space-1) var(--space-4);
+  border: 1px solid var(--color-danger, #f56c6c);
+  border-radius: var(--btn-radius-pill);
+  background: transparent;
+  color: var(--color-danger, #f56c6c);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
 }
 
 @media (max-width: 640px) {

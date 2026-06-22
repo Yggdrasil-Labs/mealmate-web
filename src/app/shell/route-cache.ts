@@ -35,9 +35,7 @@ export function buildTabCacheKey(tab: CacheTabLike, strategy: KeepAliveStrategy 
   })
 }
 
-export function getKeepAliveIncludeName(cacheKey: string) {
-  return cacheKey.split(':', 1)[0] ?? cacheKey
-}
+export { getKeepAliveIncludeName } from '@/utils/cache-key'
 
 function buildCacheKey(input: { routeName: string, fullPath: string, strategy: KeepAliveStrategy }) {
   if (input.strategy === 'fullPath')
