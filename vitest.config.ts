@@ -4,14 +4,9 @@ import AutoImport from 'unplugin-auto-import/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vitest/config'
-import { VueRouterAutoImports } from 'vue-router/unplugin'
-import VueRouter from 'vue-router/vite'
 
 export default defineConfig({
   plugins: [
-    VueRouter({
-      dts: 'src/types/route-map.d.ts',
-    }),
     vue(),
     Components({
       dts: 'src/types/components.d.ts',
@@ -24,7 +19,6 @@ export default defineConfig({
         'vue-router',
         'pinia',
         '@vueuse/core',
-        VueRouterAutoImports,
       ],
       resolvers: [ElementPlusResolver()],
       dts: 'src/types/auto-imports.d.ts',

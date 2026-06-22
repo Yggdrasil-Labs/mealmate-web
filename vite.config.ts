@@ -5,8 +5,6 @@ import Icons from 'unplugin-icons/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig, loadEnv } from 'vite'
-import { VueRouterAutoImports } from 'vue-router/unplugin'
-import VueRouter from 'vue-router/vite'
 import pkg from './package.json' with { type: 'json' }
 
 const VUE_FILE_RE = /\.vue$/
@@ -25,12 +23,6 @@ export default defineConfig(({ mode, command }) => {
 
   return {
     plugins: [
-      // Vue Router 5 file-based routing plugin
-      VueRouter({
-        dts: 'src/types/route-map.d.ts',
-        // 自动生成路由元信息
-        routesFolder: 'src/pages',
-      }),
       vue({
         // 启用模板编译优化
         template: {
@@ -60,7 +52,6 @@ export default defineConfig(({ mode, command }) => {
           'vue-router',
           'pinia',
           '@vueuse/core',
-          VueRouterAutoImports,
         ],
         dts: 'src/types/auto-imports.d.ts',
         vueTemplate: true, // 允许在 <template> 直接使用自动导入的 API

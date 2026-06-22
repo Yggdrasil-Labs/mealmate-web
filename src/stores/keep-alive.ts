@@ -1,6 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { computed } from 'vue'
-import { getKeepAliveIncludeName } from '@/app/shell/route-cache'
+import { getKeepAliveIncludeName } from '@/utils/cache-key'
 
 export const useKeepAliveStore = defineStore('keep-alive', () => {
   const keys = ref<string[]>([])

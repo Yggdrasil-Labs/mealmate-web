@@ -58,4 +58,15 @@ export const appRouteSchema: AppRouteRecord[] = [
       icon: 'menu-shopping',
     },
   },
+  {
+    name: 'NotFound',
+    path: '/:pathMatch(.*)*',
+    component: 'not-found',
+    meta: {
+      title: '页面不存在',
+      layout: 'blank',
+      menu: { visible: false },
+      tab: { enabled: false },
+    },
+  },
 ]
