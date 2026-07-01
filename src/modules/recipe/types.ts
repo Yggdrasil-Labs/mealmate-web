@@ -127,3 +127,70 @@ export interface RecipePageResult {
   pageNum: number
   pageSize: number
 }
+
+// ============= AI 菜品解析相关类型 =============
+
+/** AI 解析会话状态 */
+export type AiParseStatus = 'PARSING' | 'REFINING' | 'READY_TO_CONFIRM'
+
+/** AI 对话消息 */
+export interface AiChatMessage {
+  role: 'user' | 'assistant'
+  content: string
+}
+
+/** AI 解析返回的原始菜品数据（所有字段可空，渐进填充） */
+export interface AiParsedRecipeData {
+  name?: string | null
+  recipeType?: string | null
+  seasonTag?: string | null
+  crowdTag?: string | null
+  tasteTags?: string[] | null
+  difficultyLevel?: string | null
+  cookingTimeMin?: number | null
+  babyFriendly?: boolean | null
+  weightLossFriendly?: boolean | null
+  ingredients?: Array<{
+    ingredientName: string
+    ingredientType?: string
+    quantity?: number
+    unit?: string
+    mainIngredient?: boolean
+  }> | null
+  steps?: Array<{
+    stepNo: number
+    content: string
+  }> | null
+  nutritionFact?: {
+    calories?: number
+    protein?: number
+    fat?: number
+    carbohydrate?: number
+  } | null
+}
+
+/** POST /api/ai/recipes/chat 请求体 */
+export interface AiRecipeChatRequest {
+  sessionId: string | null
+  message: string
+}
+
+/** POST /api/ai/recipes/chat 响应 data */
+export interface AiRecipeChatReply {
+  sessionId: string
+  reply: string
+  parsed: AiParsedRecipeData | null
+  status: AiParseStatus
+  suggestions: string[]
+}
+
+/** POST /api/ai/recipes/confirm 请求体 */
+export interface AiRecipeConfirmRequest {
+  sessionId: string
+  recipe: AiParsedRecipeData
+}
+
+/** POST /api/ai/recipes/confirm 响应 data */
+export interface AiRecipeConfirmReply {
+  recipeId: number
+}
