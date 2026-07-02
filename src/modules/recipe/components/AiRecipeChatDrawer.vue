@@ -70,7 +70,8 @@ function scrollToBottom() {
 const canConfirm = computed(() => status.value === 'READY_TO_CONFIRM' && !loading.value)
 
 /** 输入框是否禁用 */
-const inputDisabled = computed(() => loading.value || status.value === 'READY_TO_CONFIRM')
+/** 输入框是否禁用（仅 loading 时禁用，READY_TO_CONFIRM 后仍可继续修正） */
+const inputDisabled = computed(() => loading.value)
 
 // 抽屉关闭时重置
 watch(visible, (val) => {
