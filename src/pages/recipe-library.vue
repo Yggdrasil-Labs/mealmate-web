@@ -3,6 +3,7 @@ import { ElButton, ElPagination } from 'element-plus'
 import { ref } from 'vue'
 import PageHeader from '@/components/PageHeader.vue'
 import { deleteRecipe } from '@/modules/recipe/api'
+import AiRecipeChatDrawer from '@/modules/recipe/components/AiRecipeChatDrawer.vue'
 import RecipeDeleteDialog from '@/modules/recipe/components/RecipeDeleteDialog.vue'
 import RecipeDetailDrawer from '@/modules/recipe/components/RecipeDetailDrawer.vue'
 import RecipeFilterBar from '@/modules/recipe/components/RecipeFilterBar.vue'
@@ -28,6 +29,17 @@ const formRecipeId = ref<string | undefined>(undefined)
 const deleteDialogVisible = ref(false)
 const deleteRecipeId = ref('')
 const deleteRecipeName = ref('')
+
+/** AI 录入抽屉 */
+const aiDrawerVisible = ref(false)
+
+function handleAiInput() {
+  aiDrawerVisible.value = true
+}
+
+async function handleAiConfirmed(_recipeId: number) {
+  await list.reload()
+}
 
 function handleView(recipeId: string) {
   detailRecipeId.value = recipeId
@@ -99,6 +111,9 @@ async function handleSaved() {
           subtitle="管理您的菜品，包括食材、步骤和营养信息。"
         >
           <template #actions>
+            <ElButton @click="handleAiInput">
+              AI 录入
+            </ElButton>
             <ElButton type="primary" @click="handleAdd">
               新增菜品
             </ElButton>
@@ -161,6 +176,12 @@ async function handleSaved() {
       :recipe-name="deleteRecipeName"
       @confirm="handleDeleteConfirm"
       @cancel="handleDeleteCancel"
+    />
+
+    <!-- AI 录入抽屉 -->
+    <AiRecipeChatDrawer
+      v-model="aiDrawerVisible"
+      @confirmed="handleAiConfirmed"
     />
   </section>
 </template>

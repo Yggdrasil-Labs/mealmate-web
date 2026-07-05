@@ -1,4 +1,8 @@
 import type {
+  AiRecipeChatReply,
+  AiRecipeChatRequest,
+  AiRecipeConfirmReply,
+  AiRecipeConfirmRequest,
   CreateRecipePayload,
   RecipeDetail,
   RecipeFilters,
@@ -10,6 +14,8 @@ import type {
   UpdateRecipePayload,
 } from './types'
 import http from '@/utils/api/http'
+
+// ============= AI 菜品解析 API =============
 
 interface RecipeApiEnvelope<T> {
   data?: T
@@ -166,4 +172,18 @@ export async function uploadRecipeStepImage(file: File): Promise<string> {
   formData.append('file', file)
   const response = await http.post<{ url: string }>('/api/recipes/step-image', formData)
   return (response as any).data?.url ?? ''
+}
+
+/** AI 对话式解析菜品 */
+export async function aiRecipeChat(cmd: AiRecipeChatRequest): Promise<AiRecipeChatReply> {
+  return unwrapResponseData<AiRecipeChatReply>(
+    http.post('/api/ai/recipes/chat', cmd),
+  )
+}
+
+/** AI 确认菜品入库 */
+export async function aiRecipeConfirm(cmd: AiRecipeConfirmRequest): Promise<AiRecipeConfirmReply> {
+  return unwrapResponseData<AiRecipeConfirmReply>(
+    http.post('/api/ai/recipes/confirm', cmd),
+  )
 }
