@@ -75,3 +75,9 @@ export function getShoppingList(planId: number) {
 export function updateShoppingItem(planId: number, itemId: number, purchased: boolean) {
   return http.put(`${BASE}/${planId}/shopping-list/items/${itemId}`, { purchased })
 }
+
+// ─── AI 生成 ───
+
+export function aiGeneratePlan(params: { familyId: number, weekStartDate: string, userHint?: string }) {
+  return unwrap<import('./types').AiMealPlanResult>(http.post('/api/ai/meal-plans/generate', params))
+}

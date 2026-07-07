@@ -55,3 +55,22 @@ export interface AdjustMealItemParams {
   newRecipeId: number
   adjustReason?: AdjustReason
 }
+
+// ─── AI 生成相关类型 ───
+
+export interface AiMealPlanGenerateParams {
+  familyId: number
+  weekStartDate: string
+  userHint?: string
+}
+
+export interface AiMealPlanResult {
+  planId: number
+  weekStartDate: string
+  weekEndDate: string
+  status: PlanStatus
+  planSource: 'AI_GENERATED' | 'RULE_ENGINE' | 'MANUAL'
+  dayMeals: Record<string, DayMeal>
+  reasoning: Record<string, string>
+  fallback: boolean
+}
