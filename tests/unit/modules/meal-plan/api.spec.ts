@@ -33,7 +33,7 @@ describe('meal-plan api', () => {
   it('adjustMealItem PUTs to /api/meal-plans/{planId}/items/{itemId}', async () => {
     const body = { newRecipeId: 200, adjustReason: 'OTHER' as const }
     await adjustMealItem(1, 10, body)
-    expect(http.put).toHaveBeenCalledWith('/api/meal-plans/1/items/10', body)
+    expect(http.put).toHaveBeenCalledWith('/api/meal-plans/1/items/10', body, { _silent: true })
   })
 
   it('getCurrentWeekPlan GETs /current with params', async () => {

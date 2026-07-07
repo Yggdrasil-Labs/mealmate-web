@@ -39,6 +39,8 @@ describe('app route schema', () => {
   })
 
   it('declares semantic icons for menu routes', () => {
-    expect(appRouteSchema.every(route => typeof route.meta.icon === 'string' && route.meta.icon.length > 0)).toBe(true)
+    const menuRoutes = appRouteSchema.filter(route => route.meta.menu?.visible !== false)
+    expect(menuRoutes.length).toBeGreaterThan(0)
+    expect(menuRoutes.every(route => typeof route.meta.icon === 'string' && route.meta.icon.length > 0)).toBe(true)
   })
 })
