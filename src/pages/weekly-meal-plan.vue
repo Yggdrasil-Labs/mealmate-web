@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import type { AiMealPlanResult } from '@/modules/meal-plan/types'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { ElMessage, ElMessageBox } from 'element-plus'
 import PageHeader from '@/components/PageHeader.vue'
+import { aiGeneratePlan } from '@/modules/meal-plan/api'
 import ManualAddDrawer from '@/modules/meal-plan/components/ManualAddDrawer.vue'
 import PlanActionBar from '@/modules/meal-plan/components/PlanActionBar.vue'
 import ReplaceRecipeDrawer from '@/modules/meal-plan/components/ReplaceRecipeDrawer.vue'
@@ -12,8 +14,6 @@ import WeekNavigator from '@/modules/meal-plan/components/WeekNavigator.vue'
 import { useManualAdd } from '@/modules/meal-plan/composables/useManualAdd'
 import { useReplaceItem } from '@/modules/meal-plan/composables/useReplaceItem'
 import { useWeeklyPlan } from '@/modules/meal-plan/composables/useWeeklyPlan'
-import { aiGeneratePlan } from '@/modules/meal-plan/api'
-import type { AiMealPlanResult } from '@/modules/meal-plan/types'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -75,7 +75,8 @@ async function handleAiGenerate() {
     }
   }
   catch (e: any) {
-    if (e === 'cancel' || e?.message === 'cancel') return
+    if (e === 'cancel' || e?.message === 'cancel')
+      return
     ElMessage.error(e?.message || 'AI 生成失败')
   }
   finally {
@@ -156,7 +157,9 @@ async function handleDelete(item: { itemId: number }) {
 
     <!-- AI 推荐理由 -->
     <div v-if="Object.keys(reasoning).length > 0" class="weekly-meal-plan__reasoning">
-      <h3 class="weekly-meal-plan__reasoning-title">📝 每日推荐理由</h3>
+      <h3 class="weekly-meal-plan__reasoning-title">
+        📝 每日推荐理由
+      </h3>
       <div v-for="(reason, date) in reasoning" :key="date" class="weekly-meal-plan__reasoning-item">
         <span class="weekly-meal-plan__reasoning-date">{{ date }}</span>
         <span class="weekly-meal-plan__reasoning-text">{{ reason }}</span>
