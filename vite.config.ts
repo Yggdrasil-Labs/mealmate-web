@@ -119,22 +119,38 @@ export default defineConfig(({ mode, command }) => {
           chunkFileNames: 'static/js/[name]-[hash].js',
           entryFileNames: 'static/js/[name]-[hash].js',
           assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
-          // 优化的代码分割策略
-          manualChunks: {
-            // Vue 核心库
-            'vue-vendor': ['vue', 'vue-router'],
-            // Element Plus
-            'element-plus': ['element-plus'],
-            // UI 库
-            'ui-vendor': ['@vueuse/core'],
-            // HTTP 库
-            'http-vendor': ['axios'],
-            // 国际化
-            'i18n-vendor': ['vue-i18n'],
-            // 状态管理
-            'store-vendor': ['pinia', 'pinia-plugin-persistedstate'],
+          // 优化的代码分割策略（Vite 8 / rolldown 要求函数形式）
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              // Vue 核心库
+              if (id.includes('/vue/') || id.includes('/vue-router/') || id.includes('/@vue/')) {
+                return 'vue-vendor'
+              }
+              // Element Plus
+              if (id.includes('/element-plus/')) {
+                return 'element-plus'
+              }
+              // UI 库
+              if (id.includes('/@vueuse/')) {
+                return 'ui-vendor'
+              }
+              // HTTP 库
+              if (id.includes('/axios/')) {
+                return 'http-vendor'
+              }
+              // 国际化
+              if (id.includes('/vue-i18n/')) {
+                return 'i18n-vendor'
+              }
+              // 状态管理
+              if (id.includes('/pinia/') || id.includes('/pinia-plugin-persistedstate/')) {
+                return 'store-vendor'
+              }
+            }
             // 公共工具
-            'common': ['src/utils', 'src/composables'],
+            if (id.includes('/src/utils/') || id.includes('/src/composables/')) {
+              return 'common'
+            }
           },
         },
         // 外部依赖（如果需要）
