@@ -174,7 +174,10 @@ export async function uploadRecipeStepImage(file: File): Promise<string> {
   return (response as any).data?.url ?? ''
 }
 
-/** AI 对话式解析菜品 */
+/** AI 流式解析端点（SSE），由 useAiChat 通过 fetch 调用 */
+export const AI_RECIPE_CHAT_STREAM_URL = '/api/ai/recipes/chat/stream'
+
+/** AI 对话式解析菜品（同步版本，保留兼容） */
 export async function aiRecipeChat(cmd: AiRecipeChatRequest): Promise<AiRecipeChatReply> {
   return unwrapResponseData<AiRecipeChatReply>(
     http.post('/api/ai/recipes/chat', cmd),

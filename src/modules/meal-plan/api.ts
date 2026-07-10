@@ -78,6 +78,9 @@ export function updateShoppingItem(planId: number, itemId: number, purchased: bo
 
 // ─── AI 生成 ───
 
+/** AI 流式生成端点（SSE），由页面通过 useAiStream 调用 */
+export const AI_MEAL_PLAN_GENERATE_STREAM_URL = '/api/ai/meal-plans/generate/stream'
+
 export function aiGeneratePlan(params: { familyId: number, weekStartDate: string, userHint?: string }) {
   return unwrap<import('./types').AiMealPlanResult>(http.post('/api/ai/meal-plans/generate', params))
 }
