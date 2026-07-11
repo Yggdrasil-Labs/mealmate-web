@@ -90,7 +90,18 @@ export default defineConfig(({ mode, command }) => {
         '/api': {
           target: envVars.VITE_API_PROXY_TARGET || envVars.VITE_API_BASE_URL || 'http://localhost:8080',
           changeOrigin: true,
-          timeout: 10000,
+          timeout: 120000,
+          proxyTimeout: 120000,
+          configure: (proxy) => {
+            // SSE 支持：禁用响应 buffer，确保 chunked 数据实时转发
+            proxy.on('proxyRes', (proxyRes) => {
+              if (proxyRes.headers['content-type']?.includes('text/event-stream')) {
+                // 确保不压缩、不 buffer
+                proxyRes.headers['cache-control'] = 'no-cache'
+                proxyRes.headers['x-accel-buffering'] = 'no'
+              }
+            })
+          },
         },
       },
       // 开发服务器优化
