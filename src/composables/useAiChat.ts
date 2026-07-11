@@ -43,8 +43,9 @@ export function useAiChat() {
     const assistantIdx = messages.value.length
     messages.value.push({ role: 'assistant', content: '' })
 
-    const apiBase = import.meta.env.VITE_API_BASE_URL || ''
-    await stream(`${apiBase}${AI_RECIPE_CHAT_STREAM_URL}`, {
+    // 流式请求走相对路径（通过 Vite dev proxy 或生产 nginx 代理）
+    const streamBase = ''
+    await stream(`${streamBase}${AI_RECIPE_CHAT_STREAM_URL}`, {
       sessionId: sessionId.value,
       message: userMessage,
     }, {

@@ -57,8 +57,9 @@ async function handleAiGenerate() {
     reasoning.value = {}
     streamingText.value = ''
 
-    const apiBase = import.meta.env.VITE_API_BASE_URL || ''
-    await stream(`${apiBase}${AI_MEAL_PLAN_GENERATE_STREAM_URL}`, {
+    // 流式请求走相对路径（通过 Vite dev proxy 或生产 nginx 代理）
+    const streamBase = ''
+    await stream(`${streamBase}${AI_MEAL_PLAN_GENERATE_STREAM_URL}`, {
       familyId: 1, // TODO: 从用户上下文获取
       weekStartDate: selectedWeekStart.value,
       userHint: userHint || undefined,
