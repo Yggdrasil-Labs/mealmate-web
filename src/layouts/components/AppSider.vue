@@ -175,7 +175,6 @@ function handleSelect(key: string) {
   overflow-y: auto;
   border-radius: calc(var(--shell-radius-xl) - 2px);
   box-shadow: 0 22px 48px rgba(15, 23, 42, 0.18);
-  outline: 9999px solid rgba(15, 23, 42, 0.4);
 }
 
 .app-sider.is-collapsed {

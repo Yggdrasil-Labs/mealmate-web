@@ -160,6 +160,15 @@ function getTabCacheKey(routeName: string, fullPath: string) {
       />
 
       <div class="default-layout__body" data-scroll-boundary="viewport" data-density="compact">
+        <!-- 移动端抽屉遮罩层 -->
+        <Transition name="fade">
+          <div
+            v-if="isMobile && isDrawerVisible"
+            class="default-layout__overlay"
+            @click="appShellStore.closeDrawer()"
+          />
+        </Transition>
+
         <AppSider
           :tree="menuStore.tree"
           :active-key="menuStore.activeKey"
@@ -278,5 +287,27 @@ function getTabCacheKey(routeName: string, fullPath: string) {
   .default-layout__main-surface {
     border-radius: var(--shell-radius-lg);
   }
+}
+
+/* 移动端抽屉遮罩层 — 不覆盖 Header，只暗化 body 区域 */
+.default-layout__overlay {
+  position: fixed;
+  top: calc(var(--shell-frame-padding) + var(--shell-header-height) + var(--shell-panel-gap));
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 15;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(2px);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 200ms ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
