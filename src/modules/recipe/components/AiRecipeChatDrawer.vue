@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ElMessage } from 'element-plus'
 import { computed, nextTick, ref, watch } from 'vue'
+import { useWindowSize } from '@vueuse/core'
 import { useAiChat } from '@/composables/useAiChat'
 
 /**
@@ -8,6 +9,7 @@ import { useAiChat } from '@/composables/useAiChat'
  *
  * 包含对话消息列表、输入框、结构化预览卡片和确认按钮。
  * 多轮对话 composable 管理 sessionId / 消息列表 / loading 状态。
+ * 移动端（<768px）自动全宽展示。
  */
 
 const props = defineProps<{
@@ -73,6 +75,10 @@ const canConfirm = computed(() => status.value === 'READY_TO_CONFIRM' && !loadin
 /** 输入框是否禁用（仅 loading 时禁用，READY_TO_CONFIRM 后仍可继续修正） */
 const inputDisabled = computed(() => loading.value)
 
+/** 响应式抽屉宽度：移动端全宽，桌面端 560px */
+const { width: windowWidth } = useWindowSize()
+const drawerSize = computed(() => windowWidth.value < 768 ? '100%' : '560px')
+
 // 抽屉关闭时重置
 watch(visible, (val) => {
   if (!val)
@@ -84,7 +90,7 @@ watch(visible, (val) => {
   <el-drawer
     v-model="visible"
     title="AI 智能录入菜品"
-    size="560px"
+    :size="drawerSize"
     :close-on-click-modal="false"
     @close="handleClose"
   >
