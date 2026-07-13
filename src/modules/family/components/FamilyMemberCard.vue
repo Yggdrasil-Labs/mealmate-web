@@ -28,19 +28,36 @@ const roleLabel = computed(() => getFamilyRoleTypeLabel(props.member.roleType, t
 const targetLabel = computed(() => getFamilyTargetTypeLabel(props.member.targetType, t))
 const preferenceSummary = computed(() => {
   const preference = props.member.preferenceSummary
-  const levelSummary = [
+
+  // 判断是否有实质性偏好数据
+  const hasTasteTags = preference.tasteTags.length > 0
+  const hasAvoid = preference.avoidIngredientCount > 0
+  const hasAllergy = preference.allergyIngredientCount > 0
+  const hasAnyContent = hasTasteTags || hasAvoid || hasAllergy
+
+  // 全部为空时显示友好提示
+  if (!hasAnyContent)
+    return t('family.preference.empty', '暂无饮食偏好')
+
+  const parts: string[] = []
+
+  if (hasTasteTags)
+    parts.push(preference.tasteTags.join('、'))
+  if (hasAvoid)
+    parts.push(`${t('family.preference.avoid', '忌口')} ${preference.avoidIngredientCount}${t('label.item', '项')}`)
+  if (hasAllergy)
+    parts.push(`${t('family.preference.allergy', '过敏')} ${preference.allergyIngredientCount}${t('label.item', '项')}`)
+
+  // 辣度/甜度/油度/盐度摘要（只显示非默认值）
+  const levelParts = [
     getSpicyLevelLabel(preference.spicyLevel, t),
     getSweetLevelLabel(preference.sweetLevel, t),
     getOilLevelLabel(preference.oilLevel, t),
     getSaltLevelLabel(preference.saltLevel, t),
   ].join(' / ')
+  parts.push(levelParts)
 
-  return [
-    ...preference.tasteTags,
-    `${preference.avoidIngredientCount}${t('label.count')}`,
-    `${preference.allergyIngredientCount}${t('label.count')}`,
-    levelSummary,
-  ].join(' · ')
+  return parts.join(' · ')
 })
 </script>
 

@@ -97,9 +97,18 @@ function stringifyStructuredValue(value: FamilyApiStructuredText | string | null
   if (typeof value.summary === 'string')
     return value.summary
 
+  // 常见 key 的中文映射（mealGoal 等结构化字段）
+  const keyLabels: Record<string, string> = {
+    weekday: '工作日',
+    weekend: '周末',
+    morning: '早餐',
+    lunch: '午餐',
+    dinner: '晚餐',
+  }
+
   const entries = Object.entries(value)
     .filter(([, item]) => item !== undefined && item !== null && item !== '')
-    .map(([key, item]) => `${key}: ${String(item)}`)
+    .map(([key, item]) => `${keyLabels[key] ?? key}: ${String(item)}`)
 
   return entries.join(', ')
 }
