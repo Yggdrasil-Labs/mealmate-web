@@ -143,9 +143,9 @@ function formatDayLabel(dateStr: string): string {
 
 .week-grid__desktop {
   display: grid;
-  grid-template-columns: 4rem repeat(7, minmax(120px, 1fr));
+  grid-template-columns: 3.5rem repeat(7, minmax(0, 1fr));
   gap: 1px;
-  min-width: 900px;
+  min-width: 0;
   background: var(--color-border-strong);
   border-radius: var(--btn-radius);
   overflow: hidden;

@@ -109,8 +109,8 @@ const { t } = useI18n()
 
 .plan-action-bar__btn--secondary {
   background: var(--color-surface-muted);
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary);
+  color: var(--color-primary-strong);
+  border: 1px solid var(--color-primary-strong);
 }
 
 .plan-action-bar__spinner {
